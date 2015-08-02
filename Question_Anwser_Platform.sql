@@ -103,14 +103,14 @@ DROP TABLE IF EXISTS `tb_ask`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tb_ask` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `question_id` int(11) unsigned NOT NULL COMMENT '问题ID',
+  `ask_question_id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '追问问题的ID (主键)',
   `ask_content` varchar(300) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '追问内容 (文字, 语音或图片的一种)',
   `content_type` tinyint(1) unsigned NOT NULL COMMENT '追问内容类型 (0: 文字 1: 语音 2: 图片)',
   `ask_time` date DEFAULT NULL COMMENT '追问时间',
   `original_quetion_id` int(11) unsigned NOT NULL COMMENT '所属问题的ID',
   `be_asked_username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT '被追问的用户',
-  PRIMARY KEY (`id`)
+  `ask_order` int(11) unsigned NOT NULL COMMENT '追问次序（方便检索所有相关的追问和追答）',
+  PRIMARY KEY (`ask_question_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='追问表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -209,7 +209,7 @@ DROP TABLE IF EXISTS `tb_question`;
 CREATE TABLE `tb_question` (
   `question_id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '问题ID (主键)',
   `question_username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '提问者的用户名',
-  `question_head` varchar(150) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '系统随机注入的头部信息',
+  `question_head` int(11) unsigned NOT NULL COMMENT '系统随机注入的头部信息ID (与tb_question_header_template表关联)',
   `content_type` tinyint(1) unsigned NOT NULL COMMENT '内容类型 (0: 文字 1: 语音 2: 图片)',
   `quetion_content` varchar(300) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '问题内容(文字, 语音或图片的一种)',
   `question_score` int(11) unsigned NOT NULL COMMENT '问题悬赏积分',
@@ -252,6 +252,30 @@ CREATE TABLE `tb_question_collection` (
 LOCK TABLES `tb_question_collection` WRITE;
 /*!40000 ALTER TABLE `tb_question_collection` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tb_question_collection` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tb_question_header_template`
+--
+
+DROP TABLE IF EXISTS `tb_question_header_template`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_question_header_template` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `header_id` int(11) unsigned NOT NULL COMMENT '信息头部ID',
+  `header_content` varchar(300) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '信息头部内容',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_question_header_template`
+--
+
+LOCK TABLES `tb_question_header_template` WRITE;
+/*!40000 ALTER TABLE `tb_question_header_template` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_question_header_template` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -314,7 +338,6 @@ DROP TABLE IF EXISTS `tb_reset`;
 CREATE TABLE `tb_reset` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '用户名',
-  `email` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '提供的邮箱',
   `reset_time` date DEFAULT NULL COMMENT '重置时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户找回密码记录表';
@@ -437,19 +460,20 @@ DROP TABLE IF EXISTS `tb_user`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tb_user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `card_number` char(11) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '证件号码（必填）',
+  `card_number` char(11) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '证件号码',
   `address` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '家庭住址',
   `grade` tinyint(1) unsigned NOT NULL COMMENT '年级 (必填)',
-  `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '真实姓名（必填）',
+  `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '真实姓名',
   `birthday` date NOT NULL COMMENT '出生日期',
   `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '注册的用户名',
   `identifier` tinyint(1) unsigned NOT NULL COMMENT '身份标识(0: 学生 1: 教师)',
   `avatar_url` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '用户头像url',
   `phone_number` char(11) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '手机号码',
   `sex` tinyint(1) unsigned NOT NULL COMMENT '性别 (0: 男 1: 女)',
-  `card_type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '证件类型 (0: 二代身份证 1: 其他)',
   `subject` tinyint(4) DEFAULT NULL COMMENT '科目 (教师必填, 学生可选)',
-  `serial_number` char(8) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '工作证号 (该项仅针对教师，长度8位)',
+  `serial_number` char(8) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '工作证号 (该项仅针对教师，长度8位)',
+  `email` varchar(150) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '注册邮箱 (问题通知和修改密码)',
+  `invitation_code` char(11) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '邀请码',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户数据表（存储用户的真实信息， 外键username与tb_account表关联）';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -473,7 +497,8 @@ DROP TABLE IF EXISTS `tb_user_points`;
 CREATE TABLE `tb_user_points` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '注册的用户名',
-  `points` int(11) unsigned NOT NULL COMMENT '积分',
+  `point_type` tinyint(4) unsigned NOT NULL COMMENT '积分类型',
+  `point_value` int(11) unsigned NOT NULL COMMENT '积分',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户积分表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -496,4 +521,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-02 17:06:04
+-- Dump completed on 2015-08-02 17:45:13
