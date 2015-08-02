@@ -80,6 +80,8 @@ CREATE TABLE `tb_answer` (
   `answer_time` date DEFAULT NULL COMMENT '回答时间',
   `question_id` int(11) unsigned NOT NULL COMMENT '对应问题的ID',
   `is_accepted` tinyint(1) unsigned NOT NULL COMMENT '回答是否被采纳',
+  `anwser_content` varchar(300) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '回答的内容 (文字, 语音或图片的一种)',
+  `content_type` tinyint(1) unsigned NOT NULL COMMENT '回答内容的类型 (0: 文字 1: 语音 2: 图片)',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='回答表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -106,6 +108,8 @@ CREATE TABLE `tb_ask` (
   `ask_content` varchar(300) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '追问内容 (文字, 语音或图片的一种)',
   `content_type` tinyint(1) unsigned NOT NULL COMMENT '追问内容类型 (0: 文字 1: 语音 2: 图片)',
   `ask_time` date DEFAULT NULL COMMENT '追问时间',
+  `original_quetion_id` int(11) unsigned NOT NULL COMMENT '所属问题的ID',
+  `be_asked_username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT '被追问的用户',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='追问表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -492,4 +496,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-01 18:26:55
+-- Dump completed on 2015-08-02 17:06:04
