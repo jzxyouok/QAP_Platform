@@ -70,15 +70,19 @@ def register(username, password, grade, user_type, **kwargs):
     values_tuple.append(username)
     values_tuple.append(grade)
     values_tuple.append(user_type)
-    for k, v in kwargs:
-        keys_tuple.append(k)
-        values_tuple.append(v)
-    sql1 = "insert into `%s` %s values '%s'" % ("tb_user", tuple(keys_tuple), tuple(values_tuple))
+    if kwargs:
+        for k, v in kwargs:
+            keys_tuple.append(k)
+            values_tuple.append(v)
+    sql1 = "insert into `%s` (%s) values (%s)" % ("tb_user", ', '.join(keys_tuple), ', '.join(values_tuple))
+    print 'zzz###', sql1
     cursor1 = db_manager.conn_r.cursor()
     try:
         cursor1.execute(sql1)
         db_manager.conn_r.commit()
+        print 'success'
     except Exception:
         db_manager.conn_r.rollback()
+        raise Exception
     db_manager.close()
     return True
