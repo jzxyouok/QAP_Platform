@@ -14,6 +14,7 @@ import tornado.web
 import tornado.httpserver
 
 from lib.user.loginServer import LoginHandler
+from lib.user.registerServer import RegisterHandler
 
 
 class MainHandler(tornado.web.RequestHandler):
@@ -37,7 +38,8 @@ class MainHandler(tornado.web.RequestHandler):
 
 application = tornado.web.Application([
     (r"/", MainHandler),
-    (r"/doUserAct", LoginHandler)
+    (r"/doUserAct/Login", LoginHandler),
+    (r"/doUserAct/Register", RegisterHandler)
 ])
 
 if __name__ == '__main__':
