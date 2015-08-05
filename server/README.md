@@ -2,7 +2,7 @@
 ####1. login
 登录
 
-HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct, 请求示例:
+HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/Login, 请求示例:
 
 	curl -d "username=xxx&password=xxx" "http://127.0.0.1:10100/doUserAct"
 
@@ -18,3 +18,6 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct, 请求示
 	{
 		"username": "flyfish",				// 用户名
 	}
+
+####2. register
+TODO: 
