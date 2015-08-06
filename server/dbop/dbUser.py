@@ -4,7 +4,10 @@
 负责与用户数据表交互
 """
 
+import hashlib
+
 from db.dbmanager import DBManager
+from db.util import forEachPlusInsertProps
 
 
 def login(username, password):
@@ -14,6 +17,7 @@ def login(username, password):
     :param password: 密码
     :return:
     """
+    password = hashlib.sha224(password).hexdigest()
     db_manager = DBManager()
     sql = "select *from `%s` where username='%s' and password='%s'" % ("tb_account", username, password)
     cursor = db_manager.conn_r.cursor()
@@ -33,7 +37,7 @@ def login(username, password):
     return is_ok, data
 
 
-def register(username, password, grade, user_type, **kwargs):
+def register(username, password, grade, identifier, options=None):
     """
     用户注册 (用户获取登录账户的唯一途径)
     1. 学生注册: username, password, grade为必填项, invitation_code为选填项
@@ -41,8 +45,8 @@ def register(username, password, grade, user_type, **kwargs):
     :param username: 用户名 (需要检查唯一性)
     :param password: 密码
     :param grade: 年级
-    :param user_type: 用户类型 (0: 学生 1: 教师)
-    :param kwargs: 可变参数 (由user_type决定)
+    :param identifier: 用户类型 (0: 学生 1: 教师)
+    :param options: 可变参数 (由user_type决定)
     :return:
     """
     db_manager = DBManager()
@@ -54,6 +58,26 @@ def register(username, password, grade, user_type, **kwargs):
     if result:
         db_manager.close()
         return False
+
+    # 键值对
+    prop_dict = dict()
+    prop_dict['username'] = username
+    prop_dict['identifier'] = identifier
+    prop_dict['grade'] = grade
+    if options:
+        assert isinstance(options, dict)
+        prop_dict.update(options)
+    insert_sql = forEachPlusInsertProps('tb_user', prop_dict)
+    # print 'zzz###', insert_sql
+    cursor1 = db_manager.conn_r.cursor()
+    try:
+        cursor1.execute(insert_sql)
+        db_manager.conn_r.commit()
+    except Exception:
+        db_manager.conn_r.rollback()
+        raise Exception
+
+    password = hashlib.sha224(password).hexdigest()
     sql0 = "insert into `%s` (%s, %s) values ('%s', '%s')" % ("tb_account", "username", "password", username, password)
     cursor0 = db_manager.conn_r.cursor()
     try:
@@ -61,28 +85,5 @@ def register(username, password, grade, user_type, **kwargs):
         db_manager.conn_r.commit()
     except Exception:
         db_manager.conn_r.rollback()
-    # 键值对
-    keys_tuple = []
-    values_tuple = []
-    keys_tuple.append("username")
-    keys_tuple.append("grade")
-    keys_tuple.append("identifier")
-    values_tuple.append(username)
-    values_tuple.append(grade)
-    values_tuple.append(user_type)
-    if kwargs:
-        for k, v in kwargs:
-            keys_tuple.append(k)
-            values_tuple.append(v)
-    sql1 = "insert into `%s` (%s) values (%s)" % ("tb_user", ', '.join(keys_tuple), ', '.join(values_tuple))
-    print 'zzz###', sql1
-    cursor1 = db_manager.conn_r.cursor()
-    try:
-        cursor1.execute(sql1)
-        db_manager.conn_r.commit()
-        print 'success'
-    except Exception:
-        db_manager.conn_r.rollback()
-        raise Exception
     db_manager.close()
     return True
