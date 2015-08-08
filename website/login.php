@@ -12,7 +12,7 @@ $password = $_POST["password"];
 echo "username: ".$username.", password: ".$password."<br>";
 
 //set POST variables
-$url = "http://127.0.0.1:10100/doUserAct";
+$url = "http://127.0.0.1:10100/doUserAct/Login";
 $fields = array(
     'username' => urlencode($username),
     'password' => urlencode($password)
