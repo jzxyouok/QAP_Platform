@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 5.6.26, for osx10.10 (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.25, for osx10.10 (x86_64)
 --
--- Host: 192.168.1.106    Database: Question_Anwser_Platform
+-- Host: 192.168.1.106    Database: Question_Answer_Platform
 -- ------------------------------------------------------
 -- Server version	5.5.44-0ubuntu0.14.10.1
 
@@ -25,9 +25,9 @@ DROP TABLE IF EXISTS `tb_account`;
 CREATE TABLE `tb_account` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT ' 账户用户名',
-  `password` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '账户密码',
+  `password` varchar(150) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '账户密码',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='登录账户表（存储账户信息: 用户名和密码）';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='登录账户表（存储账户信息: 用户名和密码）';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,6 +36,7 @@ CREATE TABLE `tb_account` (
 
 LOCK TABLES `tb_account` WRITE;
 /*!40000 ALTER TABLE `tb_account` DISABLE KEYS */;
+INSERT INTO `tb_account` VALUES (1,'flyfish','345ca077818ab58966b92260d7769ab231c86fd5380a26196abc0846');
 /*!40000 ALTER TABLE `tb_account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -460,22 +461,22 @@ DROP TABLE IF EXISTS `tb_user`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tb_user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `card_number` char(11) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '证件号码',
-  `address` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '家庭住址',
-  `grade` tinyint(1) unsigned NOT NULL COMMENT '年级 (必填)',
-  `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '真实姓名',
-  `birthday` date NOT NULL COMMENT '出生日期',
-  `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '注册的用户名',
-  `identifier` tinyint(1) unsigned NOT NULL COMMENT '身份标识(0: 学生 1: 教师)',
-  `avatar_url` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '用户头像url',
-  `phone_number` char(11) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '手机号码',
-  `sex` tinyint(1) unsigned NOT NULL COMMENT '性别 (0: 男 1: 女)',
+  `card_number` char(11) DEFAULT '' COMMENT '证件号码',
+  `address` varchar(50) DEFAULT '' COMMENT '家庭住址',
+  `grade` tinyint(1) NOT NULL COMMENT '年级 (必填)[0: 小学 1: 初中 2: 高中]',
+  `name` varchar(30) DEFAULT '' COMMENT '真实姓名',
+  `birthday` date DEFAULT NULL COMMENT '出生日期',
+  `username` varchar(50) NOT NULL DEFAULT '' COMMENT '注册的用户名',
+  `identifier` tinyint(1) NOT NULL COMMENT '身份标识(0: 学生 1: 教师)',
+  `avatar_url` varchar(50) DEFAULT '' COMMENT '用户头像url',
+  `phone_number` char(11) DEFAULT '' COMMENT '手机号码',
+  `sex` tinyint(1) DEFAULT NULL COMMENT '性别 (0: 男 1: 女)',
   `subject` tinyint(4) DEFAULT NULL COMMENT '科目 (教师必填, 学生可选)',
   `serial_number` char(8) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '工作证号 (该项仅针对教师，长度8位)',
-  `email` varchar(150) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '注册邮箱 (问题通知和修改密码)',
+  `email` varchar(150) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT '注册邮箱 (问题通知和修改密码)',
   `invitation_code` char(11) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '邀请码',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户数据表（存储用户的真实信息， 外键username与tb_account表关联）';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户数据表（存储用户的真实信息， 外键username与tb_account表关联）';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -484,6 +485,7 @@ CREATE TABLE `tb_user` (
 
 LOCK TABLES `tb_user` WRITE;
 /*!40000 ALTER TABLE `tb_user` DISABLE KEYS */;
+INSERT INTO `tb_user` VALUES (1,'','',1,'',NULL,'flyfish',0,'','13581711922',NULL,NULL,NULL,'',NULL);
 /*!40000 ALTER TABLE `tb_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -521,4 +523,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-02 17:45:13
+-- Dump completed on 2015-08-08 21:25:02
