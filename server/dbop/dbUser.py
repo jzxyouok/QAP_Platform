@@ -69,7 +69,6 @@ def register(username, password, grade, identifier, options=None):
         assert isinstance(options, dict)
         prop_dict.update(options)
     insert_sql = forEachPlusInsertProps('tb_user', prop_dict)
-    # print 'zzz###', insert_sql
     cursor1 = db_manager.conn_r.cursor()
     try:
         cursor1.execute(insert_sql)
