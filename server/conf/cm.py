@@ -8,14 +8,14 @@ class ConfigManager:
         self.config = {
             "development": {
                 "mysql": {
-                    "host": "192.168.1.106",
+                    "host": "localhsot",
                     "user": "root",
                     "passwd": "asd123",
                     "db": "Question_Answer_Platform",
                     "charset": "utf8"
                 },
                 "redis": {
-                    "host": "192.168.1.106",
+                    "host": "localhost",
                     "port": 6379
                 }
             }
