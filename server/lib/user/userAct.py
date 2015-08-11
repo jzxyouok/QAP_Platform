@@ -22,6 +22,7 @@ def login(username, password):
         result['username'] = username
         result['access_token'] = str(access_token)
         result['ts'] = ts
+        result.update(data)
         return json.dumps({
             "code": 200,
             "data": result

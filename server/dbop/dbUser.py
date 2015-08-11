@@ -5,6 +5,7 @@
 """
 
 import hashlib
+from MySQLdb.cursors import DictCursor
 
 from db.dbmanager import DBManager
 from db.util import forEachPlusInsertProps
@@ -27,7 +28,7 @@ def login(username, password):
     is_ok = False
     data = None
     if result:
-        cursor0 = db_manager.conn_r.cursor()
+        cursor0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
         sql0 = "select *from `%s` where username='%s'" % ("tb_user", username)
         cursor0.execute(sql0)
         result0 = cursor0.fetchone()
