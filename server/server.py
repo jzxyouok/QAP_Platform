@@ -15,6 +15,11 @@ import tornado.httpserver
 
 from lib.user.loginServer import LoginHandler
 from lib.user.registerServer import RegisterHandler
+from lib.question.queryUserQuestionListServer import QueryUserQuestionListHandler
+from lib.question.postQuestionServer import PostQuestionHandler
+from lib.question.connectQuestionServer import ConnectQuestionHandler
+from lib.question.searchQuestionServer import SearchQuestionHandler
+from lib.question.answerQuestionServer import AnswerQuestionHandler
 
 
 class MainHandler(tornado.web.RequestHandler):
@@ -39,7 +44,12 @@ class MainHandler(tornado.web.RequestHandler):
 application = tornado.web.Application([
     (r"/", MainHandler),
     (r"/doUserAct/Login", LoginHandler),
-    (r"/doUserAct/Register", RegisterHandler)
+    (r"/doUserAct/Register", RegisterHandler),
+    (r"/doQuestionAct/QueryUserQuestionList", QueryUserQuestionListHandler),
+    (r"/doQuestionAct/PostQuestion", PostQuestionHandler),
+    (r"/doQuestionAct/ConnectQuestion", ConnectQuestionHandler),
+    (r"/doQuestionAct/SearchQuestion", SearchQuestionHandler),
+    (r"/doQuestionAct/AnswerQuestion", AnswerQuestionHandler)
 ])
 
 if __name__ == '__main__':
