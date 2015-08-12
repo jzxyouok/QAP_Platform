@@ -8,18 +8,19 @@ import tornado.web
 from tornado.httpclient import HTTPError
 import json
 
-from questionAct import login
+from questionAct import connect_question
 
 
-class LoginHandler(tornado.web.RequestHandler):
+class ConnectQuestionHandler(tornado.web.RequestHandler):
     def get(self):
         return HTTPError(code=405)
 
     def post(self):
         username = self.get_argument('username')
-        password = self.get_argument('password')
+        question_id = self.get_argument('question_id')
+
         self.set_header("Content-Type", "application/json;charset=utf8")
-        result = login(username, password)
+        result = connect_question(username, question_id)
         self.write(json.dumps(
             {
                 "code": 200,

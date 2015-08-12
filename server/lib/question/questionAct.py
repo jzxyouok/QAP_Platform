@@ -20,26 +20,92 @@ def query_user_question_list(username):
     })
 
 
-def post_question(username, grade, subject, content_type, question_content, ):
+def post_question(username, grade, subject, content_type, question_content, question_score=0):
     """
     用户提问
     :param username: 用户名
-    :param password: 密码
     :param grade: 年级
-    :param user_type: 用户类别 (0: 学生 1: 教师)
+    :param subject: 学科
+    :param content_type: 问题内容类型
+    :param question_content: 问题内容
+    :param question_score: 悬赏积分
     :return:
     """
-    is_success = dbUser.register(username, password, grade, user_type, options)
+
+    is_success = dbQuestion.post_question(username, grade, subject, content_type, question_content, question_score)
     if is_success:
         return json.dumps({
             "code": 200,
             "data": {
-                "msg": "注册成功"
+                "msg": "提问成功"
             }
         })
     return json.dumps({
         "code": 201,
         "data": {
-            "msg": "注册失败"
+            "msg": "提问失败"
+        }
+    })
+
+
+def connect_question(username, question_id):
+    """
+    收藏问题
+    :param username: 用户名
+    :param question_id: 问题ID
+    :return:
+    """
+    is_success = dbQuestion.connect_question(username, question_id)
+    if is_success:
+        return json.dumps({
+            "code": 200,
+            "data": {
+                "msg": "收藏成功"
+            }
+        })
+    return json.dumps({
+        "code": 201,
+        "data": {
+            "msg": "已经收藏过"
+        }
+    })
+
+
+def search_question(username, question_content):
+    """
+    搜索问题 (按照问题内容搜索)
+    :param username: 用户名
+    :param question_content: 问题内容
+    :return:
+    """
+    question_list = dbQuestion.search_question(username, question_content)
+
+    return json.dumps({
+        "code": 200,
+        "data": question_list
+    })
+
+
+def answer_question(username, question_id, content_type, answer_content):
+    """
+    回答问题
+    :param username: 用户名
+    :param question_id: 问题ID
+    :param content_type: 回答内容类型
+    :param answer_content: 回答内容
+    :return:
+    """
+    is_success = dbQuestion.answer_question(username, question_id, content_type, answer_content)
+    if is_success:
+        return json.dumps({
+            "code": 200,
+            "data": {
+                "msg": "回答成功"
+            }
+        })
+    return json.dumps({
+        "code": 201,
+        "data": {
+            "msg": "没有权限回答"
         }
     })
