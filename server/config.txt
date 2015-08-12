@@ -1,0 +1,17 @@
+
+# 服务器相关配置
+硬件配置:
+CPU: 2.53GHZ 4核
+内存: 8G
+硬盘: 100G
+
+软件配置:
+nginx: version 1.8.0
+mysql: version 5.6.25 x86_64
+python: version 2.7.9
+gitlab: version 6.3.1 (本地搭建的类github, 项目代码托管)
+php: version 5.6.11
+
+nginx监听端口: 8081
+sshd服务监听的端口: 22
+数据服务后台对外开放的端口: 10100
