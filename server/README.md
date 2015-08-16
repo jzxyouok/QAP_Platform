@@ -38,7 +38,9 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/Login, 请
 
 HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/Register, 请求示例:
 
-	curl -d "username=xxx&password=xxx&grade=xxx&user_type=xxx&serial_number=xxx&options={\"phone_number\": xxx, ...}" "http://127.0.0.1:10100/doUserAct/Register"
+	curl -d "username=xxx&password=xxx&grade=xxx& identifier=xxx&options={\"phone_number\": xxx, ...}" "http://127.0.0.1:10100/doUserAct/Register"
+
+1.学生注册
 
 请求参数格式说明:
 
@@ -47,10 +49,32 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/Register, 
 		"password": "flyfish",			       // 注册密码
 		"grade": 1,							   //  注册年级(0: 小学 1: 初中 2: 高中)
 		"identifier": 0,				          // 用户身份类别 (0: 学生 1: 教师)
-		"serial_number": 1103710520,		   // 教师工作证号(学生注册不填写)
 		"options": {"phone_number": 15145102540, ....}    // 选填信息(Json序列串, 注意格式)
 	}
 	
+返回结果说明:
+
+	{
+		"code": 200,							// OK, 其余状态码均失败
+		"data": {
+			"msg": "注册成功"
+		}
+	}
+
+2.教师注册
+
+请求参数格式说明:
+
+	{
+		"username": "flyfish",				    // 注册用户名
+		"password": "flyfish",			       // 注册密码
+		"grade": 1,							   //  注册年级(1: 小学 2: 初中 3: 高中)
+		"identifier": 1,				          // 用户身份类别 (0: 学生 1: 教师)
+		"subject": 2,					          // 科目(1: 数学 2: 语文 3: 英语 4: 生物 5: 政治 6: 历史 7: 地理 8: 物理 9: 化学)
+		"serial_number": "12345678",		   // 工作证号(暂定为8位数字)
+		"options": {"phone_number": "15145102540", ....}    // 选填信息(Json序列串, 注意格式)
+	}
+
 返回结果说明:
 
 	{
@@ -81,8 +105,8 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/QueryQ
 			{
 				"question_username": "flyfish",                // 提问者
 				"avatar_url": "/data/avatars/flyfish.png",     // 头像索引
-				"question_grade": 1,		                    // 问题对应的年级
-				"question_subject": 2,                        // 问题所属科目
+				"question_grade": 1,		                    // 问题对应的年级(1: 小学 2: 初中 3: 高中)
+				"question_subject": 2,                        // 问题所属科目(1: 数学 2: 语文 3: 英语 4: 生物 5: 政治 6: 历史 7: 地理 8: 物理 9: 化学)
 				"question_head" "xxx",                        // 系统随机注入的信息头部 
 				"quetion_content": "xxx",                     // 问题内容
 				"question_score": 10,                         // 问题悬赏积分
@@ -105,9 +129,9 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/PostQu
 
 	{
 		"username": "flyfish",			                // 用户名
-		"grade": 1,							            // 年级
-		"subject": 2,                                // 科目
-		"content_type": 0, 				               // 问题内容类型
+		"grade": 1,							            // 年级(1: 小学 2: 初中 3: 高中)
+		"subject": 2,                                // 科目(1: 数学 2: 语文 3: 英语 4: 生物 5: 政治 6: 历史 7: 地理 8: 物理 9: 化学)
+		"content_type": 0, 				               // 问题内容类型(1: 文字 2: 语音 3: 图片)
 		"question_content": "xxx",                   // 问题内容
 		"question_score": 10			               // 问题悬赏积分
 	}
@@ -169,7 +193,7 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/Search
 				"question_username": "flyfish",                // 提问者
 				"avatar_url": "/data/avatars/flyfish.png",     // 头像索引
 					"question_grade": 1,		                    // 问题对应的年级
-					"question_subject": 2,                        // 问题所属科目
+					"question_subject": 2,                        // 问题所属科目(1: 数学 2: 语文 3: 英语 4: 生物 5: 政治 6: 历史 7: 地理 8: 物理 9: 化学)
 					"question_head" "xxx",                        // 系统随机注入的信息头部 
 					"quetion_content": "xxx",                     // 问题内容
 					"question_score": 10,                         // 问题悬赏积分
@@ -192,7 +216,7 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/Answer
 	{
 		"username": "flyfish",                     // 用户名
 		"question_id": 1001,		                // 回答的问题ID
-		"content_type": 0,					         // 回答内容的类型
+		"content_type": 0,					         // 回答内容的类型(1: 文字 2: 语音 3: 图片)
 		"answer_content": "xxx"                   // 回答的内容
 	}
 
@@ -217,7 +241,7 @@ HTTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/AskQu
 
 	{
 		"username": "flyfish",                       // 追问者的用户名
-		"content_type": 0,					           // 追问内容类型
+		"content_type": 0,					           // 追问内容类型(1: 文字 2: 语音 3: 图片)
 		"ask_content": "xxx",                       // 追问内容
 		"original_question_id": 1001,               // 原问题的ID
 		"be_asked_username": "flyfish"              // 被追问者的用户名
@@ -255,8 +279,8 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/QueryU
 			"question_info": {
 				"question_username": "flyfish",                // 提问者
 				"avatar_url": "/data/avatars/flyfish.png",     // 头像索引
-				"question_grade": 1,		                    // 问题对应的年级
-				"question_subject": 2,                        // 问题所属科目
+				"question_grade": 1,		                    // 问题对应的年级(1: 小学 2: 初中 3: 高中)
+				"question_subject": 2,                        // 问题所属科目(1: 数学 2: 语文 3: 英语 4: 生物 5: 政治 6: 历史 7: 地理 8: 物理 9: 化学)
 				"question_head" "xxx",                        // 系统随机注入的信息头部 
 				"quetion_content": "xxx",                     // 问题内容
 				"question_score": 10,                         // 问题悬赏积分
