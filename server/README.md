@@ -21,13 +21,13 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/Login, 请
 			"username": "flyfish",			         // 用户名
 			"card_number": "1111111111111",        // 证件号码
 			"address": "xxx",			            // 家庭住址
-			"grade": 1,                           // 年级
+			"grade": 1,                           // 年级(1: 小学 2: 初中 3: 高中)
 			"name": "flyfish",                    // 真实姓名
 			"birthday": "2015-09-11",             // 生日
-			"identifier": 0,                      // 身份标识
+			"identifier": 0,                      // 身份标识(0: 学生 1: 教师)
 			"avatar_url": "/data/avatars/flyfish.png",	               // 头像索引
 			"phone_number": "000000000000",       // 电话号码
-			"sex": 0,                             // 性别
+			"sex": 0,                             // 性别(0: 男 1: 女)
 			"email": "flyfish@ifeiyu.net",        // 电子邮箱
 			"access_token": "aej8emleui56ekwl",   // token串
 			"ts": 1438874007					        // 时间戳（用于验证token是否过期）
@@ -38,7 +38,7 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/Login, 请
 
 HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/Register, 请求示例:
 
-	curl -d "username=xxx&password=xxx&grade=xxx& identifier=xxx&options={\"phone_number\": xxx, ...}" "http://127.0.0.1:10100/doUserAct/Register"
+	curl -d "username=xxx&password=xxx&grade=xxx&identifier=xxx&options={\"phone_number\": xxx, ...}" "http://127.0.0.1:10100/doUserAct/Register"
 
 1.学生注册
 
@@ -47,7 +47,7 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/Register, 
 	{
 		"username": "flyfish",				    // 注册用户名
 		"password": "flyfish",			       // 注册密码
-		"grade": 1,							   //  注册年级(0: 小学 1: 初中 2: 高中)
+		"grade": 1,							   //  注册年级(1: 小学 2: 初中 3: 高中)
 		"identifier": 0,				          // 用户身份类别 (0: 学生 1: 教师)
 		"options": {"phone_number": 15145102540, ....}    // 选填信息(Json序列串, 注意格式)
 	}
