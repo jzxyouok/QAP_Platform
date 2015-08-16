@@ -13,6 +13,8 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/Login, 请
 		"password": "flyfish"				// 登录密码
 	}
 
+1.登录成功
+
 返回结果说明:
 	
 	{
@@ -31,6 +33,17 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/Login, 请
 			"email": "flyfish@ifeiyu.net",        // 电子邮箱
 			"access_token": "aej8emleui56ekwl",   // token串
 			"ts": 1438874007					        // 时间戳（用于验证token是否过期）
+		}，
+		"msg": ""
+	}
+2.登录失败
+
+返回结果说明:
+
+	{
+		"code": 201,							       // FAIL
+		"data": "",
+		"msg": "用户名或密码错误"
 	}
 
 ####2. register
@@ -56,9 +69,8 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/Register, 
 
 	{
 		"code": 200,							// OK, 其余状态码均失败
-		"data": {
-			"msg": "注册成功"
-		}
+		"data": ""
+		"msg": "注册成功"
 	}
 
 2.教师注册
@@ -79,9 +91,8 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/Register, 
 
 	{
 		"code": 200,							// OK, 其余状态码均失败
-		"data": {
-			"msg": "注册成功"
-		}
+		"data": "",
+		"msg": "注册成功"
 	}
 
 ####3. QueryQuestionList
@@ -114,7 +125,8 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/QueryQ
 				"question_time": "2015-08-10 00:13:13"        // 提问时间
 			},
 			......
-		]
+		],
+		"msg": ""
 	}
 
 
@@ -140,9 +152,8 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/PostQu
 	
 	{
 		"code": 200,						    // OK
-		"data": {
-			"msg": "提问成功"
-		}
+		"data": "",
+		"msg": "提问成功"
 	}
 
 
@@ -164,9 +175,8 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/Connec
 
 	{
 		"code": 200,						   // Ok
-		"data": {
-			"msg": "收藏成功"
-		}
+		"data": "",
+		"msg": "收藏成功"
 	}
 
 
@@ -201,7 +211,8 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/Search
 					"question_time": "2015-08-10 00:13:13"        // 提问时间
 				},
 				......
-			]
+			],
+		 "msg": ""
 	 }
 	
 ####7. AnswerQuestion
@@ -224,9 +235,8 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/Answer
 
 	{
 		"code": 200,                             // OK
-      	"data": {
-           "msg": "回答成功"
-       }
+      	"data": "",
+      	"msg": "回答成功"
 	}
 
 ####8. AskQuestion
@@ -251,9 +261,8 @@ HTTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/AskQu
 
 	{
 		"code": 200,			                       // OK
-		"data": {
-			"msg": "追问成功"
-		}
+		"data": "",
+		"msg": "追问成功"
 	}
 
 
@@ -296,7 +305,8 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/QueryU
 			},
 			......  
 			]
-		}
+		},
+		"msg": ""
 	}
 
 ####10. SignDaily
@@ -316,9 +326,8 @@ HTTP POST请求, 访问接口: http://127.0.0.1:10100/doUserAct/SignDaily, 请�
 
 	{
 		"code": 200,		                 // OK
-		"data": {
-			"msg": "签到成功"
-		}
+		"data": "",
+		"msg": "签到成功"
 	}
 
 ####11. QueryUserPointsDetail
@@ -348,7 +357,8 @@ HTTP POST请求, 访问接口: http://127.0.0.1:10100/doUserAct/QueryUserPointsD
 			 },
 			 ......
 		  ]
-		}
+		},
+		"msg": ""
 	}
 	
 ####12. FollowOther
@@ -369,9 +379,8 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/FollowOthe
 
 	{
 		"code": 200,                   // OK
-		"data": {
-			"msg": "关注成功"
-		}
+		"data": "",
+		"msg": "关注成功"
 	}
 
 ####13. QueryFollowers
@@ -399,7 +408,8 @@ HTTP POST请求方式, 请求接口: http://127.0.0.1:10100/doUserAct/QueryFollo
 				"level_desc": "xxx"                            // 称号
 			},
 			......
-		]
+		],
+		"msg": ""
 	}
 
 ####14. QueryUserQuestionsOrAnswers
@@ -436,7 +446,8 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/QueryUserQ
 		"data": {
 			"answer_counts": 200,        // 回答总数
 			"accepted_counts": 100       // 采纳数
-		}
+		},
+		"msg": ""
 	}
 	
 ####15 QueryUserConnectionQuestionList
@@ -462,5 +473,6 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/QueryUserC
 				"question_content": "xxx"          // 问题内容
 			},
 			......
-		]
+		],
+		"msg": ""
 	}
