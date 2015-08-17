@@ -20,12 +20,14 @@ class RegisterHandler(tornado.web.RequestHandler):
         password = self.get_argument('password')
         grade = self.get_argument('grade')
         identifier = self.get_argument('identifier')
+        subject = self.get_argument('subject', None)
+        serial_number = self.get_argument('serial_number', None)
         options = self.get_argument('options', None)
         if options:
             options = json.loads(options)
 
         self.set_header("Content-Type", "application/json;charset=utf8")
-        result = register(username, password, grade, identifier, options=options)
+        result = register(username, password, grade, identifier, subject, serial_number, options=options)
         self.write(json.dumps(
             {
                 "code": 200,

@@ -35,16 +35,18 @@ def login(username, password):
     })
 
 
-def register(username, password, grade, user_type, options=None):
+def register(username, password, grade, identifier, subject, serial_number, options=None):
     """
     用户注册
     :param username: 用户名
     :param password: 密码
     :param grade: 年级
-    :param user_type: 用户类别 (0: 学生 1: 教师)
+    :param identifier: 用户类别 (0: 学生 1: 教师)
+    :param subject: 科目 (教师才有该选项)
+    :param serial_number: 教师证 (教师才有)
     :return:
     """
-    is_success = dbUser.register(username, password, grade, user_type, options)
+    is_success = dbUser.register(username, password, grade, identifier, subject, serial_number, options)
     if is_success:
         return json.dumps({
             "code": 200,
