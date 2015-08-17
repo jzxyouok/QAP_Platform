@@ -16,6 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `tb_about_us_template`
+--
+
+DROP TABLE IF EXISTS `tb_about_us_template`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_about_us_template` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `content` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_about_us_template`
+--
+
+LOCK TABLES `tb_about_us_template` WRITE;
+/*!40000 ALTER TABLE `tb_about_us_template` DISABLE KEYS */;
+INSERT INTO `tb_about_us_template` VALUES (1,'哈尔滨市共有教师10万人，中小学学生100万人，目前缺乏有效的沟通桥梁。哈尔滨教育互动平台致力于打造人人乐用的学习服务平台，通过高效、智能、精准地匹配师生资源，为老师及学生提供多种增值服务和学习工具，创建一个专业、简单、智能、安全的高品质学习服务的第三方平台，让学习变得更加容易、平等和高效，让所有有知识、技能、才华的人都能够在这个平台上成为老师，让所有需要知识、技能、才华的人都能够在这个平台上找到他们学习的榜样。在让跟谁学成为一种生活方式的同时，跟谁学也在全力打造更富活力、更加健康的教育生态圈。');
+/*!40000 ALTER TABLE `tb_about_us_template` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tb_account`
 --
 
@@ -522,4 +546,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-17 22:33:41
+-- Dump completed on 2015-08-17 23:02:03
