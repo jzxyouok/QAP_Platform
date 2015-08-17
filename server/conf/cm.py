@@ -8,7 +8,7 @@ class ConfigManager:
         self.config = {
             "development": {
                 "mysql": {
-                    "host": "localhsot",
+                    "host": "localhost",
                     "user": "root",
                     "passwd": "flyfishdb",
                     "db": "Question_Answer_Platform",
