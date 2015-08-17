@@ -15,6 +15,9 @@ import tornado.httpserver
 
 from lib.user.loginServer import LoginHandler
 from lib.user.registerServer import RegisterHandler
+
+from lib.email.validEmailServer import ValidEmailHandler
+
 from lib.question.queryUserQuestionListServer import QueryUserQuestionListHandler
 from lib.question.postQuestionServer import PostQuestionHandler
 from lib.question.connectQuestionServer import ConnectQuestionHandler
@@ -45,6 +48,7 @@ application = tornado.web.Application([
     (r"/", MainHandler),
     (r"/doUserAct/Login", LoginHandler),
     (r"/doUserAct/Register", RegisterHandler),
+    (r"/doEmailAct/ValidEmail", ValidEmailHandler),
     (r"/doQuestionAct/QueryUserQuestionList", QueryUserQuestionListHandler),
     (r"/doQuestionAct/PostQuestion", PostQuestionHandler),
     (r"/doQuestionAct/ConnectQuestion", ConnectQuestionHandler),

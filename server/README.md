@@ -16,7 +16,7 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/Login, 请
 1.登录成功
 
 返回结果说明:
-	
+
 	{
 		"code": 200,							// OK
 		"data": {
@@ -64,7 +64,7 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/Register, 
 		"identifier": 0,				          // 用户身份类别 (0: 学生 1: 教师)
 		"options": {"phone_number": 15145102540, ....}    // 选填信息(Json序列串, 注意格式)
 	}
-	
+
 返回结果说明:
 
 	{
@@ -99,17 +99,17 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/Register, 
 请求问题列表
 
 HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/QueryQuestionList, 请求示例:
-	
+
 	curl -d "username=xxx" "http://127.0.0.1:10100/doQuestionAct/QueryQuestionList"
 
 请求参数格式说明:
-	
+
 	{
 		"username": "flyfish"		         // 用户名
 	}
-	
+
 返回结果说明:
-	
+
 	{
 		"code": 200,						      // OK
 		"data": [
@@ -118,7 +118,7 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/QueryQ
 				"avatar_url": "/data/avatars/flyfish.png",     // 头像索引
 				"question_grade": 1,		                    // 问题对应的年级(1: 小学 2: 初中 3: 高中)
 				"question_subject": 2,                        // 问题所属科目(1: 数学 2: 语文 3: 英语 4: 生物 5: 政治 6: 历史 7: 地理 8: 物理 9: 化学)
-				"question_head" "xxx",                        // 系统随机注入的信息头部 
+				"question_head" "xxx",                        // 系统随机注入的信息头部
 				"quetion_content": "xxx",                     // 问题内容
 				"question_score": 10,                         // 问题悬赏积分
 				"answer_counts": 3,                           //  问题回答的数目
@@ -147,9 +147,9 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/PostQu
 		"question_content": "xxx",                   // 问题内容
 		"question_score": 10			               // 问题悬赏积分
 	}
-	
+
 返回结果说明:
-	
+
 	{
 		"code": 200,						    // OK
 		"data": "",
@@ -170,7 +170,7 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/Connec
 		"username": "flyfish",                  // 用户名
 		"question_id": 1001				          // 问题ID
 	}
-	
+
 返回结果说明:
 
 	{
@@ -186,16 +186,16 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/Connec
 HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/SearchQuestion, 请求示例:
 
  	curl -d "username=xxx&question_content=xxx" "http://127.0.0.1:10100/doQuestionAct/SearchQuestion"
- 
+
  请求参数格式说明:
- 
+
  	{
  		"username": "flyfish",                      // 用户名
  		"question_content": "xxx"	                 // 查询的问题内容
  	}
- 
+
  返回结果说明:
- 
+
 	 {
 	 	"code": 200,						      // OK
 		"data": [
@@ -204,7 +204,7 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/Search
 				"avatar_url": "/data/avatars/flyfish.png",     // 头像索引
 					"question_grade": 1,		                    // 问题对应的年级
 					"question_subject": 2,                        // 问题所属科目(1: 数学 2: 语文 3: 英语 4: 生物 5: 政治 6: 历史 7: 地理 8: 物理 9: 化学)
-					"question_head" "xxx",                        // 系统随机注入的信息头部 
+					"question_head" "xxx",                        // 系统随机注入的信息头部
 					"quetion_content": "xxx",                     // 问题内容
 					"question_score": 10,                         // 问题悬赏积分
 					"answer_counts": 3,                           //  问题回答的数目
@@ -214,7 +214,7 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/Search
 			],
 		 "msg": ""
 	 }
-	
+
 ####7. AnswerQuestion
 回答问题
 
@@ -279,7 +279,7 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/QueryU
 		"username": "flyfish",                   // 用户名
 		"question_id": 1001                      // 问题ID
 	}
-	
+
 返回结果说明:
 
 	{
@@ -290,7 +290,7 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/QueryU
 				"avatar_url": "/data/avatars/flyfish.png",     // 头像索引
 				"question_grade": 1,		                    // 问题对应的年级(1: 小学 2: 初中 3: 高中)
 				"question_subject": 2,                        // 问题所属科目(1: 数学 2: 语文 3: 英语 4: 生物 5: 政治 6: 历史 7: 地理 8: 物理 9: 化学)
-				"question_head" "xxx",                        // 系统随机注入的信息头部 
+				"question_head" "xxx",                        // 系统随机注入的信息头部
 				"quetion_content": "xxx",                     // 问题内容
 				"question_score": 10,                         // 问题悬赏积分
 				"answer_counts": 3,                           //  问题回答的数目
@@ -298,12 +298,12 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doQuestionAct/QueryU
 			},
 			"answers_info": [{
 				"answer_username": "flyfish",                // 回答者
-				"avatar_url": "/data/avatars/flyfish.png",     // 头像索引 
+				"avatar_url": "/data/avatars/flyfish.png",     // 头像索引
 				"answer_content": "xxx",                     // 回答内容
 				"is_accepted": 0,			                  // 是否被采纳
 				"answer_time": "2015-08-10 00:13:13"        // 回答的最新时间
 			},
-			......  
+			......
 			]
 		},
 		"msg": ""
@@ -321,7 +321,7 @@ HTTP POST请求, 访问接口: http://127.0.0.1:10100/doUserAct/SignDaily, 请�
 	{
 		"username": "flyfish"	                     // 用户名
 	}
-	
+
 返回结果说明:
 
 	{
@@ -336,7 +336,7 @@ HTTP POST请求, 访问接口: http://127.0.0.1:10100/doUserAct/SignDaily, 请�
 HTTP POST请求, 访问接口: http://127.0.0.1:10100/doUserAct/QueryUserPointsDetail, 请求示例:
 
 	curl -d "username=xxx" "http://127.0.0.1:10100/doUserAct/QueryUserPointsDetail"
-	
+
 请求参数格式说明:
 
 	{
@@ -360,7 +360,7 @@ HTTP POST请求, 访问接口: http://127.0.0.1:10100/doUserAct/QueryUserPointsD
 		},
 		"msg": ""
 	}
-	
+
 ####12. FollowOther
 关注其他用户
 
@@ -389,7 +389,7 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/FollowOthe
 HTTP POST请求方式, 请求接口: http://127.0.0.1:10100/doUserAct/QueryFollowers, 请求示例:
 
 	curl -d "username=xxx" "http://127.0.0.1:10100/doUserAct/QueryFollowers"
-	
+
 请求参数格式说明:
 
 	{
@@ -418,7 +418,7 @@ HTTP POST请求方式, 请求接口: http://127.0.0.1:10100/doUserAct/QueryFollo
 HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/QueryUserQuestionsOrAnswers, 请求示例:
 
 	curl -d "username=xxx" "http://127.0.0.1:10100/doUserAct/QueryUserQuestionsOrAnswers"
-	
+
 请求参数格式说明:
 
 	{
@@ -449,14 +449,14 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/QueryUserQ
 		},
 		"msg": ""
 	}
-	
+
 ####15 QueryUserConnectionQuestionList
 请求用户收藏问题列表
 
-HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/QueryUserConnectionQuestionList, 请求示例: 
+HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/QueryUserConnectionQuestionList, 请求示例:
 
 	curl -d "username=xxx" "http://127.0.0.1:10100/doUserAct/QueryUserConnectionQuestionList"
-	
+
 请求参数格式说明:
 
 	{
@@ -476,3 +476,24 @@ HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doUserAct/QueryUserC
 		],
 		"msg": ""
 	}
+
+###16 ValidEmail
+验证邮箱是否可用
+
+HTTP POST请求方式, 访问接口: http://127.0.0.1:10100/doEmailAct/ValidEmail, 请求示例:
+
+	curl -d "email_address=xxx" "http://127.0.0.1:10100/doEmailAct/ValidEmail"
+
+请求参数格式说明:
+
+    {
+		"email_address": "flyfish@ifeiyu.net"
+    }
+
+返回结果说明:
+
+	{
+    	"code": 200,						// OK
+        "data": "",
+        "msg": ""
+    }
