@@ -16,14 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `Question_Answer_Platform`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `Question_Answer_Platform` /*!40100 DEFAULT CHARACTER SET utf8 */;
-
-USE `Question_Answer_Platform`;
-
---
 -- Table structure for table `tb_account`
 --
 
@@ -531,4 +523,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-11 22:22:57
+-- Dump completed on 2015-08-17  9:25:05
