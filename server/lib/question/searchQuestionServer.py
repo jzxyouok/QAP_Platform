@@ -6,7 +6,6 @@
 
 import tornado.web
 from tornado.httpclient import HTTPError
-import json
 
 from questionAct import search_question
 
@@ -21,10 +20,5 @@ class SearchQuestionHandler(tornado.web.RequestHandler):
 
         self.set_header("Content-Type", "application/json;charset=utf8")
         result = search_question(username, question_content)
-        self.write(json.dumps(
-            {
-                "code": 200,
-                "data": result
-            }
-        ))
+        self.write(result)
         self.finish()

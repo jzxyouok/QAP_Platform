@@ -6,7 +6,6 @@
 
 import tornado.web
 from tornado.httpclient import HTTPError
-import json
 
 from questionAct import query_user_question_list
 
@@ -19,10 +18,5 @@ class QueryUserQuestionListHandler(tornado.web.RequestHandler):
         username = self.get_argument('username')
         self.set_header("Content-Type", "application/json;charset=utf8")
         result = query_user_question_list(username)
-        self.write(json.dumps(
-            {
-                "code": 200,
-                "data": result
-            }
-        ))
+        self.write(result)
         self.finish()

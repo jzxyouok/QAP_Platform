@@ -6,7 +6,6 @@
 
 import tornado.web
 from tornado.httpclient import HTTPError
-import json
 
 from questionAct import connect_question
 
@@ -21,10 +20,5 @@ class ConnectQuestionHandler(tornado.web.RequestHandler):
 
         self.set_header("Content-Type", "application/json;charset=utf8")
         result = connect_question(username, question_id)
-        self.write(json.dumps(
-            {
-                "code": 200,
-                "data": result
-            }
-        ))
+        self.write(result)
         self.finish()

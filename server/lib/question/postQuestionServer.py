@@ -6,7 +6,6 @@
 
 import tornado.web
 from tornado.httpclient import HTTPError
-import json
 
 from questionAct import post_question
 
@@ -25,10 +24,5 @@ class PostQuestionHandler(tornado.web.RequestHandler):
 
         self.set_header("Content-Type", "application/json;charset=utf8")
         result = post_question(username, grade, subject, content_type, question_content, question_score)
-        self.write(json.dumps(
-            {
-                "code": 200,
-                "data": result
-            }
-        ))
+        self.write(result)
         self.finish()
