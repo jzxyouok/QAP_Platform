@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.73, for redhat-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.26, for osx10.10 (x86_64)
 --
--- Host: localhost    Database: Question_Answer_Platform
+-- Host: 192.168.1.106    Database: Question_Answer_Platform
 -- ------------------------------------------------------
--- Server version	5.1.73
+-- Server version	5.5.44-0ubuntu0.14.10.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `tb_account`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tb_account` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT ' 账户用户名',
+  `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT ' 账户用户名 (强制为邮箱地址)',
   `password` varchar(150) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '账户密码',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='登录账户表（存储账户信息: 用户名和密码）';
@@ -211,7 +211,7 @@ CREATE TABLE `tb_question` (
   `question_id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '问题ID (主键)',
   `question_username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '提问者的用户名',
   `question_head` int(11) unsigned NOT NULL COMMENT '系统随机注入的头部信息ID (与tb_question_header_template表关联)',
-  `content_type` tinyint(1) unsigned NOT NULL COMMENT '内容类型 (0: 文字 1: 语音 2: 图片)',
+  `content_type` tinyint(1) unsigned NOT NULL COMMENT '内容类型 (1: 文字 2: 语音 3: 图片)',
   `quetion_content` varchar(300) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '问题内容(文字, 语音或图片的一种)',
   `question_score` int(11) unsigned NOT NULL COMMENT '问题悬赏积分',
   `question_grade` tinyint(1) unsigned NOT NULL COMMENT '问题所属的年级',
@@ -466,14 +466,13 @@ CREATE TABLE `tb_user` (
   `grade` tinyint(1) NOT NULL COMMENT '年级 (必填)[0: 小学 1: 初中 2: 高中]',
   `name` varchar(30) DEFAULT '' COMMENT '真实姓名',
   `birthday` date DEFAULT NULL COMMENT '出生日期',
-  `username` varchar(50) NOT NULL DEFAULT '' COMMENT '注册的用户名',
+  `username` varchar(50) NOT NULL DEFAULT '' COMMENT '注册的用户名 (邮箱地址)',
   `identifier` tinyint(1) NOT NULL COMMENT '身份标识(0: 学生 1: 教师)',
   `avatar_url` varchar(50) DEFAULT '' COMMENT '用户头像url',
   `phone_number` char(11) DEFAULT '' COMMENT '手机号码',
   `sex` tinyint(1) DEFAULT NULL COMMENT '性别 (0: 男 1: 女)',
   `subject` tinyint(4) DEFAULT NULL COMMENT '科目 (教师必填, 学生可选)',
   `serial_number` char(8) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '工作证号 (该项仅针对教师，长度8位)',
-  `email` varchar(150) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT '注册邮箱 (问题通知和修改密码)',
   `invitation_code` char(11) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '邀请码',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户数据表（存储用户的真实信息， 外键username与tb_account表关联）';
@@ -485,7 +484,7 @@ CREATE TABLE `tb_user` (
 
 LOCK TABLES `tb_user` WRITE;
 /*!40000 ALTER TABLE `tb_user` DISABLE KEYS */;
-INSERT INTO `tb_user` VALUES (1,'','',1,'',NULL,'flyfish',0,'','13581711922',NULL,NULL,NULL,'',NULL);
+INSERT INTO `tb_user` VALUES (1,'','',1,'',NULL,'flyfish',0,'','13581711922',NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `tb_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -523,4 +522,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-17  9:25:05
+-- Dump completed on 2015-08-17 22:33:41
