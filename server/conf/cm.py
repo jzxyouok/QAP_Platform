@@ -10,7 +10,7 @@ class ConfigManager:
                 "mysql": {
                     "host": "localhsot",
                     "user": "root",
-                    "passwd": "asd123",
+                    "passwd": "flyfishdb",
                     "db": "Question_Answer_Platform",
                     "charset": "utf8"
                 },
