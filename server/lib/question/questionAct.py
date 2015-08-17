@@ -16,7 +16,8 @@ def query_user_question_list(username):
 
     return json.dumps({
         "code": 200,
-        "data": question_list
+        "data": question_list,
+        "msg": ""
     })
 
 
@@ -36,15 +37,13 @@ def post_question(username, grade, subject, content_type, question_content, ques
     if is_success:
         return json.dumps({
             "code": 200,
-            "data": {
-                "msg": "提问成功"
-            }
+            "data": "",
+            "msg": "提问成功"
         })
     return json.dumps({
         "code": 201,
-        "data": {
-            "msg": "提问失败"
-        }
+        "data": "",
+        "msg": "提问失败"
     })
 
 
@@ -59,15 +58,13 @@ def connect_question(username, question_id):
     if is_success:
         return json.dumps({
             "code": 200,
-            "data": {
-                "msg": "收藏成功"
-            }
+            "data": "",
+            "msg": "收藏成功"
         })
     return json.dumps({
         "code": 201,
-        "data": {
-            "msg": "已经收藏过"
-        }
+        "data": "",
+        "msg": "已经收藏过"
     })
 
 
@@ -82,7 +79,8 @@ def search_question(username, question_content):
 
     return json.dumps({
         "code": 200,
-        "data": question_list
+        "data": question_list,
+        "msg": ""
     })
 
 
@@ -99,13 +97,11 @@ def answer_question(username, question_id, content_type, answer_content):
     if is_success:
         return json.dumps({
             "code": 200,
-            "data": {
-                "msg": "回答成功"
-            }
+            "data": "",
+            "msg": "回答成功"
         })
     return json.dumps({
         "code": 201,
-        "data": {
-            "msg": "没有权限回答"
-        }
+        "data": "",
+        "msg": "没有权限回答"
     })
