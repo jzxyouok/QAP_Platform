@@ -111,7 +111,7 @@ def forEachQueryProps(sqlstr, props):
     elif type(props) == type([0]):
         i = 0
         for prop in props:
-            if(i == 0):
+            if i == 0:
                 sqlstr += ' ' + prop
             else:
                 sqlstr += ', ' + prop

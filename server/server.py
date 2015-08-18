@@ -15,6 +15,9 @@ import tornado.httpserver
 
 from lib.user.loginServer import LoginHandler
 from lib.user.registerServer import RegisterHandler
+from lib.user.changePasswordServer import ChangePasswordHandler
+from lib.user.AboutUsServer import AboutUsHandler
+from lib.user.FeedbackServer import FeedBackHandler
 
 from lib.email.validEmailServer import ValidEmailHandler
 
@@ -48,6 +51,9 @@ application = tornado.web.Application([
     (r"/", MainHandler),
     (r"/doUserAct/Login", LoginHandler),
     (r"/doUserAct/Register", RegisterHandler),
+    (r"/doUserAct/ChangePassword", ChangePasswordHandler),
+    (r"/doUserAct/AboutUs", AboutUsHandler),
+    (r"/doUserAct/FeedBack", FeedBackHandler),
     (r"/doEmailAct/ValidEmail", ValidEmailHandler),
     (r"/doQuestionAct/QueryUserQuestionList", QueryUserQuestionListHandler),
     (r"/doQuestionAct/PostQuestion", PostQuestionHandler),
