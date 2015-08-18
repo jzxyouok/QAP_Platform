@@ -4,7 +4,6 @@ import json
 import datetime
 import decimal
 import time
-import app.share.mylog as log
 import traceback
 
 
@@ -35,8 +34,6 @@ class SmartResponse():
 
         if isinstance(msg, unicode):
             msg = msg.encode("utf8")
-        # for log
-        log.msg("response : %s" % msg)
         return msg
 
     @classmethod
