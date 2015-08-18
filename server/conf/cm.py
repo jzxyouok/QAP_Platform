@@ -3,10 +3,23 @@
 
 class ConfigManager:
     def __init__(self):
-        # self.env = "production"
         self.env = "development"
+        # self.env = "production"
         self.config = {
             "development": {
+                "mysql": {
+                    "host": "192.168.1.106",
+                    "user": "root",
+                    "passwd": "asd123",
+                    "db": "Question_Answer_Platform",
+                    "charset": "utf8"
+                },
+                "redis": {
+                    "host": "192.168.1.106",
+                    "port": 6379
+                }
+            },
+            "production": {
                 "mysql": {
                     "host": "localhost",
                     "user": "root",
