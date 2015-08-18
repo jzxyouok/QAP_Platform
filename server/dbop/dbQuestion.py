@@ -81,7 +81,7 @@ def post_question(username, grade, subject, content_type, question_content, ques
             header_id = result0['header_id']
     sql = "insert into `%s` (question_username, question_head, content_type, question_content, question_score, " \
           "question_grade, question_subject, question_time, question_status) values ('%s', '%s', '%s', '%s', '%s', " \
-          "'%s', '%s', '%s', '%s')" % ("tb_account", username, header_id, content_type, question_content,
+          "'%s', '%s', '%s', '%s')" % ("tb_question", username, header_id, content_type, question_content,
                                        question_score, grade, subject, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 0)
     cursor = db_manager.conn_r.cursor()
     try:
