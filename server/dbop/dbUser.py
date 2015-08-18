@@ -8,7 +8,7 @@ import hashlib
 from MySQLdb.cursors import DictCursor
 
 from db.dbmanager import DBManager
-from db.util import forEachPlusInsertProps
+from db.util import forEachPlusInsertProps, forEachUpdateProps
 
 
 def login(username, password):
@@ -58,6 +58,7 @@ def register(username, password, grade, identifier, subject, serial_number, opti
     sql = "select * from `%s` where username='%s'" % ("tb_account", username)
     cursor.execute(sql)
     result = cursor.fetchone()
+    cursor.close()
     if result:
         db_manager.close()
         return False
@@ -79,8 +80,11 @@ def register(username, password, grade, identifier, subject, serial_number, opti
     try:
         cursor1.execute(insert_sql)
         db_manager.conn_r.commit()
+        cursor1.close()
     except Exception:
         db_manager.conn_r.rollback()
+        cursor1.close()
+        db_manager.close()
         raise Exception
 
     password = hashlib.sha224(password).hexdigest()
@@ -89,7 +93,99 @@ def register(username, password, grade, identifier, subject, serial_number, opti
     try:
         cursor0.execute(sql0)
         db_manager.conn_r.commit()
+        cursor0.close()
     except Exception:
         db_manager.conn_r.rollback()
+        cursor0.close()
+        db_manager.close()
     db_manager.close()
+    return True
+
+
+def change_password(username, old_password, new_password):
+    """
+    修改密码
+    :param username: 用户名
+    :param old_password: 旧密码
+    :param new_password: 新密码
+    :return:
+    """
+    db_manager = DBManager()
+    cursor = db_manager.conn_r.cursor(cursorclass=DictCursor)
+    # 判断用户是否合法
+    sql = "select password from `%s` where username='%s'" % ("tb_account", username)
+    cursor.execute(sql)
+    result = cursor.fetchone()
+    cursor.close()
+    if result is None:
+        return False, "用户不存在"
+    tmp_password = result['password']
+    password = hashlib.sha224(old_password).hexdigest()
+    if tmp_password != password:
+        return False, "原密码错误"
+    props = dict()
+    prere = dict()
+    props['password'] = hashlib.sha224(new_password).hexdigest()
+    prere['username'] = username
+    sql0 = forEachUpdateProps("tb_account", props, prere)
+    try:
+        cursor0 = db_manager.conn_r.cursor()
+        cursor0.execute(sql0)
+        db_manager.conn_r.commit()
+    except Exception:
+        db_manager.conn_r.rollback()
+        cursor0.close()
+        db_manager.close()
+        raise Exception
+    db_manager.close()
+    return True, "修改密码成功"
+
+
+def about_us(username):
+    """
+    关于我们
+    :param username: 用户名
+    :return:
+    """
+    db_manager = DBManager()
+    cursor = db_manager.conn_r.cursor(cursorclass=DictCursor)
+    sql = "select content from `%s`" % "tb_about_us_template"
+    cursor.execute(sql)
+    result = cursor.fetchone()
+    cursor.close()
+    db_manager.close()
+    if result is None:
+        return False, ""
+    return True, result
+
+
+def feedback(username, content, contact_type, contact_value, feed_time):
+    """
+    意见反馈
+    :param username: 用户名
+    :param content: 反馈内容
+    :param contact_type: 联系类型 (1: QQ 2: 邮箱 3: 手机)
+    :param contact_value: 联系方式
+    :param feed_time: 提交反馈的时间
+    :return:
+    """
+    db_manager = DBManager()
+    props = dict()
+    props['username'] = username
+    props['content'] = content
+    props['contact_type'] = contact_type
+    props['contact_value'] = contact_value
+    props['feed_time'] = feed_time
+    sql = forEachPlusInsertProps("tb_feedback", props)
+    try:
+        cursor = db_manager.conn_r.cursor()
+        cursor.execute(sql)
+        db_manager.conn_r.commit()
+        cursor.close()
+    except Exception:
+        db_manager.conn_r.rollback()
+        cursor.close()
+        db_manager.close()
+        raise Exception
+        return False
     return True

@@ -68,7 +68,7 @@ def post_question(username, grade, subject, content_type, question_content, ques
     :return:
     """
     db_manager = DBManager()
-    header_id = -1
+    header_id = 0
     # 获取随机问题头部 (随机数的上限取决于后期配置的模板表的大小)
     r_index = randint(0, 0)
     if r_index > 0:
@@ -81,7 +81,7 @@ def post_question(username, grade, subject, content_type, question_content, ques
             header_id = result0['header_id']
     sql = "insert into `%s` (question_username, question_head, content_type, question_content, question_score, " \
           "question_grade, question_subject, question_time, question_status) values ('%s', '%s', '%s', '%s', '%s', " \
-          "'%s', '%s', '%s', '%s')" % ("tb_account", username, header_id, content_type, question_content,
+          "'%s', '%s', '%s', '%s')" % ("tb_question", username, header_id, content_type, question_content,
                                        question_score, grade, subject, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 0)
     cursor = db_manager.conn_r.cursor()
     try:
@@ -133,8 +133,9 @@ def search_question(username, question_content):
     """
     db_manager = DBManager()
     question_list = []
+    # 默认搜索文字
     sql = "select *from `%s` where content_type='%s' and question_content like '%s' order by question_time desc" % \
-          ("tb_question", 0, question_content)
+          ("tb_question", 1, question_content)
     cursor = db_manager.conn_r.cursor(cursorclass=DictCursor)
     cursor.execute(sql)
     result = cursor.fetchall()
@@ -144,13 +145,14 @@ def search_question(username, question_content):
             tmp = item.copy()
             question_id = item['question_id']
             cursor0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
-            sql0 = "select count(*) from `%s` where question_id='%s'" % ("tb_answer", question_id)
+            sql0 = "select count(*) as counts from `%s` where question_id='%s'" % ("tb_answer", question_id)
             cursor0.execute(sql0)
             result0 = cursor0.fetchone()
             cursor0.close()
             counter = 0
             if result0:
-                counter = result0[0][0]
+                print 'zzz###', result0, type(result0)
+                counter = result0['counts']
             tmp['answer_counts'] = counter
             question_list.append(tmp)
     db_manager.close()

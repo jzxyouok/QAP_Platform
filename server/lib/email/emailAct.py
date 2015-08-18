@@ -1,6 +1,6 @@
 # coding: utf8
 
-import json
+from tool.util import SmartResponse
 
 import dbop.dbEmail as dbEmail
 
@@ -12,7 +12,7 @@ def valid_email(email_address):
     :return:
     """
     is_ok, msg = dbEmail.valid_email(email_address)
-    return json.dumps({
+    return SmartResponse().jsonwrap({
         "code": 200 if is_ok else 201,
         "data": "",
         "msg": msg

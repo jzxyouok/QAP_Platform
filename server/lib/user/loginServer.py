@@ -6,7 +6,6 @@
 
 import tornado.web
 from tornado.httpclient import HTTPError
-import json
 
 from userAct import login
 
@@ -20,10 +19,5 @@ class LoginHandler(tornado.web.RequestHandler):
         password = self.get_argument('password')
         self.set_header("Content-Type", "application/json;charset=utf8")
         result = login(username, password)
-        self.write(json.dumps(
-            {
-                "code": 200,
-                "data": result
-            }
-        ))
+        self.write(result)
         self.finish()
