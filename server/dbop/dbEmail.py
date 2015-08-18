@@ -16,7 +16,7 @@ def valid_email(email_address):
     db_manager = DBManager()
     cursor = db_manager.conn_r.cursor()
     # 判断邮箱地址是否存在
-    sql = "select * from `%s` where email='%s'" % ("tb_user", email_address)
+    sql = "select * from `%s` where username='%s'" % ("tb_account", email_address)
     cursor.execute(sql)
     result = cursor.fetchone()
     cursor.close()

@@ -25,13 +25,13 @@ def login(username, password):
         result.update(data)
         return json.dumps({
             "code": 200,
-            "data": result
+            "data": result,
+            "msg": ""
         })
     return json.dumps({
         "code": 201,
-        "data": {
-            "msg": "登录失败"
-        }
+        "data": "",
+        "msg": "登录失败"
     })
 
 
@@ -50,13 +50,11 @@ def register(username, password, grade, identifier, subject, serial_number, opti
     if is_success:
         return json.dumps({
             "code": 200,
-            "data": {
-                "msg": "注册成功"
-            }
+            "data": "",
+            "msg": "注册成功"
         })
     return json.dumps({
         "code": 201,
-        "data": {
-            "msg": "注册失败"
-        }
+        "data": "",
+        "msg": "注册失败"
     })
