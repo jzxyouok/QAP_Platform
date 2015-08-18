@@ -1,0 +1,31 @@
+#!/bin/bash
+
+:<<!
+ReadMe:
+重新部署GFF项目
+1. 键入source ./restart运行该脚本
+2. 脚本完成2件事：
+①  找出之前项目对应的后台进程并杀死；
+②  激活python环境，重新部署项目
+3. virtual_python_dev: GFF项目部署的python环境
+!
+
+# 项目的python环境
+virtual_python_dev="env_Question_Answer_Platform_2.7.9"
+# 项目的根路径
+project_dir="/data/projects/QAP_Server"
+
+# step 1: 杀死GFF运行的后台进程
+ps aux | grep -E "python server.py$"| awk '{print $2}' | xargs kill
+echo "清理server项目进程成功"
+
+# step 2: 重新部署GFF项目
+echo "重新部署server项目..."
+
+pyenv activate $virtual_python_dev
+
+cd $project_dir
+python server.py > server.log 2>&1 &
+echo "项目部署成功"
+deactivate
+
