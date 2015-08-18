@@ -96,12 +96,12 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doUserAct/Regist
 		"msg": "注册成功"
 	}
 
-####3. QueryQuestionList
+####3. QueryUserQuestionList
 请求问题列表
 
-HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/QueryQuestionList, 请求示例:
+HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/QueryUserQuestionList, 请求示例:
 
-	curl -d "username=xxx" "http://123.59.71.144:10100/doQuestionAct/QueryQuestionList"
+	curl -d "username=xxx" "http://123.59.71.144:10100/doQuestionAct/QueryUserQuestionList"
 
 请求参数格式说明:
 
@@ -498,3 +498,73 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doEmailAct/Valid
         "data": "",
         "msg": ""
     }
+
+###17 ChangePassword
+修改密码
+
+HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doUserAct/ChangePassword, 请求示例:
+
+	curl -d "username=xxx&old_password=xxx&new_password=xxx" "http://123.59.71.144:10100/doUserAct/ChangePassword"
+
+请求参数格式说明:
+
+	{
+		"username": "flyfish@ifeiyu.net",                         // 用户名
+		"old_password": "flyfish",                                // 旧密码
+		"new_password": "flyfish12",                              // 新密码
+	}
+
+返回结果说明:
+
+	{
+		"code": 200,                            // OK
+		"data": "",
+		"msg": "修改密码成功"
+	}
+
+###18 AboutUs
+关于我们
+
+HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doUserAct/AboutUs, 请求示例:
+
+	curl -d "username=xxx" "http://123.59.71.144:10100/doUserAct/AboutUs"
+
+请求参数格式说明:
+
+	{
+		"username": "flyfish@ifeiyu.net"                         // 用户名
+	}
+	
+返回结果说明:
+
+	{
+		"code": 200,                              // OK
+		"data": {
+			"content": "哈尔滨市共有教师10万人，中小学学生100万人，目前缺乏有效的沟通桥梁。哈尔滨教育互动平台致力于打造人人乐用的学习服务平台，通过高效、智能、精准地匹配师生资源，为老师及学生提供多种增值服务和学习工具，创建一个专业、简单、智能、安全的高品质学习服务的第三方平台，让学习变得更加容易、平等和高效，让所有有知识、技能、才华的人都能够在这个平台上成为老师，让所有需要知识、技能、才华的人都能够在这个平台上找到他们学习的榜样。在让跟谁学成为一种生活方式的同时，跟谁学也在全力打造更富活力、更加健康的教育生态圈。"
+		},
+		"msg": ""
+	}
+	
+###19 FeedBack
+意见反馈
+
+HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doUserAct/FeedBack, 请求示例:
+
+	curl -d "username=xxx&content=xxx&contact_type=xxx&contact_value=xxx" "http://123.59.71.144:10100/doUserAct/FeedBack"
+
+请求参数格式说明:
+
+	{
+		"username": "flyfish@ifeiyu.net",                             // 用户名
+		"content": "flyfish, zzz",                                    // 反馈内容
+		"contact_type": 1,                                            // 联系类型 (1: QQ 2: 邮箱 3: 手机)
+		"contact_value": "1234567890"                                 // 联系方式 (对应联系类型)
+	}
+
+返回结果说明:
+
+	{
+		"code": 200,                       // OK
+		"data": "",
+		"msg": "提交反馈成功"
+	}
