@@ -1,6 +1,6 @@
 # coding: utf8
 
-import json
+from tool.util import SmartResponse
 
 import dbop.dbQuestion as dbQuestion
 
@@ -14,7 +14,7 @@ def query_user_question_list(username):
     """
     question_list = dbQuestion.query_user_question_list(username)
 
-    return json.dumps({
+    return SmartResponse().jsonwrap({
         "code": 200,
         "data": question_list,
         "msg": ""
@@ -35,12 +35,12 @@ def post_question(username, grade, subject, content_type, question_content, ques
 
     is_success = dbQuestion.post_question(username, grade, subject, content_type, question_content, question_score)
     if is_success:
-        return json.dumps({
+        return SmartResponse().jsonwrap({
             "code": 200,
             "data": "",
             "msg": "提问成功"
         })
-    return json.dumps({
+    return SmartResponse().jsonwrap({
         "code": 201,
         "data": "",
         "msg": "提问失败"
@@ -56,12 +56,12 @@ def connect_question(username, question_id):
     """
     is_success = dbQuestion.connect_question(username, question_id)
     if is_success:
-        return json.dumps({
+        return SmartResponse().jsonwrap({
             "code": 200,
             "data": "",
             "msg": "收藏成功"
         })
-    return json.dumps({
+    return SmartResponse().jsonwrap({
         "code": 201,
         "data": "",
         "msg": "已经收藏过"
@@ -77,7 +77,7 @@ def search_question(username, question_content):
     """
     question_list = dbQuestion.search_question(username, question_content)
 
-    return json.dumps({
+    return SmartResponse().jsonwrap({
         "code": 200,
         "data": question_list,
         "msg": ""
@@ -95,12 +95,12 @@ def answer_question(username, question_id, content_type, answer_content):
     """
     is_success = dbQuestion.answer_question(username, question_id, content_type, answer_content)
     if is_success:
-        return json.dumps({
+        return SmartResponse().jsonwrap({
             "code": 200,
             "data": "",
             "msg": "回答成功"
         })
-    return json.dumps({
+    return SmartResponse().jsonwrap({
         "code": 201,
         "data": "",
         "msg": "没有权限回答"

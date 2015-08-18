@@ -2,7 +2,7 @@
 
 import uuid
 import time
-import json
+from tool.util import SmartResponse
 
 import dbop.dbUser as dbUser
 
@@ -23,12 +23,12 @@ def login(username, password):
         result['access_token'] = str(access_token)
         result['ts'] = ts
         result.update(data)
-        return json.dumps({
+        return SmartResponse().jsonwrap({
             "code": 200,
             "data": result,
             "msg": ""
         })
-    return json.dumps({
+    return SmartResponse().jsonwrap({
         "code": 201,
         "data": "",
         "msg": "登录失败"
@@ -48,12 +48,12 @@ def register(username, password, grade, identifier, subject, serial_number, opti
     """
     is_success = dbUser.register(username, password, grade, identifier, subject, serial_number, options)
     if is_success:
-        return json.dumps({
+        return SmartResponse().jsonwrap({
             "code": 200,
             "data": "",
             "msg": "注册成功"
         })
-    return json.dumps({
+    return SmartResponse().jsonwrap({
         "code": 201,
         "data": "",
         "msg": "注册失败"
