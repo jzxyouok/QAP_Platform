@@ -78,6 +78,7 @@ class MyStrAList():
 
 time_formate_str = "%Y-%m-%d %H:%M:%S"
 
+
 def time_now_str():
     return time.strftime(time_formate_str, time.localtime())
 
@@ -87,8 +88,9 @@ def copy_dict_by_keys(keys, source_dict, to_dict):
         if key in source_dict.keys():
             to_dict[key] = source_dict[key]
         else:
-            print key , 'not in ', source_dict
+            print key, 'not in ', source_dict
             assert 0
+
 
 def add_dict_by_keys(dict_1, dict_2, keys=None):
     if not keys:
@@ -197,23 +199,27 @@ def safe_str_to_dict(value):
         return {}
 
 
-#把datetime转成字符串
+# 把datetime转成字符串
 def datetime_toString(dt):
     return dt.strftime(time_formate_str)
 
-#把字符串转成datetime
+
+# 把字符串转成datetime
 def string_toDatetime(string):
     return datetime.datetime.strptime(string, time_formate_str)
 
-#把字符串转成时间戳形式
+
+# 把字符串转成时间戳形式
 def string_toTimestamp(strTime):
     return time.mktime(string_toDatetime(strTime).timetuple())
 
-#把时间戳转成字符串形式
+
+# 把时间戳转成字符串形式
 def timestamp_toString(stamp):
     return time.strftime(time_formate_str, time.localtime(stamp))
 
-#把datetime类型转成时间戳形式
+
+# 把datetime类型转成时间戳形式
 def datetime_toTimestamp(dateTim):
     return time.mktime(dateTim.timetuple())
 
@@ -227,3 +233,52 @@ def is_datetime_equal(a_date_time, b_date_time):
 
 def time_delta_toString(timeDelta):
     return '{:02}:{:02}:{:02}'.format(timeDelta.seconds // 3600, timeDelta.seconds % 3600 // 60, timeDelta.seconds % 60)
+
+
+def get_file_extension(path):
+    """
+    返回文件后缀
+    :param path: 文件路径
+    :return:
+    """
+    import os.path
+    return os.path.splitext(path)[1]
+
+
+def save_file(file_name, file_content, dir_type):
+    """
+    保存文件到本地
+    :param file_name: 文件名
+    :param file_content: 文件内容
+    :param dir_type: 保存路径类型 (1: avatar 2: question_pic 3: question_sound)
+    :return:
+    """
+    from conf.cm import ConfigManager
+    cm = ConfigManager()
+    if dir_type == 1:
+        upload_dir = cm.get_config('upload')['save']['avatar']
+        url = cm.get_config('upload')['visit']['avatar']
+    elif dir_type == 2:
+        upload_dir = cm.get_config('upload')['save']['pic']
+        url = cm.get_config('upload')['visit']['pic']
+    elif dir_type == 3:
+        upload_dir = cm.get_config('upload')['save']['sound']
+        url = cm.get_config('upload')['visit']['sound']
+    output_file = open(upload_dir + file_name, 'wb')
+    output_file.write(file_content)
+    output_file.flush()
+    output_file.close()
+
+    return url + file_name
+
+
+def get_system_default_avatar_url():
+    """
+    返回系统默认的头像url地址
+    :return:
+    """
+    from conf.cm import ConfigManager
+    cm = ConfigManager()
+    avatar_url = cm.get_config('upload')['visit']['avatar'] + 'default.png'
+    return avatar_url
+

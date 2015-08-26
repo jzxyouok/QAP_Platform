@@ -17,6 +17,18 @@ class ConfigManager:
                 "redis": {
                     "host": "192.168.1.106",
                     "port": 6379
+                },
+                "upload": {
+                    "save": {
+                        "pic": "/data/upload/pic/",
+                        "avatar": "/data/upload/avatar/",
+                        "sound": "/data/upload/sound/"
+                    },
+                    "visit": {
+                        "pic": "/qap_server/uploads/question/pic/",
+                        "avatar": "/qap_server/uploads/user/avatar/",
+                        "sound": "/qap_server/uploads/question/sound/"
+                    }
                 }
             },
             "production": {
@@ -30,6 +42,18 @@ class ConfigManager:
                 "redis": {
                     "host": "localhost",
                     "port": 6379
+                },
+                "upload": {
+                    "save": {
+                        "pic": "/data/upload/pic/",
+                        "avatar": "/data/upload/avatar/",
+                        "sound": "/data/upload/sound/"
+                    },
+                    "visit": {
+                        "pic": "/qap_server/uploads/question/pic/",
+                        "avatar": "/qap_server/uploads/user/avatar/",
+                        "sound": "/qap_server/uploads/question/sound/"
+                    }
                 }
             }
         }

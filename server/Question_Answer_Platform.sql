@@ -51,7 +51,7 @@ CREATE TABLE `tb_account` (
   `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT ' 账户用户名 (强制为邮箱地址)',
   `password` varchar(150) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '账户密码',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='登录账户表（存储账户信息: 用户名和密码）';
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='登录账户表（存储账户信息: 用户名和密码）';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,7 +60,7 @@ CREATE TABLE `tb_account` (
 
 LOCK TABLES `tb_account` WRITE;
 /*!40000 ALTER TABLE `tb_account` DISABLE KEYS */;
-INSERT INTO `tb_account` VALUES (1,'flyfish@ifeiyu.net','345ca077818ab58966b92260d7769ab231c86fd5380a26196abc0846');
+INSERT INTO `tb_account` VALUES (1,'flyfish@ifeiyu.net','345ca077818ab58966b92260d7769ab231c86fd5380a26196abc0846'),(2,'daijun74@163.com','7e6a4309ddf6e8866679f61ace4f621b0e3455ebac2e831a60f13cd1'),(3,'1553556149@qq.com','345ca077818ab58966b92260d7769ab231c86fd5380a26196abc0846'),(4,'heavenfox@126.com','345ca077818ab58966b92260d7769ab231c86fd5380a26196abc0846'),(5,'nobody@ifeiyu.net','345ca077818ab58966b92260d7769ab231c86fd5380a26196abc0846'),(6,'flyfish13@ifeiyu.net','345ca077818ab58966b92260d7769ab231c86fd5380a26196abc0846'),(7,'flyfish120@ifeiyu.net','345ca077818ab58966b92260d7769ab231c86fd5380a26196abc0846'),(8,'caiyuanpei@vip.qq.com','e25388fde8290dc286a6164fa2d97e551b53498dcbf7bc378eb1f178'),(9,'caiyuanpei1@vip.qq.com','e25388fde8290dc286a6164fa2d97e551b53498dcbf7bc378eb1f178'),(10,'caiyuanpei2@vip.qq.com','e25388fde8290dc286a6164fa2d97e551b53498dcbf7bc378eb1f178'),(11,'caiyuanpei3@vip.qq.com','e25388fde8290dc286a6164fa2d97e551b53498dcbf7bc378eb1f178'),(12,'caiyuanpei4@vip.qq.com','e25388fde8290dc286a6164fa2d97e551b53498dcbf7bc378eb1f178'),(13,'da@da.com','f8cdb04495ded47615258f9dc6a3f4707fd2405434fefc3cbf4ef4e6'),(14,'qflyfish@ifeiyu.net','345ca077818ab58966b92260d7769ab231c86fd5380a26196abc0846'),(15,'flyfish15@ifeiyu.net','345ca077818ab58966b92260d7769ab231c86fd5380a26196abc0846');
 /*!40000 ALTER TABLE `tb_account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -105,8 +105,9 @@ CREATE TABLE `tb_answer` (
   `answer_time` date DEFAULT NULL COMMENT '回答时间',
   `question_id` int(11) unsigned NOT NULL COMMENT '对应问题的ID',
   `is_accepted` tinyint(1) unsigned NOT NULL COMMENT '回答是否被采纳',
-  `anwser_content` varchar(300) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '回答的内容 (文字, 语音或图片的一种)',
-  `content_type` tinyint(1) unsigned NOT NULL COMMENT '回答内容的类型 (0: 文字 1: 语音 2: 图片)',
+  `answer_content` varchar(300) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '回答的内容 (文字)',
+  `answer_pic_url` varchar(150) DEFAULT NULL COMMENT '回答相关的图片url',
+  `answer_sound_url` varchar(150) DEFAULT NULL COMMENT '回答相关的录音url',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='回答表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -129,10 +130,11 @@ DROP TABLE IF EXISTS `tb_ask`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tb_ask` (
   `ask_question_id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '追问问题的ID (主键)',
-  `ask_content` varchar(300) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '追问内容 (文字, 语音或图片的一种)',
-  `content_type` tinyint(1) unsigned NOT NULL COMMENT '追问内容类型 (0: 文字 1: 语音 2: 图片)',
+  `ask_content` varchar(300) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '追问内容 (文字)',
+  `ask_pic_url` varchar(150) DEFAULT NULL COMMENT '追问相关的图片url',
+  `ask_sound_url` varchar(150) DEFAULT NULL COMMENT '追问相关的录音url',
   `ask_time` date DEFAULT NULL COMMENT '追问时间',
-  `original_quetion_id` int(11) unsigned NOT NULL COMMENT '所属问题的ID',
+  `original_question_id` int(11) unsigned NOT NULL COMMENT '所属问题的ID',
   `be_asked_username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT '被追问的用户',
   `ask_order` int(11) unsigned NOT NULL COMMENT '追问次序（方便检索所有相关的追问和追答）',
   PRIMARY KEY (`ask_question_id`)
@@ -159,11 +161,9 @@ CREATE TABLE `tb_feedback` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(50) DEFAULT NULL COMMENT '用户名',
   `content` text COMMENT '反馈内容',
-  `contact_type` tinyint(1) unsigned NOT NULL COMMENT '联系方式 (1: QQ 2: 邮箱 3: 手机)',
-  `contact_value` varchar(50) DEFAULT NULL COMMENT '联系方式',
   `feed_time` datetime DEFAULT NULL COMMENT '提交反馈的时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,7 +172,7 @@ CREATE TABLE `tb_feedback` (
 
 LOCK TABLES `tb_feedback` WRITE;
 /*!40000 ALTER TABLE `tb_feedback` DISABLE KEYS */;
-INSERT INTO `tb_feedback` VALUES (1,'flyfish@ifeiyu.net','hello',1,'1553556289','2015-08-19 00:20:24');
+INSERT INTO `tb_feedback` VALUES (1,'flyfish@ifeiyu.net','hello','2015-08-19 00:20:24'),(2,'flyfish@ifeiyu.net','hello','2015-08-19 15:08:34'),(3,'daijun74@163.com','Test','2015-08-19 15:10:15'),(4,'flyfish@ifeiyu.net','wawo','2015-08-20 11:15:03'),(5,'flyfish@ifeiyu.net','wawo','2015-08-20 11:20:48'),(6,'flyfish@ifeiyu.net','wawo','2015-08-20 11:26:00'),(7,'flyfish@ifeiyu.net','wawo','2015-08-20 11:32:37'),(8,'flyfish@ifeiyu.net','wawo','2015-08-20 11:33:35'),(9,'flyfish@ifeiyu.net','wawo','2015-08-20 11:44:56'),(10,'flyfish@ifeiyu.net','wawo','2015-08-21 22:46:57'),(11,'flyfish@ifeiyu.net','wawo','2015-08-21 22:47:12'),(12,'flyfish@ifeiyu.net','wawo','2015-08-21 22:47:58'),(13,'flyfish@ifeiyu.net','wawo','2015-08-21 22:48:42'),(14,'flyfish@ifeiyu.net','wawo','2015-08-21 23:06:08'),(15,'flyfish@ifeiyu.net','wawo','2015-08-21 23:06:49'),(16,'flyfish@ifeiyu.net','wawo','2015-08-21 23:17:56'),(17,'flyfish@ifeiyu.net','wawo','2015-08-21 23:18:23'),(18,'flyfish@ifeiyu.net','wawo','2015-08-21 23:18:30'),(19,'flyfish@ifeiyu.net','wawo','2015-08-21 23:26:27'),(20,'flyfish@ifeiyu.net','wawo','2015-08-21 23:48:58'),(21,'flyfish@ifeiyu.net','wawo','2015-08-21 23:49:36'),(22,'flyfish@ifeiyu.net','wawo','2015-08-21 23:56:28'),(23,'flyfish@ifeiyu.net','wawo','2015-08-22 00:25:03'),(24,'flyfish@ifeiyu.net','wawo','2015-08-22 00:27:02'),(25,'flyfish@ifeiyu.net','wawo','2015-08-22 00:29:23'),(26,'flyfish@ifeiyu.net','wawo','2015-08-22 00:54:16'),(27,'flyfish@ifeiyu.net','wawo','2015-08-22 00:55:04'),(28,'flyfish@ifeiyu.net','wawo','2015-08-22 00:55:40'),(29,'flyfish@ifeiyu.net','wawo','2015-08-22 01:03:22'),(30,'flyfish@ifeiyu.net','wawo','2015-08-22 19:43:55'),(31,'flyfish@ifeiyu.net','wawo','2015-08-22 19:44:24'),(32,'flyfish@ifeiyu.net','wawo','2015-08-22 19:44:44'),(33,'flyfish@ifeiyu.net','wawo','2015-08-22 21:35:40'),(34,'flyfish@ifeiyu.net','wawo','2015-08-22 22:50:33'),(35,'da@da.com','nihao xiongdi men','2015-08-23 07:11:52'),(36,'flyfish@ifeiyu.net','wawo','2015-08-23 11:22:57'),(37,'flyfish@ifeiyu.net','wawo','2015-08-23 12:28:19'),(38,'flyfish@ifeiyu.net','wawo','2015-08-23 12:31:27'),(39,'flyfish@ifeiyu.net','wawo','2015-08-24 23:14:23'),(40,'flyfish@ifeiyu.net','wawo','2015-08-24 23:14:57'),(41,'flyfish@ifeiyu.net','wawo','2015-08-24 23:16:49'),(42,'flyfish@ifeiyu.net','wawo','2015-08-24 23:17:08'),(43,'flyfish@ifeiyu.net','wawo','2015-08-24 23:17:33'),(44,'flyfish@ifeiyu.net','wawo','2015-08-24 23:35:20'),(45,'flyfish@ifeiyu.net','wawo','2015-08-25 22:16:30'),(46,'flyfish@ifeiyu.net','wawo','2015-08-25 22:17:27'),(47,'flyfish@ifeiyu.net','wawo','2015-08-25 22:19:49'),(48,'flyfish@ifeiyu.net','wawo','2015-08-25 23:26:10'),(49,'flyfish@ifeiyu.net','wawo','2015-08-25 23:29:35'),(50,'flyfish@ifeiyu.net','wawo','2015-08-25 23:29:54');
 /*!40000 ALTER TABLE `tb_feedback` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -248,7 +248,7 @@ CREATE TABLE `tb_level_rule_template` (
 
 LOCK TABLES `tb_level_rule_template` WRITE;
 /*!40000 ALTER TABLE `tb_level_rule_template` DISABLE KEYS */;
-INSERT INTO `tb_level_rule_template` VALUES (1,1,0,'学渣','[0, 100]'),(2,1,1,'菜鸟教师','[0, 100]'),(3,2,0,'学弟','[100, 200]'),(4,2,1,'初级教师','[100, 200]'),(5,3,0,'学长','[200, 300]'),(6,3,1,'中级教师','[200, 300]'),(7,4,0,'学霸','[300, 600]'),(8,4,1,'高级教师','[300, 600]'),(9,5,0,'学神','[600, -1]'),(10,5,1,'超级教师','[600, -1]');
+INSERT INTO `tb_level_rule_template` VALUES (1,1,0,'学渣','[0, 100]'),(2,1,1,'菜鸟教师','[0, 100]'),(3,2,0,'学弟','[100, 200]'),(4,2,1,'初级教师','[100, 200]'),(5,3,0,'学长','[200, 300]'),(6,3,1,'中级教师','[200, 300]'),(7,4,0,'学霸','[300, 600]'),(8,4,1,'高级教师','[300, 600]'),(9,5,0,'学神','[600, 1000000]'),(10,5,1,'超级教师','[600, 1000000]');
 /*!40000 ALTER TABLE `tb_level_rule_template` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -263,15 +263,16 @@ CREATE TABLE `tb_question` (
   `question_id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '问题ID (主键)',
   `question_username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '提问者的用户名',
   `question_head` int(11) unsigned NOT NULL COMMENT '系统随机注入的头部信息ID (与tb_question_header_template表关联)',
-  `content_type` tinyint(1) unsigned NOT NULL COMMENT '内容类型 (1: 文字 2: 语音 3: 图片)',
-  `quetion_content` varchar(300) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '问题内容(文字, 语音或图片的一种)',
+  `question_content` varchar(300) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '问题内容(文字)',
+  `question_pic_url` varchar(150) DEFAULT NULL COMMENT '问题相关的图片url',
+  `question_sound_url` varchar(150) DEFAULT NULL COMMENT '问题相关的录音url',
   `question_score` int(11) unsigned NOT NULL COMMENT '问题悬赏积分',
   `question_grade` tinyint(1) unsigned NOT NULL COMMENT '问题所属的年级',
   `question_subject` tinyint(4) unsigned NOT NULL COMMENT '问题所属的科目',
-  `question_time` date DEFAULT NULL COMMENT '提问时间',
+  `question_time` datetime DEFAULT NULL COMMENT '提问时间',
   `question_status` tinyint(1) unsigned NOT NULL COMMENT '问题当前的状态 (0: 未解决 1: 已解决)',
   PRIMARY KEY (`question_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='提问表';
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8 COMMENT='提问表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -280,6 +281,7 @@ CREATE TABLE `tb_question` (
 
 LOCK TABLES `tb_question` WRITE;
 /*!40000 ALTER TABLE `tb_question` DISABLE KEYS */;
+INSERT INTO `tb_question` VALUES (2,'flyfish',0,'zzzz','','',10,2,4,'2015-08-20 00:00:00',0),(3,'flyfish@ifeiyu.net',0,'世界这么大, 你不想取看看吗？','','',20,1,4,'2015-08-20 10:23:12',0),(4,'flyfish@ifeiyu.net',0,'世界这么大, 你不想取看看吗？','','',20,1,4,'2015-08-20 10:27:08',0),(5,'flyfish@ifeiyu.net',0,'世界这么大, 你不想取看看吗？','','',20,1,4,'2015-08-20 10:30:47',0),(6,'flyfish@ifeiyu.net',0,'世界这么大, 你不想取看看吗？','','',20,1,4,'2015-08-20 10:32:34',0),(7,'flyfish@ifeiyu.net',0,'世界这么大, 你不想取看看吗？','','',20,1,4,'2015-08-20 10:33:02',0),(8,'flyfish@ifeiyu.net',0,'世界这么大, 你不想取看看吗？','','',20,1,4,'2015-08-20 10:35:10',0),(9,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-20 10:35:37',0),(10,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-20 10:38:15',0),(11,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-20 10:44:32',0),(12,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-20 10:46:40',0),(13,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-20 10:47:45',0),(14,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-20 10:49:14',0),(15,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-20 10:57:20',0),(16,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-20 10:58:38',0),(17,'caiyuanpei@vip.qq.com',0,'hello world','','',10,2,7,'2015-08-23 11:09:45',0),(18,'caiyuanpei@vip.qq.com',0,'hello world','','',10,2,7,'2015-08-23 11:12:36',0),(19,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-23 11:26:31',0),(20,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-23 12:28:11',0),(21,'caiyuanpei@vip.qq.com',0,'hello world','','',10,3,7,'2015-08-23 15:28:38',0),(22,'flyfish@ifeiyu.net',0,'','','',0,1,1,'2015-08-24 00:21:54',0),(23,'flyfish@ifeiyu.net',0,'','','',0,1,1,'2015-08-24 00:22:09',0),(24,'flyfish@ifeiyu.net',0,'oil明明哦','','',0,1,1,'2015-08-24 00:22:57',0),(25,'flyfish@ifeiyu.net',0,'','','',0,1,1,'2015-08-24 01:54:43',0),(26,'flyfish@ifeiyu.net',0,'哦哦哦','','',5,1,1,'2015-08-24 06:25:53',0),(27,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-24 22:42:24',0),(28,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-24 22:43:50',0),(29,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-24 22:46:47',0),(30,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-24 22:48:25',0),(31,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-24 23:14:02',0),(32,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-24 23:36:13',0),(33,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-24 23:39:57',0),(34,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-24 23:41:21',0),(35,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-24 23:41:40',0),(36,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-24 23:43:30',0),(37,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-24 23:44:13',0),(38,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-24 23:46:57',0),(39,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-24 23:47:37',0),(40,'flyfish@ifeiyu.net',0,'hello','','',20,1,4,'2015-08-24 23:47:59',0),(41,'flyfish@ifeiyu.net',0,'hello',NULL,NULL,20,1,4,'2015-08-25 22:20:10',0),(42,'flyfish@ifeiyu.net',0,'hello',NULL,NULL,20,1,4,'2015-08-25 22:21:05',0),(43,'flyfish@ifeiyu.net',0,'hello',NULL,NULL,20,1,4,'2015-08-25 22:24:21',0),(44,'flyfish@ifeiyu.net',0,'hello',NULL,NULL,20,1,4,'2015-08-25 22:27:35',0),(45,'flyfish@ifeiyu.net',0,'hello',NULL,NULL,20,1,4,'2015-08-25 23:39:31',0),(46,'flyfish@ifeiyu.net',0,'hello',NULL,NULL,20,1,4,'2015-08-26 00:21:52',0),(47,'flyfish@ifeiyu.net',0,'hello',NULL,NULL,20,1,4,'2015-08-26 00:27:11',0),(48,'flyfish@ifeiyu.net',0,'hello',NULL,NULL,20,1,4,'2015-08-26 00:28:05',0),(49,'flyfish@ifeiyu.net',0,'hello',NULL,NULL,20,1,4,'2015-08-26 01:12:53',0),(50,'flyfish@ifeiyu.net',0,'hello',NULL,NULL,20,1,4,'2015-08-26 01:13:17',0),(51,'flyfish@ifeiyu.net',0,'hello',NULL,NULL,20,1,4,'2015-08-26 01:14:58',0);
 /*!40000 ALTER TABLE `tb_question` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -292,10 +294,11 @@ DROP TABLE IF EXISTS `tb_question_collection`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tb_question_collection` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `quesiton_id` int(11) unsigned NOT NULL COMMENT '问题ID',
+  `question_id` int(11) unsigned NOT NULL COMMENT '收藏问题的ID',
   `collecter_username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '收藏者的用户名 ',
+  `collect_time` datetime DEFAULT NULL COMMENT '收藏时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='问题收藏表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='问题收藏表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -304,6 +307,7 @@ CREATE TABLE `tb_question_collection` (
 
 LOCK TABLES `tb_question_collection` WRITE;
 /*!40000 ALTER TABLE `tb_question_collection` DISABLE KEYS */;
+INSERT INTO `tb_question_collection` VALUES (1,3,'flyfish@ifeiyu.net',NULL),(2,1001,'flyfish@ifeiyu.net',NULL);
 /*!40000 ALTER TABLE `tb_question_collection` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -344,7 +348,7 @@ CREATE TABLE `tb_relation` (
   `other_username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '用户名B',
   `relation_type` tinyint(1) unsigned NOT NULL COMMENT '关系类型 (0: 关注 1: 被关注)',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户关注/粉丝表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户关注/粉丝表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -353,6 +357,7 @@ CREATE TABLE `tb_relation` (
 
 LOCK TABLES `tb_relation` WRITE;
 /*!40000 ALTER TABLE `tb_relation` DISABLE KEYS */;
+INSERT INTO `tb_relation` VALUES (1,'flyfish@ifeiyu.net','flyfish13@ifeiyu.net',0),(2,'flyfish13@ifeiyu.net','flyfish@ifeiyu.net',1);
 /*!40000 ALTER TABLE `tb_relation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -427,7 +432,7 @@ CREATE TABLE `tb_score_rule_template` (
 
 LOCK TABLES `tb_score_rule_template` WRITE;
 /*!40000 ALTER TABLE `tb_score_rule_template` DISABLE KEYS */;
-INSERT INTO `tb_score_rule_template` VALUES (1,1,'新用户登陆',20),(2,2,'学生提问奖励',5),(3,3,'⽼师回答奖励被采纳',5),(4,4,'老师回答未被采纳',1),(5,5,'问题被举报,管理员核实后删除',-20),(6,6,'每⽇签到',10),(7,7,'邀请新⽤户(邀请时产生验证码,⽤户根据验证码)',10);
+INSERT INTO `tb_score_rule_template` VALUES (1,1,'新用户登陆',20),(2,2,'提问',5),(3,3,'回答被采纳',5),(4,4,'回答未被采纳',1),(5,5,'问题被举报,管理员核实后删除',-20),(6,6,'签到',10),(7,7,'邀请⽤户',10);
 /*!40000 ALTER TABLE `tb_score_rule_template` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -465,9 +470,9 @@ DROP TABLE IF EXISTS `tb_sign`;
 CREATE TABLE `tb_sign` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '签到者的用户名',
-  `sign_time` date DEFAULT NULL COMMENT '签到日期 (每天仅允许签到一次)',
+  `sign_time` datetime DEFAULT NULL COMMENT '签到日期 (每天仅允许签到一次)',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户签到表';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='用户签到表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -476,6 +481,7 @@ CREATE TABLE `tb_sign` (
 
 LOCK TABLES `tb_sign` WRITE;
 /*!40000 ALTER TABLE `tb_sign` DISABLE KEYS */;
+INSERT INTO `tb_sign` VALUES (1,'flyfish@ifeiyu.net','2015-08-15 22:46:57'),(2,'flyfish@ifeiyu.net','2015-08-16 23:06:08'),(3,'flyfish@ifeiyu.net','2015-08-17 23:06:49'),(4,'flyfish@ifeiyu.net','2015-08-18 23:17:56'),(5,'flyfish@ifeiyu.net','2015-08-19 23:18:23'),(6,'flyfish@ifeiyu.net','2015-08-20 23:18:30'),(7,'flyfish@ifeiyu.net','2015-08-21 23:48:58'),(8,'flyfish@ifeiyu.net','2015-08-22 00:25:03'),(9,'flyfish@ifeiyu.net','2015-08-23 11:22:57'),(10,'flyfish@ifeiyu.net','2015-08-24 00:19:08'),(11,'flyfish@ifeiyu.net','2015-08-25 22:16:30');
 /*!40000 ALTER TABLE `tb_sign` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -513,21 +519,22 @@ DROP TABLE IF EXISTS `tb_user`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tb_user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `card_number` char(11) DEFAULT '' COMMENT '证件号码',
+  `card_number` char(12) DEFAULT NULL COMMENT '证件号码',
   `address` varchar(50) DEFAULT '' COMMENT '家庭住址',
   `grade` tinyint(1) NOT NULL COMMENT '年级 (必填)[0: 小学 1: 初中 2: 高中]',
   `name` varchar(30) DEFAULT '' COMMENT '真实姓名',
   `birthday` date DEFAULT NULL COMMENT '出生日期',
   `username` varchar(50) NOT NULL DEFAULT '' COMMENT '注册的用户名 (邮箱地址)',
   `identifier` tinyint(1) NOT NULL COMMENT '身份标识(0: 学生 1: 教师)',
-  `avatar_url` varchar(50) DEFAULT '' COMMENT '用户头像url',
-  `phone_number` char(11) DEFAULT '' COMMENT '手机号码',
+  `avatar_url` varchar(100) DEFAULT NULL COMMENT '用户头像url',
+  `phone_number` char(12) DEFAULT NULL COMMENT '手机号码',
   `sex` tinyint(1) DEFAULT NULL COMMENT '性别 (0: 男 1: 女)',
   `subject` tinyint(4) DEFAULT NULL COMMENT '科目 (教师必填, 学生可选)',
-  `serial_number` char(8) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '工作证号 (该项仅针对教师，长度8位)',
+  `serial_number` char(9) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '工作证号 (该项仅针对教师，长度8位)',
   `invitation_code` char(11) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '邀请码',
+  `nickname` varchar(50) DEFAULT NULL COMMENT '昵称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户数据表（存储用户的真实信息， 外键username与tb_account表关联）';
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='用户数据表（存储用户的真实信息， 外键username与tb_account表关联）';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -536,8 +543,34 @@ CREATE TABLE `tb_user` (
 
 LOCK TABLES `tb_user` WRITE;
 /*!40000 ALTER TABLE `tb_user` DISABLE KEYS */;
-INSERT INTO `tb_user` VALUES (1,'','',1,'',NULL,'flyfish@ifeiyu.net',0,'','17681711922',NULL,NULL,NULL,NULL);
+INSERT INTO `tb_user` VALUES (1,'','',1,'',NULL,'flyfish@ifeiyu.net',0,'','17681711922',NULL,NULL,NULL,NULL,'cls1991'),(2,'','',1,'',NULL,'daijun74@163.com',0,'','',NULL,NULL,NULL,NULL,NULL),(3,'','',2,'',NULL,'1553556149@qq.com',0,'','',NULL,NULL,NULL,NULL,NULL),(4,'','',1,'',NULL,'heavenfox@126.com',1,'','',NULL,4,'12345678',NULL,NULL),(5,'','',1,'',NULL,'nobody@ifeiyu.net',1,'','',NULL,4,'12345678',NULL,NULL),(6,'11111111111','where',1,'张三','2015-09-11','flyfish13@ifeiyu.net',1,'/data/avatars/flyfish.png','00000000000',0,4,'12345678',NULL,NULL),(7,NULL,'',1,'',NULL,'flyfish120@ifeiyu.net',1,NULL,NULL,NULL,4,'12345678','',NULL),(8,NULL,'',3,'',NULL,'caiyuanpei@vip.qq.com',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(9,NULL,'',3,'',NULL,'caiyuanpei1@vip.qq.com',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(10,NULL,'',3,'',NULL,'caiyuanpei2@vip.qq.com',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(11,NULL,'',3,'',NULL,'caiyuanpei3@vip.qq.com',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(12,NULL,'',3,'',NULL,'caiyuanpei4@vip.qq.com',1,NULL,NULL,NULL,2,'12345678',NULL,NULL),(13,NULL,'',1,'',NULL,'da@da.com',1,NULL,NULL,NULL,1,'123456',NULL,NULL),(14,NULL,'',1,'',NULL,'qflyfish@ifeiyu.net',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(15,'111111111111','where',1,'张三','2015-09-11','flyfish15@ifeiyu.net',1,'/qap_server/uploads/user/avatar/default.png','000000000000',0,4,'12345678',NULL,NULL);
 /*!40000 ALTER TABLE `tb_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tb_user_log`
+--
+
+DROP TABLE IF EXISTS `tb_user_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_user_log` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '注册的用户名',
+  `login_time` datetime DEFAULT NULL COMMENT '登录时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `my_key` (`username`,`login_time`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='用户等级';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_user_log`
+--
+
+LOCK TABLES `tb_user_log` WRITE;
+/*!40000 ALTER TABLE `tb_user_log` DISABLE KEYS */;
+INSERT INTO `tb_user_log` VALUES (1,'flyfish@ifeiyu.net','2015-08-25 22:16:30'),(2,'flyfish@ifeiyu.net','2015-08-25 22:17:27'),(3,'flyfish@ifeiyu.net','2015-08-25 22:19:48'),(4,'flyfish@ifeiyu.net','2015-08-25 23:29:54');
+/*!40000 ALTER TABLE `tb_user_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -552,8 +585,9 @@ CREATE TABLE `tb_user_points` (
   `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '注册的用户名',
   `point_type` tinyint(4) unsigned NOT NULL COMMENT '积分类型',
   `point_value` int(11) unsigned NOT NULL COMMENT '积分',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户积分表';
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `my_key` (`username`,`point_type`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COMMENT='用户积分表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -562,6 +596,7 @@ CREATE TABLE `tb_user_points` (
 
 LOCK TABLES `tb_user_points` WRITE;
 /*!40000 ALTER TABLE `tb_user_points` DISABLE KEYS */;
+INSERT INTO `tb_user_points` VALUES (1,'flyfish@ifeiyu.net',6,90),(10,'flyfish@ifeiyu.net',1,20),(12,'flyfish@ifeiyu.net',2,55);
 /*!40000 ALTER TABLE `tb_user_points` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -574,4 +609,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-19  1:27:31
+-- Dump completed on 2015-08-26  1:19:43
