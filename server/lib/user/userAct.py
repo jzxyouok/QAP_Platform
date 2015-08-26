@@ -243,3 +243,20 @@ def modify_personal_information(username, props=None, options=None):
         "code": 201,
         "msg": "修改失败"
     })
+
+
+def query_all_information(username, identifier):
+    """
+    请求我的页面数据
+    :param username: 用户名
+    :param identifier: 身份标志
+    :return:
+    """
+    is_ok, data = dbUser.query_all_information(username, identifier)
+    if is_ok:
+        return {
+            "code": 200,
+            "data": data,
+            "msg": ""
+        }
+

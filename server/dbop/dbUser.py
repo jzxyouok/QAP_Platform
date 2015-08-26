@@ -10,8 +10,8 @@ import hashlib
 from MySQLdb.cursors import DictCursor
 
 from db.dbmanager import DBManager
-from db.util import forEachPlusInsertProps, forEachUpdateProps, FormatUpdateStr
-from tool.util import string_toDatetime, time_now_str
+from db.util import forEachPlusInsertProps, forEachUpdateProps, FormatUpdateStr, FormatCondition
+from tool.util import string_toDatetime, time_now_str, safe_str_to_list
 
 
 def login(username, password, identifier):
@@ -508,6 +508,161 @@ def modify_personal_information(username, props=None, options=None):
     return False
 
 
+def query_all_information(username, identifier):
+    """
+    请求我的页面数据
+    :param username: 用户名
+    :param identifier: 身份标志
+    :return:
+    """
+    db_manager = DBManager()
+    data = {}
+    # 学生
+    if identifier == 0:
+        # 拿到称号
+        # 拿到总条数
+        sql = "select count(*) as counts from `%s` where question_username='%s'" % ("tb_question", username)
+        cursor = db_manager.conn_r.cursor(cursorclass=DictCursor)
+        cursor.execute(sql)
+        result = cursor.fetchone()
+        cursor.close()
+        sums = 0
+        if result:
+            sums = result['counts']
+        # 拿到已解决的问题数
+        sql = "select count(*) as counts from `%s` where question_username='%s' and question_status=%s" % \
+              ("tb_question", username, 1)
+        cursor = db_manager.conn_r.cursor(cursorclass=DictCursor)
+        cursor.execute(sql)
+        result = cursor.fetchone()
+        cursor.close()
+        solved_num = 0
+        if result:
+            solved_num = result['counts']
+        # 拿到总问题数/已解决的问题数
+        data['question_info'] = {
+            "total_questions": sums,
+            "solved_questions": solved_num
+        }
+
+    # 教师
+    elif identifier == 1:
+        # 拿到称号
+        # 拿到总回答数
+        sql = "select count(question_id) as counts from `tb_answer` where answer_username='%s' and question_id not in (select ask_question_id from " \
+              "`tb_ask` where be_asked_username='%s')" % (username, username)
+        cursor = db_manager.conn_r.cursor(cursorclass=DictCursor)
+        cursor.execute(sql)
+        result = cursor.fetchone()
+        cursor.close()
+        sums = 0
+        if result:
+            sums = result['counts']
+
+        # 拿到没有被采纳的回答列表
+        query_str = FormatCondition(props={
+            "answer_username": username,
+            "is_accepted": 0
+        })
+        sql = "select count(question_id) as counts from `tb_answer` where %s and question_id not in (select ask_question_id from " \
+              "`tb_ask` where be_asked_username='%s')" % (query_str, username)
+        cursor = db_manager.conn_r.cursor(cursorclass=DictCursor)
+        cursor.execute(sql)
+        result = cursor.fetchone()
+        cursor.close()
+        counts = 0
+        if result:
+            counts = result['counts']
+            # 回答没有被采纳
+            user_operation_type = 4
+            sql2 = "select score_points from `%s` where user_operation_type=%s" % ("tb_score_rule_template", user_operation_type)
+            cursor2 = db_manager.conn_r.cursor(cursorclass=DictCursor)
+            cursor2.execute(sql2)
+            result2 = cursor2.fetchone()
+            cursor2.close()
+            point_value = result2['score_points'] * counts
+            sql_0 = "insert into `%s` (username, point_type, point_value) values ('%s', %s, %s) ON DUPLICATE KEY UPDATE" \
+                    " point_value=point_value" % ("tb_user_points", username, user_operation_type, point_value)
+            try:
+                cursor2 = db_manager.conn_r.cursor()
+                cursor2.execute(sql_0)
+                db_manager.conn_r.commit()
+                cursor2.close()
+            except Exception:
+                db_manager.conn_r.rollback()
+                cursor2.close()
+                db_manager.close()
+                raise Exception
+        # 拿到总回答数/被采纳的回答数
+        data['answer_info'] = {
+            "total_answers": sums,
+            "accepted_answers": sums - counts
+        }
+
+    # 拿到总学分
+    cursor_0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
+    sql = "select user_operation_type, user_operation_desc, point_value from `%s` as u inner " \
+          "join `%s` as s on u.point_type=s.user_operation_type and username='%s'" % ("tb_user_points",
+                                                                                      "tb_score_rule_template", username)
+    msg = "[in query_user_points_detail] sql=" + sql
+    logging.info(msg)
+    cursor_0.execute(sql)
+    result = cursor_0.fetchall()
+    cursor_0.close()
+    if result is None:
+        return False, None
+    total_points = 0
+    for item in result:
+        total_points += item['point_value']
+
+    # 拿到称号模板数据
+    sql = "select *from `%s` where level_type=%s order by level" % ("tb_level_rule_template", identifier)
+    cursor = db_manager.conn_r.cursor(cursorclass=DictCursor)
+    cursor.execute(sql)
+    user_level_templates = cursor.fetchall()
+    cursor.close()
+    # 默认的数据
+    user_level = 0
+    level_desc = user_level_templates[0]['level_desc']
+    for t in user_level_templates:
+        level_section = safe_str_to_list(t['level_section'])
+        if sums in xrange(level_section[0], level_section[1]):
+            user_level = t['level']
+            level_desc = t['level_desc']
+            break
+    data['user_info'] = {
+        "user_level": user_level,
+        "level_desc": level_desc,
+        "total_points": total_points
+    }
+
+    # 拿到关注/粉丝数
+    cursor_0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
+    sql = "select count(*) as follows from `%s` where username='%s' and relation_type=0" % ("tb_relation", username)
+    cursor_0.execute(sql)
+    result = cursor_0.fetchone()
+    cursor_0.close()
+    if result is None:
+        follows_num = 0
+    else:
+        follows_num = result['follows']
+    cursor_1 = db_manager.conn_r.cursor(cursorclass=DictCursor)
+    sql1 = "select count(*) as fans from `%s` where other_username='%s' and relation_type=0" % ("tb_relation", username)
+    cursor_1.execute(sql1)
+    result1 = cursor_1.fetchone()
+    cursor_1.close()
+    if result1 is None:
+        fans_num = 0
+    else:
+        fans_num = result1['fans']
+    data['relation_info'] = {
+        "follows_num": follows_num,
+        "fans_num": fans_num
+    }
+    db_manager.close()
+    return True, data
+
+
 def get_latest_id(username):
     """
     根据用户名获取tb_account中对应主键ID
@@ -527,5 +682,6 @@ def get_latest_id(username):
     cursor1 = db_manager.conn_r.cursor(cursorclass=DictCursor)
     cursor1.execute(sql1)
     result1 = cursor0.fetchone()
+    cursor1.close()
+    db_manager.close()
     return result1['Auto_increment']
-

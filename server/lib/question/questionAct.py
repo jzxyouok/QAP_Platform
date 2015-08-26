@@ -63,7 +63,7 @@ def connect_question(username, question_id):
     :param question_id: 问题ID
     :return:
     """
-    is_success = dbQuestion.connect_question(username, question_id)
+    is_success, msg = dbQuestion.connect_question(username, question_id)
     if is_success:
         return SmartResponse().jsonwrap({
             "code": 200,
@@ -72,7 +72,7 @@ def connect_question(username, question_id):
         })
     return SmartResponse().jsonwrap({
         "code": 201,
-        "msg": "已经收藏过"
+        "msg": msg
     })
 
 
@@ -207,4 +207,28 @@ def adopt_answer(username, question_id, answer_id, answer_username):
         "msg": msg
     })
 
+
+def query_user_question_or_answer_list(username, identifier, is_part, cur_page, page_size):
+    """
+    请求用户的问题列表或者回答列表
+    :param username: 用户名
+    :param identifier: 身份标志 (0: 学生 1: 教师)
+    :param is_part: 按照条件搜索 (学生: 问题完成数 教师： 回答采纳数)
+    :param cur_page: 当前数据分页
+    :param page_size: 每页显示数据条数
+    :return:
+    """
+    is_success, question_list, counts = dbQuestion.query_user_question_or_answer_list(username, identifier, is_part,
+                                                                                      cur_page, page_size)
+    if is_success:
+        return SmartResponse().jsonwrap({
+            "code": 200,
+            "data": {
+                "question_list": question_list,
+                "page_size": page_size,
+                "cur_page": cur_page,
+                "counts": counts
+            },
+            "msg": ""
+        })
 

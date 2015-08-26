@@ -1,5 +1,5 @@
 ##数据服务接口
-####1. login
+###1 login
 用户登录
 
 HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doUserAct/Login, 请求示例:
@@ -49,7 +49,7 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doUserAct/Login,
 		"msg": "用户名或密码错误"
 	}
 
-####2. register
+###2 register
 用户注册
 
 HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doUserAct/Register, 请求示例:
@@ -100,7 +100,7 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doUserAct/Regist
 		"msg": "注册成功"
 	}
 
-####3. QueryUserQuestionList
+###3 QueryUserQuestionList
 请求问题列表
 
 HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/QueryUserQuestionList, 请求示例:
@@ -146,8 +146,7 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/Qu
 		"msg": ""
 	}
 
-
-####4. PostQuestion
+###4 PostQuestion
 用户提问
 
 HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/PostQuestion, 请求示例:
@@ -172,8 +171,7 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/Po
 		"msg": "提问成功"
 	}
 
-
-####5. ConnectQuestion
+###5 ConnectQuestion
 收藏问题
 
 HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/ConnectQuestion, 请求示例:
@@ -195,8 +193,7 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/Co
 		"msg": "收藏成功"
 	}
 
-
-####6. SearchQuestion
+###6 SearchQuestion
 用户搜索问题
 
 HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/SearchQuestion, 请求示例:
@@ -245,7 +242,7 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/Se
 		 "msg": ""
 	 }
 
-####7. AnswerQuestion
+###7 AnswerQuestion
 回答问题
 
 HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/AnswerQuestion, 请求示例:
@@ -268,7 +265,7 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/An
       	"msg": "回答成功"
 	}
 
-####8. AskQuestion
+###8 AskQuestion
 用户追问
 
 HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/AskQuestion, 请求示例:
@@ -293,8 +290,7 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/As
 		"msg": "追问成功"
 	}
 
-
-####9. QueryUserQuestionDetail
+###9 QueryUserQuestionDetail
 请求问题详细信息
 
 HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/QueryUserQuestionDetail, 请求示例:
@@ -363,7 +359,7 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/Qu
 		"msg": ""
 	}
 
-####10. SignDaily
+###10 SignDaily
 每日签到
 
 HTTP POST请求, 访问接口: http://123.59.71.144:10100/doUserAct/SignDaily, 请求示例:
@@ -384,7 +380,7 @@ HTTP POST请求, 访问接口: http://123.59.71.144:10100/doUserAct/SignDaily, �
 		"msg": "签到成功"
 	}
 
-####11. QueryUserPointsDetail
+###11 QueryUserPointsDetail
 请求用户积分明细
 
 HTTP POST请求, 访问接口: http://123.59.71.144:10100/doUserAct/QueryUserPointsDetail, 请求示例:
@@ -415,7 +411,7 @@ HTTP POST请求, 访问接口: http://123.59.71.144:10100/doUserAct/QueryUserPoi
 		"msg": ""
 	}
 
-####12. FollowOther
+###12 FollowOther
 关注其他用户
 
 HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doUserAct/FollowOther, 请求示例:
@@ -437,7 +433,7 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doUserAct/Follow
 		"msg": "关注成功"
 	}
 
-####13. QueryFollowers
+###13 QueryFollowers
 请求关注/粉丝列表
 
 HTTP POST请求方式, 请求接口: http://123.59.71.144:10100/doUserAct/QueryFollowers, 请求示例:
@@ -461,50 +457,60 @@ HTTP POST请求方式, 请求接口: http://123.59.71.144:10100/doUserAct/QueryF
 		"msg": ""
 	}
 
-####14. QueryUserQuestionsOrAnswers
+###14 QueryUserQuestionOrAnswerList
 请求用户的提问/回答列表
 
 HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doUserAct/QueryUserQuestionsOrAnswers, 请求示例:
 
-	curl -d "username=xxx" "http://123.59.71.144:10100/doUserAct/QueryUserQuestionsOrAnswers"
+	curl -d "username=xxx&identifier=xxx&is_part=xxx&cur_page=xxx&page_size=xxx" "http://123.59.71.144:10100/doUserAct/QueryUserQuestionsOrAnswers"
 
 请求参数格式说明:
 
 	{
-		"username": "flyfish@ifeiyu.net"                // 用户名
+		"username": "flyfish@ifeiyu.net",                // 用户名
+        "identifier": 0,                               // 身份标志 (0: 学生 1: 教师)
+        "is_part": 0,                                // 查询范围 (0: 全部 1: 部分[学生: 完成的问题 教师: 被采纳的回答])
+        "cur_page": 1,                               // 当前分页
+        "page_size": 20                             // 每页显示的条数
 	}
-
-1.学生
 
 返回结果说明:
 
 	{
-		"code": 200,	                      // OK
+	 	"code": 200,						      // OK
 		"data": {
-			"question_counts": 200,        // 提问总数
-			"complete_counts": 100         // 完成数
+			"question_list":
+				[
+					{
+							"question_id": 3,                             // 问题ID
+							"question_username": "flyfish@ifeiyu.net",                // 提问者
+							"avatar_url": "/data/avatars/flyfish.png",     // 头像索引
+							"nickname": "cls1991",                        // 昵称
+							"question_grade": 1,		                    // 问题对应的年级
+							"question_subject": 2,                        // 问题所属科目(1: 数学 2: 语文 3: 英语 4: 生物 5: 政治 6: 历史 7: 地理 8: 物理 9: 化学)
+							"question_head" "xxx",                        // 系统随机注入的信息头部
+							"quetion_content": "xxx",                     // 问题内容
+							"question_pic_url": "xxx",                     // 问题相关的图片url
+							"question_sound_url": "xxx",                  // 问题相关的录音url
+							"question_score": 10,                         // 问题悬赏积分
+							"answer_counts": 3,                           //  问题回答的数目
+							"question_time": "2015-08-10 00:13:13"        // 提问时间
+						},
+						......
+				 ],
+			 "cur_page": 1,                  // 当前页数
+			 "page_size": 15,                // 每页显示的数据条数
+			 "counts": 30                    // 数据总条数
 		}
-	}
+		 "msg": ""
+	 }
 
-2.教师
-
-返回结果说明:
-
-	{
-		"code": 200,                     // OK
-		"data": {
-			"answer_counts": 200,        // 回答总数
-			"accepted_counts": 100       // 采纳数
-		},
-		"msg": ""
-	}
-
-####15 QueryUserConnectionQuestionList
+###15 QueryUserConnectionQuestionList
 请求用户收藏问题列表
 
-HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doUserAct/QueryUserConnectionQuestionList, 请求示例:
+HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/QueryUserConnectionQuestionList, 请求示例:
 
-	curl -d "username=xxx" "http://123.59.71.144:10100/doUserAct/QueryUserConnectionQuestionList"
+	curl -d "username=xxx" "http://123.59.71.144:10100/doQuestionAct/QueryUserConnectionQuestionList"
 
 请求参数格式说明:
 
@@ -678,4 +684,43 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/Ad
         "msg": "采纳成功"
     }
 
+###22 QueryAllInformation
+请求用户所有信息 (供客户端进入"我的"页面使用)
 
+HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/QueryAllInformation, 请求示例:
+
+	curl -d "username=xxx&identifier=xxx" "http://123.59.71.144:10100/doQuestionAct/QueryAllInformation"
+
+请求参数格式说明:
+
+	{
+    	"username": "flyfish@ifeiyu.net",                   // 用户名
+        "identifier": 0                                     // 身份标志 (0: 学生 1: 教师)
+    }
+
+返回结果说明:
+
+	{
+    	"code": 200,                               // OK
+        "data": {
+    		"user_info": {
+      			"level_desc": "学渣",             // 称号
+      			"total_points": 175,             // 总学分
+      			"user_level": 1                 // 等级
+    		},
+    		"relation_info": {
+      			"follows_num": 1,                // 关注数
+      			"fans_num": 0                    // 粉丝数
+    		},
+            // 学生
+    		"question_info": {
+      			"solved_questions": 0,           // 已完成的问题数
+      			"total_questions": 46           // 问题总数
+    		}
+            // 教师
+            "answer_info": {
+            	"total_answers": 30,           // 总回答数
+                "accepted_answers": 10         // 被采纳的回答数
+            }
+  		}
+    }

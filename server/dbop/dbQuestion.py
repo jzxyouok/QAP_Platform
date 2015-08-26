@@ -167,6 +167,14 @@ def connect_question(username, question_id):
     :return:
     """
     db_manager = DBManager()
+    # 问题是否存在
+    sql0 = "select *from `%s` where question_id=%s" % ("tb_question", question_id)
+    cursor0 = db_manager.conn_r.cursor()
+    cursor0.execute(sql0)
+    result0 = cursor0.fetchone()
+    cursor0.close()
+    if result0 is not None:
+        return False, "问题不存在"
     # 查询是否收藏过该问题
     sql0 = "select *from `%s` where collecter_username='%s' and question_id=%s" % ("tb_question_collection",
                                                                                    username, question_id)
@@ -175,7 +183,7 @@ def connect_question(username, question_id):
     result0 = cursor0.fetchone()
     cursor0.close()
     if result0 is not None:
-        return False
+        return False, "已收藏过该问题"
     sql = "insert into `%s` (question_id, collecter_username, collect_time) values (%s, '%s')" % ("tb_question_collection",
                                                                                     question_id, username, time_now_str())
     msg = "[in connect_question] sql=" + sql
@@ -200,17 +208,22 @@ def query_collect_question_list(username, cur_page, page_size):
     :return:
     """
     db_manager = DBManager()
-    sql0 = "select *, count(*) as counts from `%s` where collecter_username='%s' order by collect_time desc limit %s,%s" % \
+    question_list = []
+    # 获取总页数
+    sql_0 = "select count(*) as counts from `%s` where collecter_username='%s'" % ("tb_question_collection", username)
+    cursor_0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
+    cursor_0.execute(sql_0)
+    tmp = cursor_0.fetchone()
+    cursor_0.close()
+    if tmp is None or len(tmp) == 0:
+        return True, question_list, 0
+    counts = tmp['counts']
+    sql0 = "select *from `%s` where collecter_username='%s' order by collect_time desc limit %s,%s" % \
            ("tb_question_collection", username, (cur_page - 1) * page_size, page_size)
     cursor0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
     cursor0.execute(sql0)
     results = cursor0.fetchall()
     cursor0.close()
-    question_list = []
-    if results is None or len(results) == 0:
-        return True, question_list, 0
-    # 拿到总条数
-    counts = results[0]['counts']
     for t in results:
         # 拿到用户信息
         tmp = dict()
@@ -230,6 +243,8 @@ def query_collect_question_list(username, cur_page, page_size):
         cursor0.execute(sql0)
         result0 = cursor0.fetchone()
         cursor0.close()
+        if result0 is None:
+            continue
         tmp.update(result0)
 
         cursor0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
@@ -242,6 +257,104 @@ def query_collect_question_list(username, cur_page, page_size):
             counter = result0['counts']
         tmp['answer_counts'] = counter
         question_list.append(tmp)
+    db_manager.close()
+    return True, question_list, counts
+
+
+def query_user_question_or_answer_list(username, identifier, is_part, cur_page, page_size):
+    """
+    请求用户的问题列表或者回答列表
+    :param username: 用户名
+    :param identifier: 身份标志 (0: 学生 1: 教师)
+    :param is_part: 按照条件搜索 (学生: 问题完成数 教师： 回答采纳数)
+    :param cur_page: 当前数据分页
+    :param page_size: 每页显示数据条数
+    :return:
+    """
+    db_manager = DBManager()
+    order_key = 'question_time'
+    table_name = 'tb_question'
+    question_list = []
+    counts = 0
+    # 学生
+    if identifier == 0:
+        # 全部搜索
+        if is_part == 0:
+            query_str = FormatCondition(props={
+                "question_username": username
+            })
+        # 部分搜索
+        elif is_part == 1:
+            query_str = FormatCondition(props={
+                "question_username": username,
+                "question_status": 1
+            })
+        # 拿到总条数
+        sql = "select count(*) as counts from `%s` where %s" % (table_name, query_str)
+        cursor = db_manager.conn_r.cursor(cursorclass=DictCursor)
+        cursor.execute(sql)
+        result = cursor.fetchone()
+        cursor.close()
+        if result is None or len(result) == 0:
+            return True, question_list, 0
+        counts = result['counts']
+        sql0 = "select *from `%s` where %s order by %s desc limit %s,%s" % \
+               (table_name, query_str, order_key, (cur_page - 1) * page_size, page_size)
+    # 教师
+    elif identifier == 1:
+        # 全部搜索
+        if is_part == 0:
+            query_str = FormatCondition(props={
+                "answer_username": username
+            })
+        # 部分搜索
+        elif is_part == 1:
+            query_str = FormatCondition(props={
+                "answer_username": username,
+                "is_accepted": 1
+            })
+        # 拿到总条数
+        sql = "select count(question_id) as counts from `tb_answer` where %s and question_id not in (select ask_question_id from " \
+              "`tb_ask` where be_asked_username='%s')" % (query_str, username)
+        cursor = db_manager.conn_r.cursor(cursorclass=DictCursor)
+        cursor.execute(sql)
+        result = cursor.fetchone()
+        cursor.close()
+        if result is None or len(result) == 0:
+            return True, question_list, 0
+        counts = result['counts']
+        sql0 = "select *from `%s` where question_id in (select question_id from `tb_answer` where " \
+               "%s and question_id not in (select ask_question_id from `tb_ask` where be_asked_username='%s')) order by " \
+               "%s desc limit %s,%s" % (table_name, query_str, username, order_key, (cur_page - 1) * page_size,
+                                        page_size)
+    cursor0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
+    cursor0.execute(sql0)
+    results = cursor0.fetchall()
+    cursor0.close()
+    for t in results:
+        # 拿到用户信息
+        tmp = dict()
+        tmp_username = t['question_username']
+        tmp_question_id = t['question_id']
+        sql0 = "select avatar_url, nickname from `%s` where username='%s'" % ("tb_user", tmp_username)
+        cursor0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
+        cursor0.execute(sql0)
+        result0 = cursor0.fetchone()
+        cursor0.close()
+        tmp['avatar_url'] = result0['avatar_url']
+        tmp['nickname'] = result0['nickname']
+
+        cursor0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
+        sql0 = "select count(*) as counts from `%s` where question_id=%s" % ("tb_answer", tmp_question_id)
+        cursor0.execute(sql0)
+        result0 = cursor0.fetchone()
+        cursor0.close()
+        counter = 0
+        if result0:
+            counter = result0['counts']
+        tmp['answer_counts'] = counter
+        question_list.append(tmp)
+    db_manager.close()
     return True, question_list, counts
 
 
@@ -465,7 +578,7 @@ def query_user_question_detail(username, question_id):
                                    'answer_pic_url', 'answer_sound_url'], t, tmp_answer_dict)
                 tmp_answer_list.append(tmp_answer_dict)
         answer_list.append(tmp_answer_list)
-
+    db_manager.close()
     return True, data
 
 
@@ -648,5 +761,7 @@ def get_latest_id(username, table_name, key):
     cursor1 = db_manager.conn_r.cursor(cursorclass=DictCursor)
     cursor1.execute(sql1)
     result1 = cursor0.fetchone()
+    cursor1.close()
+    db_manager.close()
     return result1['Auto_increment']
 

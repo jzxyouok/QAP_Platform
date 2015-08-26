@@ -118,7 +118,7 @@ def test_QueryUserConnectionQuestionList():
     :return:
     """
     params = {'username': "flyfish@ifeiyu.net"}
-    r = requests.post("http://%s:10100/doUserAct/QueryUserConnectionQuestionList" % HOST, data=params)
+    r = requests.post("http://%s:10100/doQuestionAct/QueryUserConnectionQuestionList" % HOST, data=params)
     print r.cookies
     print params, '-', r.text
 
@@ -128,8 +128,19 @@ def test_ModifyPersonalInformation():
     测试关于我们
     :return:
     """
-    params = {'username': "flyfish@ifeiyu.net", "props": "{'nickname': u'cls1991我'}"}
+    params = {'username': "flyfish@ifeiyu.net", "props": "{'nickname': 'cls1991'}"}
     r = requests.post("http://%s:10100/doUserAct/ModifyPersonalInformation" % HOST, data=params)
+    print r.cookies
+    print params, '-', r.text
+
+
+def test_QueryAllInformation():
+    """
+    测试关于我们
+    :return:
+    """
+    params = {'username': "flyfish@ifeiyu.net", "identifier": 0}
+    r = requests.post("http://%s:10100/doUserAct/QueryAllInformation" % HOST, data=params)
     print r.cookies
     print params, '-', r.text
 
@@ -146,3 +157,4 @@ if __name__ == '__main__':
     test_QueryFollowers()
     test_QueryUserConnectionQuestionList()
     test_ModifyPersonalInformation()
+    test_QueryAllInformation()

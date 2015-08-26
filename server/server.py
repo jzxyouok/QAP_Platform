@@ -25,8 +25,8 @@ from lib.user.SignUpServer import SignUpHandler
 from lib.user.QueryUserPointsDetailServer import QueryUserPointsDetailHandler
 from lib.user.FollowOtherServer import FollowOtherHandler
 from lib.user.QueryFollowersServer import QueryFollowersHandler
-from lib.user.QueryUserConnectionQuestionListServer import QueryUserConnectionQuestionListHandler
 from lib.user.ModifyPersonalInformationServer import ModifyPersonalInformationHandler
+from lib.user.QueryAllInformationServer import QueryAllInformationHandler
 
 from lib.email.validEmailServer import ValidEmailHandler
 
@@ -39,6 +39,7 @@ from lib.question.queryUserQuestionDetailServer import QueryUserQuestionDetailHa
 from lib.question.askQuestionServer import AskQuestionHandler
 from lib.question.adoptAnswerServer import AdoptAnswerHandler
 from lib.question.queryUserConnectionQuestionListServer import QueryUserConnectionQuestionListHandler
+from lib.question.queryUserQuestionOrAnswerListServer import QueryUserQuestionOrAnswerListHandler
 
 
 class MainHandler(tornado.web.RequestHandler):
@@ -73,6 +74,7 @@ application = tornado.web.Application([
     (r"/doUserAct/QueryFollowers", QueryFollowersHandler),
     (r"/doUserAct/QueryUserConnectionQuestionList", QueryUserConnectionQuestionListHandler),
     (r"/doUserAct/ModifyPersonalInformation", ModifyPersonalInformationHandler),
+    (r"/doUserAct/QueryAllInformation", QueryAllInformationHandler),
     (r"/doEmailAct/ValidEmail", ValidEmailHandler),
     (r"/doQuestionAct/QueryUserQuestionList", QueryUserQuestionListHandler),
     (r"/doQuestionAct/PostQuestion", PostQuestionHandler),
@@ -82,7 +84,8 @@ application = tornado.web.Application([
     (r"/doQuestionAct/QueryUserQuestionDetail", QueryUserQuestionDetailHandler),
     (r"/doQuestionAct/AskQuestion", AskQuestionHandler),
     (r"/doQuestionAct/AdoptAnswer", AdoptAnswerHandler),
-    (r"/doQuestionAct/QueryUserConnectionQuestionList", QueryUserConnectionQuestionListHandler)
+    (r"/doQuestionAct/QueryUserConnectionQuestionList", QueryUserConnectionQuestionListHandler),
+    (r"/doQuestionAct/QueryUserQuestionOrAnswerList", QueryUserQuestionOrAnswerListHandler)
 ])
 
 if __name__ == '__main__':

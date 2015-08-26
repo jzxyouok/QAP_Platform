@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.26, for osx10.10 (x86_64)
+-- MySQL dump 10.14  Distrib 5.5.41-MariaDB, for Linux (x86_64)
 --
--- Host: 192.168.1.106    Database: Question_Answer_Platform
+-- Host: localhost    Database: Question_Answer_Platform
 -- ------------------------------------------------------
--- Server version	5.5.44-0ubuntu0.14.10.1
+-- Server version	5.5.41-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -559,8 +559,8 @@ CREATE TABLE `tb_user_log` (
   `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '注册的用户名',
   `login_time` datetime DEFAULT NULL COMMENT '登录时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `my_key` (`username`,`login_time`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='用户等级';
+  UNIQUE KEY `my_index` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户等级';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -569,7 +569,7 @@ CREATE TABLE `tb_user_log` (
 
 LOCK TABLES `tb_user_log` WRITE;
 /*!40000 ALTER TABLE `tb_user_log` DISABLE KEYS */;
-INSERT INTO `tb_user_log` VALUES (1,'flyfish@ifeiyu.net','2015-08-25 22:16:30'),(2,'flyfish@ifeiyu.net','2015-08-25 22:17:27'),(3,'flyfish@ifeiyu.net','2015-08-25 22:19:48'),(4,'flyfish@ifeiyu.net','2015-08-25 23:29:54');
+INSERT INTO `tb_user_log` VALUES (1,'flyfish@ifeiyu.net','2015-08-25 22:16:30');
 /*!40000 ALTER TABLE `tb_user_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -609,4 +609,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-26  1:19:43
+-- Dump completed on 2015-08-26 12:01:05

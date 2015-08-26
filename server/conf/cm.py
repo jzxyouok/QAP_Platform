@@ -3,8 +3,8 @@
 
 class ConfigManager:
     def __init__(self):
-        self.env = "development"
-        # self.env = "production"
+        # self.env = "development"
+        self.env = "production"
         self.config = {
             "development": {
                 "mysql": {
