@@ -72,7 +72,6 @@ application = tornado.web.Application([
     (r"/doUserAct/QueryUserPointsDetail", QueryUserPointsDetailHandler),
     (r"/doUserAct/FollowOther", FollowOtherHandler),
     (r"/doUserAct/QueryFollowers", QueryFollowersHandler),
-    (r"/doUserAct/QueryUserConnectionQuestionList", QueryUserConnectionQuestionListHandler),
     (r"/doUserAct/ModifyPersonalInformation", ModifyPersonalInformationHandler),
     (r"/doUserAct/QueryAllInformation", QueryAllInformationHandler),
     (r"/doEmailAct/ValidEmail", ValidEmailHandler),

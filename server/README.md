@@ -687,9 +687,9 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/Ad
 ###22 QueryAllInformation
 请求用户所有信息 (供客户端进入"我的"页面使用)
 
-HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/QueryAllInformation, 请求示例:
+HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doUserAct/QueryAllInformation, 请求示例:
 
-	curl -d "username=xxx&identifier=xxx" "http://123.59.71.144:10100/doQuestionAct/QueryAllInformation"
+	curl -d "username=xxx&identifier=xxx" "http://123.59.71.144:10100/doUserAct/QueryAllInformation"
 
 请求参数格式说明:
 
