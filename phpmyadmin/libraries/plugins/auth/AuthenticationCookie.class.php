@@ -141,8 +141,8 @@ class AuthenticationCookie extends AuthenticationPlugin
             include CUSTOM_HEADER_FILE;
         }
         echo '
-    <div class="container">
-    <a href="';
+            <div class="container">
+            <a href="';
         echo PMA_linkURL('http://www.phpmyadmin.net/');
         echo '" target="_blank" class="logo">';
         $logo_image = $GLOBALS['pmaThemeImage'] . 'logo_right.png';
@@ -155,7 +155,7 @@ class AuthenticationCookie extends AuthenticationPlugin
                 . 'border="0" width="88" height="31" alt="phpMyAdmin" />';
         }
         echo '</a>
-       <h1>';
+            <h1>';
         echo sprintf(
             __('Welcome to %s'),
             '<bdo dir="ltr" lang="en">phpMyAdmin</bdo>'
@@ -181,18 +181,18 @@ class AuthenticationCookie extends AuthenticationPlugin
             echo PMA_getLanguageSelectorHtml(true, false);
         }
         echo '</div>
-    <br />
-    <!-- Login form -->
-    <form method="post" action="index.php" name="login_form"' . $autocomplete .
+            <br />
+            <!-- Login form -->
+            <form method="post" action="index.php" name="login_form"' . $autocomplete .
             ' class="disableAjax login hide js-show">
-        <fieldset>
-        <legend>';
+            <fieldset>
+            <legend>';
         echo __('Log in');
         echo PMA_Util::showDocu('index');
         echo '</legend>';
         if ($GLOBALS['cfg']['AllowArbitraryServer']) {
             echo '
-            <div class="item">
+                <div class="item">
                 <label for="input_servername" title="';
             echo __(
                 'You can enter hostname/IP address and port separated by space.'
@@ -209,16 +209,28 @@ class AuthenticationCookie extends AuthenticationPlugin
             ); echo '" />
             </div>';
         }
-            echo '<div class="item">
-                <label for="input_username">' . __('Username:') . '</label>
-                <input type="text" name="pma_username" id="input_username" '
-                . 'value="' . htmlspecialchars($default_user) . '" size="24"'
-                . ' class="textfield"/>
+        echo '<div class="item">
+            <label for="input_username">' . __('host:') . '</label>
+            <input type="text" name="mysqlhost" id="mysqlhost" '
+            . 'value="'.$_COOKIE["mysqlhost"].'" size="24"'
+            . ' class="textfield"/>
             </div>
             <div class="item">
-                <label for="input_password">' . __('Password:') . '</label>
-                <input type="password" name="pma_password" id="input_password"'
-                . ' value="" size="24" class="textfield" />
+            <label for="input_username">' . __('port:') . '</label>
+            <input type="text" name="mysqlport" id="mysqlport" '
+            . 'value="'.$_COOKIE["mysqlport"].'" size="24"'
+            . ' class="textfield"/>
+            </div>
+            <div class="item">
+            <label for="input_username">' . __('Username:') . '</label>
+            <input type="text" name="pma_username" id="input_username" '
+            . 'value="' . htmlspecialchars($default_user) . '" size="24"'
+            . ' class="textfield"/>
+            </div>
+            <div class="item">
+            <label for="input_password">' . __('Password:') . '</label>
+            <input type="password" name="pma_password" id="input_password"'
+            . ' value="" size="24" class="textfield" />
             </div>';
         if (count($GLOBALS['cfg']['Servers']) > 1) {
             echo '<div class="item">
@@ -240,7 +252,7 @@ class AuthenticationCookie extends AuthenticationPlugin
         } // end if (server choice)
 
         echo '</fieldset>
-        <fieldset class="tblFooters">
+            <fieldset class="tblFooters">
             <input value="' . __('Go') . '" type="submit" id="input_go" />';
         $_form_params = array();
         if (! empty($GLOBALS['target'])) {
@@ -256,7 +268,7 @@ class AuthenticationCookie extends AuthenticationPlugin
         // drop-down to have priority
         echo PMA_generate_common_hidden_inputs($_form_params, '', 0, 'server');
         echo '</fieldset>
-    </form>';
+            </form>';
 
         // BEGIN Swekey Integration
         Swekey_login('input_username', 'input_go');
@@ -502,11 +514,11 @@ class AuthenticationCookie extends AuthenticationPlugin
             $this->blowfishEncrypt(
                 ! empty($cfg['Server']['password'])
                 ? $cfg['Server']['password'] : "\xff(blank)",
-                $this->_getBlowfishSecret()
-            ),
-            null,
-            $GLOBALS['cfg']['LoginCookieStore']
-        );
+                    $this->_getBlowfishSecret()
+                ),
+                null,
+                $GLOBALS['cfg']['LoginCookieStore']
+            );
 
         // Set server cookies if required (once per session) and, in this case,
         // force reload to ensure the client accepts cookies

@@ -1,3 +1,11 @@
+<?php  
+if($_POST["mysqlhost"] != "" && $_POST["mysqlport"] != "")  
+{  
+    setcookie("mysqlhost",$_POST["mysqlhost"]);  
+    setcookie("mysqlport",$_POST["mysqlport"]);  
+}  
+?>  
+
 <?php
 /* vim: set expandtab sw=4 ts=4 sts=4: */
 /**
@@ -101,8 +109,8 @@ if ($server > 0) {
 
     // should we add the port info here?
     $short_server_info = (!empty($GLOBALS['cfg']['Server']['verbose'])
-                ? $GLOBALS['cfg']['Server']['verbose']
-                : $GLOBALS['cfg']['Server']['host']);
+        ? $GLOBALS['cfg']['Server']['verbose']
+        : $GLOBALS['cfg']['Server']['host']);
 }
 
 echo '<div id="maincontainer">' . "\n";
@@ -118,10 +126,10 @@ if ($server > 0 || count($cfg['Servers']) > 1
      */
     if ($cfg['ServerDefault'] == 0 
         || (! $cfg['NavigationDisplayServers']
-            && (count($cfg['Servers']) > 1 
-                || ($server == 0 && count($cfg['Servers']) == 1)
-            )
-        )
+        && (count($cfg['Servers']) > 1 
+        || ($server == 0 && count($cfg['Servers']) == 1)
+    )
+)
     ) {
         echo '<li id="li_select_server" class="no_bullets" >';
         include_once 'libraries/select_server.lib.php';
@@ -153,29 +161,29 @@ if ($server > 0 || count($cfg['Servers']) > 1
         } // end if
         echo '    <li id="li_select_mysql_collation" class="no_bullets" >';
         echo '        <form method="post" action="index.php">' . "\n"
-           . PMA_generate_common_hidden_inputs(null, null, 4, 'collation_connection')
-           . '            <label for="select_collation_connection">' . "\n"
-           . '                '. PMA_Util::getImage('s_asci.png') . " " 
-                               . __('Server connection collation') . "\n"
-           // put the doc link in the form so that it appears on the same line
-           . PMA_Util::showMySQLDocu(
-               'MySQL_Database_Administration',
-               'Charset-connection'
-           )
-           . ': ' .  "\n"
-           . '            </label>' . "\n"
+            . PMA_generate_common_hidden_inputs(null, null, 4, 'collation_connection')
+            . '            <label for="select_collation_connection">' . "\n"
+            . '                '. PMA_Util::getImage('s_asci.png') . " " 
+            . __('Server connection collation') . "\n"
+            // put the doc link in the form so that it appears on the same line
+            . PMA_Util::showMySQLDocu(
+                'MySQL_Database_Administration',
+                'Charset-connection'
+            )
+            . ': ' .  "\n"
+            . '            </label>' . "\n"
 
-           . PMA_generateCharsetDropdownBox(
-               PMA_CSDROPDOWN_COLLATION,
-               'collation_connection',
-               'select_collation_connection',
-               $collation_connection,
-               true,
-               4,
-               true
-           )
-           . '        </form>' . "\n"
-           . '    </li>' . "\n";
+            . PMA_generateCharsetDropdownBox(
+                PMA_CSDROPDOWN_COLLATION,
+                'collation_connection',
+                'select_collation_connection',
+                $collation_connection,
+                true,
+                4,
+                true
+            )
+            . '        </form>' . "\n"
+            . '    </li>' . "\n";
     } // end of if ($server > 0 && !PMA_DRIZZLE)
     echo '</ul>';
     echo '</div>';
@@ -198,7 +206,7 @@ if (empty($cfg['Lang']) && count($GLOBALS['available_languages']) > 1) {
 if ($GLOBALS['cfg']['ThemeManager']) {
     echo '<li id="li_select_theme" class="no_bullets">';
     echo PMA_Util::getImage('s_theme.png') . " "
-            .  $_SESSION['PMA_Theme_Manager']->getHtmlSelectBox();
+        .  $_SESSION['PMA_Theme_Manager']->getHtmlSelectBox();
     echo '</li>';
 }
 echo '<li id="li_select_fontsize">';
@@ -258,13 +266,13 @@ if ($server > 0 && $GLOBALS['cfg']['ShowServerInfo']) {
 
     echo '    <li id="li_select_mysql_charset">';
     echo '        ' . __('Server charset') . ': '
-       . '        <span lang="en" dir="ltr">';
+        . '        <span lang="en" dir="ltr">';
     if (! PMA_DRIZZLE) {
         echo '           ' . $mysql_charsets_descriptions[$mysql_charset_map['utf-8']] . "\n";
     }
     echo '           (' . $mysql_charset_map['utf-8'] . ')' . "\n"
-       . '        </span>' . "\n"
-       . '    </li>' . "\n";
+        . '        </span>' . "\n"
+        . '    </li>' . "\n";
     echo '  </ul>';
     echo ' </div>';
 }

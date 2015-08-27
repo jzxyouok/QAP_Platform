@@ -115,450 +115,433 @@ $cfg['blowfish_secret'] = 'hdiwuhdihwidwhidhwidhdlajodjwodjoqw';
  */
 $cfg['Servers'] = array();
 
-$connect_hosts = array(
-    '1' => array(
-        "host" => "192.168.1.86",
-        "port" => 3306,
-        "user" => "root",
-        "password" => "flyfishdb",
-    ),
-    '2' => array(
-        "host" => "localhost", 
-        "port" => 3306,
-        "user" => "root",
-        "password" => "asd123"
-    )
-);
+$i = 1;
 
-for($i = 1;$i<=count($connect_hosts);$i++) {
+/**
+ * MySQL hostname or IP address
+ *
+ * @global string $cfg['Servers'][$i]['host']
+ */
+$cfg['Servers'][$i]['host'] = $_COOKIE["mysqlhost"];
 
-    /**
-     * MySQL hostname or IP address
-     *
-     * @global string $cfg['Servers'][$i]['host']
-     */
-    $cfg['Servers'][$i]['host'] = $connect_hosts[$i]['host'];
+/**
+ * MySQL port - leave blank for default port
+ *
+ * @global string $cfg['Servers'][$i]['port']
+ */
+$cfg['Servers'][$i]['port'] = $_COOKIE["mysqlport"];
 
-    /**
-     * MySQL port - leave blank for default port
-     *
-     * @global string $cfg['Servers'][$i]['port']
-     */
-    $cfg['Servers'][$i]['port'] = $connect_hosts[$i]['port'];
+/**
+ * Path to the socket - leave blank for default socket
+ *
+ * @global string $cfg['Servers'][$i]['socket']
+ */
+$cfg['Servers'][$i]['socket'] = '';
 
-    /**
-     * Path to the socket - leave blank for default socket
-     *
-     * @global string $cfg['Servers'][$i]['socket']
-     */
-    $cfg['Servers'][$i]['socket'] = '';
+/**
+ * Use SSL for connecting to MySQL server?
+ *
+ * @global boolean $cfg['Servers'][$i]['ssl']
+ */
+$cfg['Servers'][$i]['ssl'] = false;
 
-    /**
-     * Use SSL for connecting to MySQL server?
-     *
-     * @global boolean $cfg['Servers'][$i]['ssl']
-     */
-    $cfg['Servers'][$i]['ssl'] = false;
+/**
+ * How to connect to MySQL server ('tcp' or 'socket')
+ *
+ * @global string $cfg['Servers'][$i]['connect_type']
+ */
+$cfg['Servers'][$i]['connect_type'] = 'tcp';
 
-    /**
-     * How to connect to MySQL server ('tcp' or 'socket')
-     *
-     * @global string $cfg['Servers'][$i]['connect_type']
-     */
-    $cfg['Servers'][$i]['connect_type'] = 'tcp';
+/**
+ * The PHP MySQL extension to use ('mysql' or 'mysqli')
+ *
+ * @global string $cfg['Servers'][$i]['extension']
+ */
+$cfg['Servers'][$i]['extension'] = 'mysqli';
 
-    /**
-     * The PHP MySQL extension to use ('mysql' or 'mysqli')
-     *
-     * @global string $cfg['Servers'][$i]['extension']
-     */
-    $cfg['Servers'][$i]['extension'] = 'mysqli';
+/**
+ * Use compressed protocol for the MySQL connection
+ *
+ * @global boolean $cfg['Servers'][$i]['compress']
+ */
+$cfg['Servers'][$i]['compress'] = false;
 
-    /**
-     * Use compressed protocol for the MySQL connection
-     *
-     * @global boolean $cfg['Servers'][$i]['compress']
-     */
-    $cfg['Servers'][$i]['compress'] = false;
+/**
+ * MySQL control host. This permits to use a host different than the
+ * main host, for the phpMyAdmin configuration storage. If left empty,
+ * $cfg['Servers'][$i]['host'] is used instead.
+ *
+ * @global string $cfg['Servers'][$i]['controlhost']
+ */
+$cfg['Servers'][$i]['controlhost'] = '';
 
-    /**
-     * MySQL control host. This permits to use a host different than the
-     * main host, for the phpMyAdmin configuration storage. If left empty,
-     * $cfg['Servers'][$i]['host'] is used instead.
-     *
-     * @global string $cfg['Servers'][$i]['controlhost']
-     */
-    $cfg['Servers'][$i]['controlhost'] = '';
+/**
+ * MySQL control user settings (this user must have read-only
+ * access to the "mysql/user" and "mysql/db" tables). The controluser is also
+ * used for all relational features (pmadb)
+ *
+ * @global string $cfg['Servers'][$i]['controluser']
+ */
+$cfg['Servers'][$i]['controluser'] = '';
 
-    /**
-     * MySQL control user settings (this user must have read-only
-     * access to the "mysql/user" and "mysql/db" tables). The controluser is also
-     * used for all relational features (pmadb)
-     *
-     * @global string $cfg['Servers'][$i]['controluser']
-     */
-    $cfg['Servers'][$i]['controluser'] = '';
+/**
+ * MySQL control user settings (this user must have read-only
+ * access to the "mysql/user" and "mysql/db" tables). The controluser is also
+ * used for all relational features (pmadb)
+ *
+ * @global string $cfg['Servers'][$i]['controlpass']
+ */
+$cfg['Servers'][$i]['controlpass'] = '';
 
-    /**
-     * MySQL control user settings (this user must have read-only
-     * access to the "mysql/user" and "mysql/db" tables). The controluser is also
-     * used for all relational features (pmadb)
-     *
-     * @global string $cfg['Servers'][$i]['controlpass']
-     */
-    $cfg['Servers'][$i]['controlpass'] = '';
+/**
+ * Authentication method (valid choices: config, http, signon or cookie)
+ *
+ * @global string $cfg['Servers'][$i]['auth_type']
+ */
+$cfg['Servers'][$i]['auth_type'] = 'cookie';
 
-    /**
-     * Authentication method (valid choices: config, http, signon or cookie)
-     *
-     * @global string $cfg['Servers'][$i]['auth_type']
-     */
-    $cfg['Servers'][$i]['auth_type'] = 'cookie';
+/**
+ * HTTP Basic Auth Realm name to display (only used with 'HTTP' auth_type)
+ *
+ * @global string $cfg['Servers'][$i]['auth_http_realm']
+ */
+$cfg['Servers'][$i]['auth_http_realm'] = '';
 
-    /**
-     * HTTP Basic Auth Realm name to display (only used with 'HTTP' auth_type)
-     *
-     * @global string $cfg['Servers'][$i]['auth_http_realm']
-     */
-    $cfg['Servers'][$i]['auth_http_realm'] = '';
+/**
+ * File containing Swekey ids and login names (see /contrib);
+ * leave empty to deactivate Swekey hardware authentication
+ *
+ * @global string $cfg['Servers'][$i]['auth_swekey_config']
+ */
+$cfg['Servers'][$i]['auth_swekey_config'] = '';
 
-    /**
-     * File containing Swekey ids and login names (see /contrib);
-     * leave empty to deactivate Swekey hardware authentication
-     *
-     * @global string $cfg['Servers'][$i]['auth_swekey_config']
-     */
-    $cfg['Servers'][$i]['auth_swekey_config'] = '';
+/**
+ * MySQL user
+ *
+ * @global string $cfg['Servers'][$i]['user']
+ */
+$cfg['Servers'][$i]['user'] = '';
 
-    /**
-     * MySQL user
-     *
-     * @global string $cfg['Servers'][$i]['user']
-     */
-    $cfg['Servers'][$i]['user'] = $connect_hosts[$i]['user'];
+/**
+ * MySQL password (only needed with 'config' auth_type)
+ *
+ * @global string $cfg['Servers'][$i]['password']
+ */
+$cfg['Servers'][$i]['password'] = '';
 
-    /**
-     * MySQL password (only needed with 'config' auth_type)
-     *
-     * @global string $cfg['Servers'][$i]['password']
-     */
-    $cfg['Servers'][$i]['password'] = $connect_hosts[$i]['password'];
+/**
+ * Session to use for 'signon' authentication method
+ *
+ * @global string $cfg['Servers'][$i]['SignonSession']
+ */
+$cfg['Servers'][$i]['SignonSession'] = '';
 
-    /**
-     * Session to use for 'signon' authentication method
-     *
-     * @global string $cfg['Servers'][$i]['SignonSession']
-     */
-    $cfg['Servers'][$i]['SignonSession'] = '';
+/**
+ * PHP script to use for 'signon' authentication method
+ *
+ * @global string $cfg['Servers'][$i]['SignonScript']
+ */
+$cfg['Servers'][$i]['SignonScript'] = '';
 
-    /**
-     * PHP script to use for 'signon' authentication method
-     *
-     * @global string $cfg['Servers'][$i]['SignonScript']
-     */
-    $cfg['Servers'][$i]['SignonScript'] = '';
+/**
+ * URL where to redirect user to login for 'signon' authentication method
+ *
+ * @global string $cfg['Servers'][$i]['SignonURL']
+ */
+$cfg['Servers'][$i]['SignonURL'] = '';
 
-    /**
-     * URL where to redirect user to login for 'signon' authentication method
-     *
-     * @global string $cfg['Servers'][$i]['SignonURL']
-     */
-    $cfg['Servers'][$i]['SignonURL'] = '';
+/**
+ * URL where to redirect user after logout
+ *
+ * @global string $cfg['Servers'][$i]['LogoutURL']
+ */
+$cfg['Servers'][$i]['LogoutURL'] = '';
 
-    /**
-     * URL where to redirect user after logout
-     *
-     * @global string $cfg['Servers'][$i]['LogoutURL']
-     */
-    $cfg['Servers'][$i]['LogoutURL'] = '';
+/**
+ * Whether to try to connect without password
+ *
+ * @global boolean $cfg['Servers'][$i]['nopassword']
+ */
+$cfg['Servers'][$i]['nopassword'] = false;
 
-    /**
-     * Whether to try to connect without password
-     *
-     * @global boolean $cfg['Servers'][$i]['nopassword']
-     */
-    $cfg['Servers'][$i]['nopassword'] = false;
+/**
+ * If set to a db-name, only this db is displayed in navigation panel
+ * It may also be an array of db-names
+ *
+ * @global string $cfg['Servers'][$i]['only_db']
+ */
+$cfg['Servers'][$i]['only_db'] = '';
 
-    /**
-     * If set to a db-name, only this db is displayed in navigation panel
-     * It may also be an array of db-names
-     *
-     * @global string $cfg['Servers'][$i]['only_db']
-     */
-    $cfg['Servers'][$i]['only_db'] = '';
+/**
+ * Database name to be hidden from listings
+ *
+ * @global string $cfg['Servers'][$i]['hide_db']
+ */
+$cfg['Servers'][$i]['hide_db'] = '';
 
-    /**
-     * Database name to be hidden from listings
-     *
-     * @global string $cfg['Servers'][$i]['hide_db']
-     */
-    $cfg['Servers'][$i]['hide_db'] = '';
+/**
+ * Verbose name for this host - leave blank to show the hostname
+ * (for HTTP authentication, all non-US-ASCII characters will be stripped)
+ *
+ * @global string $cfg['Servers'][$i]['verbose']
+ */
+$cfg['Servers'][$i]['verbose'] = '';
 
-    /**
-     * Verbose name for this host - leave blank to show the hostname
-     * (for HTTP authentication, all non-US-ASCII characters will be stripped)
-     *
-     * @global string $cfg['Servers'][$i]['verbose']
-     */
-    $cfg['Servers'][$i]['verbose'] = '';
+/**
+ * Database used for Relation, Bookmark and PDF Features
+ * (see examples/create_tables.sql)
+ *   - leave blank for no support
+ *     SUGGESTED: 'phpmyadmin'
+ *
+ * @global string $cfg['Servers'][$i]['pmadb']
+ */
+$cfg['Servers'][$i]['pmadb'] = '';
 
-    /**
-     * Database used for Relation, Bookmark and PDF Features
-     * (see examples/create_tables.sql)
-     *   - leave blank for no support
-     *     SUGGESTED: 'phpmyadmin'
-     *
-     * @global string $cfg['Servers'][$i]['pmadb']
-     */
-    $cfg['Servers'][$i]['pmadb'] = '';
+/**
+ * Bookmark table
+ *   - leave blank for no bookmark support
+ *     SUGGESTED: 'pma__bookmark'
+ *
+ * @global string $cfg['Servers'][$i]['bookmarktable']
+ */
+$cfg['Servers'][$i]['bookmarktable'] = '';
 
-    /**
-     * Bookmark table
-     *   - leave blank for no bookmark support
-     *     SUGGESTED: 'pma__bookmark'
-     *
-     * @global string $cfg['Servers'][$i]['bookmarktable']
-     */
-    $cfg['Servers'][$i]['bookmarktable'] = '';
+/**
+ * table to describe the relation between links (see doc)
+ *   - leave blank for no relation-links support
+ *     SUGGESTED: 'pma__relation'
+ *
+ * @global string $cfg['Servers'][$i]['relation']
+ */
+$cfg['Servers'][$i]['relation'] = '';
 
-    /**
-     * table to describe the relation between links (see doc)
-     *   - leave blank for no relation-links support
-     *     SUGGESTED: 'pma__relation'
-     *
-     * @global string $cfg['Servers'][$i]['relation']
-     */
-    $cfg['Servers'][$i]['relation'] = '';
+/**
+ * table to describe the display fields
+ *   - leave blank for no display fields support
+ *     SUGGESTED: 'pma__table_info'
+ *
+ * @global string $cfg['Servers'][$i]['table_info']
+ */
+$cfg['Servers'][$i]['table_info'] = '';
 
-    /**
-     * table to describe the display fields
-     *   - leave blank for no display fields support
-     *     SUGGESTED: 'pma__table_info'
-     *
-     * @global string $cfg['Servers'][$i]['table_info']
-     */
-    $cfg['Servers'][$i]['table_info'] = '';
+/**
+ * table to describe the tables position for the PDF schema
+ *   - leave blank for no PDF schema support
+ *     SUGGESTED: 'pma__table_coords'
+ *
+ * @global string $cfg['Servers'][$i]['table_coords']
+ */
+$cfg['Servers'][$i]['table_coords'] = '';
 
-    /**
-     * table to describe the tables position for the PDF schema
-     *   - leave blank for no PDF schema support
-     *     SUGGESTED: 'pma__table_coords'
-     *
-     * @global string $cfg['Servers'][$i]['table_coords']
-     */
-    $cfg['Servers'][$i]['table_coords'] = '';
+/**
+ * table to describe pages of relationpdf
+ *   - leave blank if you don't want to use this
+ *     SUGGESTED: 'pma__pdf_pages'
+ *
+ * @global string $cfg['Servers'][$i]['pdf_pages']
+ */
+$cfg['Servers'][$i]['pdf_pages'] = '';
 
-    /**
-     * table to describe pages of relationpdf
-     *   - leave blank if you don't want to use this
-     *     SUGGESTED: 'pma__pdf_pages'
-     *
-     * @global string $cfg['Servers'][$i]['pdf_pages']
-     */
-    $cfg['Servers'][$i]['pdf_pages'] = '';
+/**
+ * table to store column information
+ *   - leave blank for no column comments/mime types
+ *     SUGGESTED: 'pma__column_info'
+ *
+ * @global string $cfg['Servers'][$i]['column_info']
+ */
+$cfg['Servers'][$i]['column_info'] = '';
 
-    /**
-     * table to store column information
-     *   - leave blank for no column comments/mime types
-     *     SUGGESTED: 'pma__column_info'
-     *
-     * @global string $cfg['Servers'][$i]['column_info']
-     */
-    $cfg['Servers'][$i]['column_info'] = '';
+/**
+ * table to store SQL history
+ *   - leave blank for no SQL query history
+ *     SUGGESTED: 'pma__history'
+ *
+ * @global string $cfg['Servers'][$i]['history']
+ */
+$cfg['Servers'][$i]['history'] = '';
 
-    /**
-     * table to store SQL history
-     *   - leave blank for no SQL query history
-     *     SUGGESTED: 'pma__history'
-     *
-     * @global string $cfg['Servers'][$i]['history']
-     */
-    $cfg['Servers'][$i]['history'] = '';
+/**
+ * table to store the coordinates for Designer
+ *   - leave blank for no Designer feature
+ *     SUGGESTED: 'pma__designer_coords'
+ *
+ * @global string $cfg['Servers'][$i]['designer_coords']
+ */
+$cfg['Servers'][$i]['designer_coords'] = '';
 
-    /**
-     * table to store the coordinates for Designer
-     *   - leave blank for no Designer feature
-     *     SUGGESTED: 'pma__designer_coords'
-     *
-     * @global string $cfg['Servers'][$i]['designer_coords']
-     */
-    $cfg['Servers'][$i]['designer_coords'] = '';
+/**
+ * table to store recently used tables
+ *   - leave blank for no "persistent" recently used tables
+ *     SUGGESTED: 'pma__recent'
+ */
+$cfg['Servers'][$i]['recent'] = '';
 
-    /**
-     * table to store recently used tables
-     *   - leave blank for no "persistent" recently used tables
-     *     SUGGESTED: 'pma__recent'
-     */
-    $cfg['Servers'][$i]['recent'] = '';
+/**
+ * table to store UI preferences for tables
+ *   - leave blank for no "persistent" UI preferences
+ *     SUGGESTED: 'pma__table_uiprefs'
+ */
+$cfg['Servers'][$i]['table_uiprefs'] = '';
 
-    /**
-     * table to store UI preferences for tables
-     *   - leave blank for no "persistent" UI preferences
-     *     SUGGESTED: 'pma__table_uiprefs'
-     */
-    $cfg['Servers'][$i]['table_uiprefs'] = '';
+/**
+ * table to store SQL tracking
+ *   - leave blank for no SQL tracking
+ *     SUGGESTED: 'pma__tracking'
+ *
+ * @global string $cfg['Servers'][$i]['tracking']
+ */
+$cfg['Servers'][$i]['tracking'] = '';
 
-    /**
-     * table to store SQL tracking
-     *   - leave blank for no SQL tracking
-     *     SUGGESTED: 'pma__tracking'
-     *
-     * @global string $cfg['Servers'][$i]['tracking']
-     */
-    $cfg['Servers'][$i]['tracking'] = '';
+/**
+ * table to store user preferences
+ *   - leave blank to disable server storage
+ *     SUGGESTED: 'pma__userconfig'
+ *
+ * @global string $cfg['Servers'][$i]['userconfig']
+ */
+$cfg['Servers'][$i]['userconfig'] = '';
 
-    /**
-     * table to store user preferences
-     *   - leave blank to disable server storage
-     *     SUGGESTED: 'pma__userconfig'
-     *
-     * @global string $cfg['Servers'][$i]['userconfig']
-     */
-    $cfg['Servers'][$i]['userconfig'] = '';
+/**
+ * Maximum number of records saved in $cfg['Servers'][$i]['table_uiprefs'] table.
+ *
+ * In case where tables in databases is modified (e.g. dropped or renamed),
+ * table_uiprefs may contains invalid data (referring to tables which are not
+ * exist anymore).
+ * This configuration make sure that we only keep N (N = MaxTableUiprefs)
+ * newest record in table_uiprefs and automatically delete older records.
+ *
+ * @global integer $cfg['Servers'][$i]['userconfig'] = '';
+ */
+$cfg['Servers'][$i]['MaxTableUiprefs'] = 100;
 
-    /**
-     * Maximum number of records saved in $cfg['Servers'][$i]['table_uiprefs'] table.
-     *
-     * In case where tables in databases is modified (e.g. dropped or renamed),
-     * table_uiprefs may contains invalid data (referring to tables which are not
-     * exist anymore).
-     * This configuration make sure that we only keep N (N = MaxTableUiprefs)
-     * newest record in table_uiprefs and automatically delete older records.
-     *
-     * @global integer $cfg['Servers'][$i]['userconfig'] = '';
-     */
-    $cfg['Servers'][$i]['MaxTableUiprefs'] = 100;
+/**
+ * whether to allow root login
+ *
+ * @global boolean $cfg['Servers'][$i]['AllowRoot']
+ */
+$cfg['Servers'][$i]['AllowRoot'] = true;
 
-    /**
-     * whether to allow root login
-     *
-     * @global boolean $cfg['Servers'][$i]['AllowRoot']
-     */
-    $cfg['Servers'][$i]['AllowRoot'] = true;
+/**
+ * whether to allow login of any user without a password
+ *
+ * @global boolean $cfg['Servers'][$i]['AllowNoPassword']
+ */
+$cfg['Servers'][$i]['AllowNoPassword'] = false;
 
-    /**
-     * whether to allow login of any user without a password
-     *
-     * @global boolean $cfg['Servers'][$i]['AllowNoPassword']
-     */
-    $cfg['Servers'][$i]['AllowNoPassword'] = false;
+/**
+ * Host authentication order, leave blank to not use
+ *
+ * @global string $cfg['Servers'][$i]['AllowDeny']['order']
+ */
+$cfg['Servers'][$i]['AllowDeny']['order'] = '';
 
-    /**
-     * Host authentication order, leave blank to not use
-     *
-     * @global string $cfg['Servers'][$i]['AllowDeny']['order']
-     */
-    $cfg['Servers'][$i]['AllowDeny']['order'] = '';
+/**
+ * Host authentication rules, leave blank for defaults
+ *
+ * @global array $cfg['Servers'][$i]['AllowDeny']['rules']
+ */
+$cfg['Servers'][$i]['AllowDeny']['rules'] = array();
 
-    /**
-     * Host authentication rules, leave blank for defaults
-     *
-     * @global array $cfg['Servers'][$i]['AllowDeny']['rules']
-     */
-    $cfg['Servers'][$i]['AllowDeny']['rules'] = array();
+/**
+ * Disable use of INFORMATION_SCHEMA. Is always 'false' for Drizzle.
+ *
+ * @see https://sourceforge.net/p/phpmyadmin/bugs/2606/
+ * @see http://bugs.mysql.com/19588
+ * @global boolean $cfg['Servers'][$i]['DisableIS']
+ */
+$cfg['Servers'][$i]['DisableIS'] = true;
 
-    /**
-     * Disable use of INFORMATION_SCHEMA. Is always 'false' for Drizzle.
-     *
-     * @see https://sourceforge.net/p/phpmyadmin/bugs/2606/
-     * @see http://bugs.mysql.com/19588
-     * @global boolean $cfg['Servers'][$i]['DisableIS']
-     */
-    $cfg['Servers'][$i]['DisableIS'] = true;
+/**
+ * SQL command to fetch available databases
+ *
+ * by default most user will be fine with SHOW DATABASES,
+ * for servers with a huge amount of databases it is possible to
+ * define a command which executes faster but with less information
+ *
+ * especially when accessing database servers from ISPs changing this command
+ * can result in a great speed improvement
+ *
+ * false will disable fetching databases from the server, only databases in
+ * $cfg['Servers'][$i]['only_db'] will be displayed
+ *
+ * #user# will be replaced by current user
+ *
+ * examples:
+ * 'SHOW DATABASES'
+ * "SHOW DATABASES LIKE '#user#\_%'"
+ * 'SELECT DISTINCT TABLE_SCHEMA FROM information_schema.SCHEMA_PRIVILEGES'
+ * 'SELECT SCHEMA_NAME FROM information_schema.SCHEMATA'
+ * false
+ *
+ * @global array $cfg['Servers'][$i]['ShowDatabasesCommand']
+ */
+$cfg['Servers'][$i]['ShowDatabasesCommand'] = 'SHOW DATABASES';
 
-    /**
-     * SQL command to fetch available databases
-     *
-     * by default most user will be fine with SHOW DATABASES,
-     * for servers with a huge amount of databases it is possible to
-     * define a command which executes faster but with less information
-     *
-     * especially when accessing database servers from ISPs changing this command
-     * can result in a great speed improvement
-     *
-     * false will disable fetching databases from the server, only databases in
-     * $cfg['Servers'][$i]['only_db'] will be displayed
-     *
-     * #user# will be replaced by current user
-     *
-     * examples:
-     * 'SHOW DATABASES'
-     * "SHOW DATABASES LIKE '#user#\_%'"
-     * 'SELECT DISTINCT TABLE_SCHEMA FROM information_schema.SCHEMA_PRIVILEGES'
-     * 'SELECT SCHEMA_NAME FROM information_schema.SCHEMATA'
-     * false
-     *
-     * @global array $cfg['Servers'][$i]['ShowDatabasesCommand']
-     */
-    $cfg['Servers'][$i]['ShowDatabasesCommand'] = 'SHOW DATABASES';
+/**
+ * Whether the tracking mechanism creates
+ * versions for tables and views automatically.
+ *
+ * @global bool $cfg['Servers'][$i]['tracking_version_auto_create']
+ */
 
-    /**
-     * Whether the tracking mechanism creates
-     * versions for tables and views automatically.
-     *
-     * @global bool $cfg['Servers'][$i]['tracking_version_auto_create']
-     */
+$cfg['Servers'][$i]['tracking_version_auto_create'] = false;
 
-    $cfg['Servers'][$i]['tracking_version_auto_create'] = false;
+/**
+ * Defines the list of statements
+ * the auto-creation uses for new versions.
+ *
+ * @global string $cfg['Servers'][$i]['tracking_default_statements']
+ */
 
-    /**
-     * Defines the list of statements
-     * the auto-creation uses for new versions.
-     *
-     * @global string $cfg['Servers'][$i]['tracking_default_statements']
-     */
+$cfg['Servers'][$i]['tracking_default_statements']
+    = 'CREATE TABLE,ALTER TABLE,DROP TABLE,RENAME TABLE,CREATE INDEX,' .
+    'DROP INDEX,INSERT,UPDATE,DELETE,TRUNCATE,REPLACE,CREATE VIEW,' .
+    'ALTER VIEW,DROP VIEW,CREATE DATABASE,ALTER DATABASE,DROP DATABASE';
 
-    $cfg['Servers'][$i]['tracking_default_statements']
-        = 'CREATE TABLE,ALTER TABLE,DROP TABLE,RENAME TABLE,CREATE INDEX,' .
-        'DROP INDEX,INSERT,UPDATE,DELETE,TRUNCATE,REPLACE,CREATE VIEW,' .
-        'ALTER VIEW,DROP VIEW,CREATE DATABASE,ALTER DATABASE,DROP DATABASE';
+/**
+ * Whether a DROP VIEW IF EXISTS statement will be added
+ * as first line to the log when creating a view.
+ *
+ * @global bool $cfg['Servers'][$i]['tracking_add_drop_view']
+ */
 
-    /**
-     * Whether a DROP VIEW IF EXISTS statement will be added
-     * as first line to the log when creating a view.
-     *
-     * @global bool $cfg['Servers'][$i]['tracking_add_drop_view']
-     */
+$cfg['Servers'][$i]['tracking_add_drop_view'] = true;
 
-    $cfg['Servers'][$i]['tracking_add_drop_view'] = true;
+/**
+ * Whether a DROP TABLE IF EXISTS statement will be added
+ * as first line to the log when creating a table.
+ *
+ * @global bool $cfg['Servers'][$i]['tracking_add_drop_table']
+ */
 
-    /**
-     * Whether a DROP TABLE IF EXISTS statement will be added
-     * as first line to the log when creating a table.
-     *
-     * @global bool $cfg['Servers'][$i]['tracking_add_drop_table']
-     */
+$cfg['Servers'][$i]['tracking_add_drop_table'] = true;
 
-    $cfg['Servers'][$i]['tracking_add_drop_table'] = true;
+/**
+ * Whether a DROP DATABASE IF EXISTS statement will be added
+ * as first line to the log when creating a database.
+ *
+ * @global bool $cfg['Servers'][$i]['tracking_add_drop_database']
+ */
 
-    /**
-     * Whether a DROP DATABASE IF EXISTS statement will be added
-     * as first line to the log when creating a database.
-     *
-     * @global bool $cfg['Servers'][$i]['tracking_add_drop_database']
-     */
+$cfg['Servers'][$i]['tracking_add_drop_database'] = true;
 
-    $cfg['Servers'][$i]['tracking_add_drop_database'] = true;
+/**
+ * Enables caching of TABLE STATUS outputs for specific databases on this server
+ * (in some cases TABLE STATUS can be very slow, so you may want to cache it).
+ * APC is used (if the PHP extension is available, if not, this setting is ignored
+ * silently). You have to provide StatusCacheLifetime.
+ * Takes effect only if DisableIS is true.
+ *
+ * @global array $cfg['Servers'][$i]['StatusCacheDatabases']
+ */
+$cfg['Servers'][$i]['StatusCacheDatabases'] = array();
 
-    /**
-     * Enables caching of TABLE STATUS outputs for specific databases on this server
-     * (in some cases TABLE STATUS can be very slow, so you may want to cache it).
-     * APC is used (if the PHP extension is available, if not, this setting is ignored
-     * silently). You have to provide StatusCacheLifetime.
-     * Takes effect only if DisableIS is true.
-     *
-     * @global array $cfg['Servers'][$i]['StatusCacheDatabases']
-     */
-    $cfg['Servers'][$i]['StatusCacheDatabases'] = array();
-
-    /**
-     * Lifetime in seconds of the TABLE STATUS cache if StatusCacheDatabases is used
-     *
-     * @global integer $cfg['Servers'][$i]['StatusCacheLifetime']
-     */
-    $cfg['Servers'][$i]['StatusCacheLifetime'] = 0;
-
-}
+/**
+ * Lifetime in seconds of the TABLE STATUS cache if StatusCacheDatabases is used
+ *
+ * @global integer $cfg['Servers'][$i]['StatusCacheLifetime']
+ */
+$cfg['Servers'][$i]['StatusCacheLifetime'] = 0;
 
 /**
  * Default server (0 = no default server)
@@ -760,8 +743,7 @@ $cfg['IgnoreMultiSubmitErrors'] = false;
  *
  * @global boolean $cfg['AllowArbitraryServer']
  */
-$cfg['AllowArbitraryServer'] = true;
-# $cfg['AllowArbitraryServer'] = false;
+$cfg['AllowArbitraryServer'] = false;
 
 
 /*******************************************************************************
