@@ -4,7 +4,6 @@ import json
 import datetime
 import decimal
 import time
-import app.share.mylog as log
 import traceback
 
 
@@ -14,6 +13,8 @@ class MyJsonEncoder(json.JSONEncoder):
             return obj.strftime('%Y-%m-%d %H:%M:%S')
         elif isinstance(obj, datetime.timedelta):
             return str(obj)
+        elif isinstance(obj, datetime.date):
+            return obj.strftime('%Y-%m-%d')
         elif isinstance(obj, decimal.Decimal):
             return float(obj)
         else:
@@ -35,8 +36,6 @@ class SmartResponse():
 
         if isinstance(msg, unicode):
             msg = msg.encode("utf8")
-        # for log
-        log.msg("response : %s" % msg)
         return msg
 
     @classmethod
@@ -81,6 +80,7 @@ class MyStrAList():
 
 time_formate_str = "%Y-%m-%d %H:%M:%S"
 
+
 def time_now_str():
     return time.strftime(time_formate_str, time.localtime())
 
@@ -90,8 +90,20 @@ def copy_dict_by_keys(keys, source_dict, to_dict):
         if key in source_dict.keys():
             to_dict[key] = source_dict[key]
         else:
-            print key , 'not in ', source_dict
+            print key, 'not in ', source_dict
             assert 0
+
+
+def copy_dict_by_keys_with_new_keys(keys, new_keys, source_dict, to_dict):
+    index = 0
+    for key in keys:
+        if key in source_dict.keys():
+            to_dict[new_keys[index]] = source_dict[key]
+            index += 1
+        else:
+            print key, 'not in ', source_dict
+            assert 0
+
 
 def add_dict_by_keys(dict_1, dict_2, keys=None):
     if not keys:
@@ -200,23 +212,27 @@ def safe_str_to_dict(value):
         return {}
 
 
-#把datetime转成字符串
+# 把datetime转成字符串
 def datetime_toString(dt):
     return dt.strftime(time_formate_str)
 
-#把字符串转成datetime
+
+# 把字符串转成datetime
 def string_toDatetime(string):
     return datetime.datetime.strptime(string, time_formate_str)
 
-#把字符串转成时间戳形式
+
+# 把字符串转成时间戳形式
 def string_toTimestamp(strTime):
     return time.mktime(string_toDatetime(strTime).timetuple())
 
-#把时间戳转成字符串形式
+
+# 把时间戳转成字符串形式
 def timestamp_toString(stamp):
     return time.strftime(time_formate_str, time.localtime(stamp))
 
-#把datetime类型转成时间戳形式
+
+# 把datetime类型转成时间戳形式
 def datetime_toTimestamp(dateTim):
     return time.mktime(dateTim.timetuple())
 
@@ -230,3 +246,62 @@ def is_datetime_equal(a_date_time, b_date_time):
 
 def time_delta_toString(timeDelta):
     return '{:02}:{:02}:{:02}'.format(timeDelta.seconds // 3600, timeDelta.seconds % 3600 // 60, timeDelta.seconds % 60)
+
+
+def get_file_extension(path):
+    """
+    返回文件后缀
+    :param path: 文件路径
+    :return:
+    """
+    import os.path
+    return os.path.splitext(path)[1]
+
+
+def save_file(file_name, file_content, dir_type):
+    """
+    保存文件到本地
+    :param file_name: 文件名
+    :param file_content: 文件内容
+    :param dir_type: 保存路径类型 (1: avatar 2: question_pic 3: question_sound)
+    :return:
+    """
+    from conf.cm import ConfigManager
+    cm = ConfigManager()
+    if dir_type == 1:
+        upload_dir = cm.get_config('upload')['save']['avatar']
+        url = cm.get_config('upload')['visit']['avatar']
+    elif dir_type == 2:
+        upload_dir = cm.get_config('upload')['save']['pic']
+        url = cm.get_config('upload')['visit']['pic']
+    elif dir_type == 3:
+        upload_dir = cm.get_config('upload')['save']['sound']
+        url = cm.get_config('upload')['visit']['sound']
+    output_file = open(upload_dir + file_name, 'wb')
+    output_file.write(file_content)
+    output_file.flush()
+    output_file.close()
+
+    return url + file_name
+
+
+def get_system_default_avatar_url():
+    """
+    返回系统默认的头像url地址
+    :return:
+    """
+    from conf.cm import ConfigManager
+    cm = ConfigManager()
+    avatar_url = "http://" + cm.get_config('host') + ":" + str(cm.get_config('port')) + cm.get_config('upload')['visit']['avatar'] + 'default.png'
+    return avatar_url
+
+
+def random_str(random_length=8):
+    from random import Random
+    str0 = ''
+    chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'
+    length = len(chars) - 1
+    random = Random()
+    for i in range(random_length):
+        str0 += chars[random.randint(0, length)]
+    return str0

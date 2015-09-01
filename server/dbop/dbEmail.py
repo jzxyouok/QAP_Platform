@@ -14,12 +14,12 @@ def valid_email(email_address):
     :return:
     """
     db_manager = DBManager()
-    cursor = db_manager.conn_r.cursor()
+    cursor_0 = db_manager.conn_r.cursor()
     # 判断邮箱地址是否存在
     sql = "select * from `%s` where username='%s'" % ("tb_account", email_address)
-    cursor.execute(sql)
-    result = cursor.fetchone()
-    cursor.close()
+    cursor_0.execute(sql)
+    result = cursor_0.fetchone()
+    cursor_0.close()
     db_manager.close()
     if result:
         return False, "邮箱已被注册"

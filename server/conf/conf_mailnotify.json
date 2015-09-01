@@ -1,0 +1,5 @@
+{
+    "mail_from": "hrbqapcommon@sina.com.cn",
+    "mail_password": "12345678",
+    "mail_host":"smtp.sina.com.cn"
+}

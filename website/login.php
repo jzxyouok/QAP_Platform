@@ -8,19 +8,20 @@
 
 $username = $_POST["username"];
 $password = $_POST["password"];
+$file0 = $_FILES["file1"];
 
-echo "username: ".$username.", password: ".$password."<br>";
 
 //set POST variables
-$url = "http://123.59.71.144:10100/doUserAct/Login";
+$url = "http://localhost:10100/doUserAct/UploadFile";
 $fields = array(
     'username' => urlencode($username),
     'password' => urlencode($password)
 );
 
 //url-ify the data for the POST
+$fields_string = '';
 foreach($fields as $key => $value) {
-    $fields_string .= $key.'='.$value.'&';
+    $fields_string .= $key .= '='.$value.'&';
 }
 rtrim($fields_string, '&');
 

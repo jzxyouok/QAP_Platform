@@ -54,12 +54,12 @@
     <!--------tabs end--------->
       <!-- /container -->
     <div class="container" >
-      <form class="form-signin" action="login.php" method="post">
+      <form class="form-signin" action="http://123.59.71.144:10100/doUserAct/UploadFile" method="post" enctype="multipart/form-data" >
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="inputUsername" class="sr-only">Username</label>
         <input type="username" id="inputUsername" name="username" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+        <input type="file" id="inputPassword" name="uploadfile" class="form-control" placeholder="Password" required>
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me"> Remember me

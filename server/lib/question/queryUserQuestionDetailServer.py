@@ -9,19 +9,18 @@ from tornado.httpclient import HTTPError
 
 from tool.util import safe_str_to_int
 
-from questionAct import query_user_question_list
+from questionAct import query_user_question_detail
 
 
-class QueryUserQuestionListHandler(tornado.web.RequestHandler):
+class QueryUserQuestionDetailHandler(tornado.web.RequestHandler):
     def get(self):
         return HTTPError(code=405)
 
     def post(self):
         username = self.get_argument('username')
-        cur_page = safe_str_to_int(self.get_argument('cur_page', 1))
-        page_size = safe_str_to_int(self.get_argument('page_size', 10))
+        question_id = safe_str_to_int(self.get_argument('question_id'))
 
         self.set_header("Content-Type", "application/json;charset=utf8")
-        result = query_user_question_list(username, cur_page, page_size)
+        result = query_user_question_detail(username, question_id)
         self.write(result)
         self.finish()
