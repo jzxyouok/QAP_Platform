@@ -15,7 +15,11 @@ def test_login():
     测试用户登录
     :return:
     """
+<<<<<<< HEAD
     params = {'username': "heavenfox@126.com", 'password': 'flyfish', "identifier": 0}
+=======
+    params = {'username': "flyfish@ifeiyu.net", 'password': 'flyfish', "identifier": 0}
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     r = requests.post("http://%s:10100/doUserAct/Login" % HOST, data=params)
     print r.cookies
     print params, '-', r.text
@@ -26,7 +30,11 @@ def test_register():
     测试用户注册
     :return:
     """
+<<<<<<< HEAD
     params = {'username': "heavenfox@126.com", 'password': 'flyfish', 'grade': 1, 'identifier': 0, 'nickname': 'cls1991', 'subject': 4,
+=======
+    params = {'username': "flyfish15@ifeiyu.net", 'password': 'flyfish', 'grade': 1, 'identifier': 1, 'nickname': 'cls1991', 'subject': 4,
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
               'serial_number': "12345678", 'options': "{'card_number': '1111111111111', 'name': u'张三', 'birthday': "
                                                       "'2015-09-11', "
                                                       "'phone_number': '000000000000', 'sex': 0, 'address': 'where'}"}
@@ -73,7 +81,11 @@ def test_SignUp():
     测试关于我们
     :return:
     """
+<<<<<<< HEAD
     params = {'username': "heavenfox@126.com"}
+=======
+    params = {'username': "flyfish@ifeiyu.net"}
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     r = requests.post("http://%s:10100/doUserAct/SignDaily" % HOST, data=params)
     print r.cookies
     print params, '-', r.text
@@ -128,7 +140,11 @@ def test_ModifyPersonalInformation():
     测试关于我们
     :return:
     """
+<<<<<<< HEAD
     params = {'username': "flyfish@ifeiyu.net", 'nickname': u'cls1991睡觉'}
+=======
+    params = {'username': "flyfish@ifeiyu.net", "props": "{'nickname': 'cls1991'}"}
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     r = requests.post("http://%s:10100/doUserAct/ModifyPersonalInformation" % HOST, data=params)
     print r.cookies
     print params, '-', r.text
@@ -145,6 +161,7 @@ def test_QueryAllInformation():
     print params, '-', r.text
 
 
+<<<<<<< HEAD
 def test_ResetUserPassword():
     """
     测试重置密码
@@ -170,3 +187,18 @@ if __name__ == '__main__':
     test_ModifyPersonalInformation()
     # test_QueryAllInformation()
     # test_ResetUserPassword()
+=======
+if __name__ == '__main__':
+    test_login()
+    test_register()
+    test_AboutUs()
+    test_FeedBack()
+    test_ChangePassword()
+    test_SignUp()
+    test_QueryUserPointsDetail()
+    test_FollowOther()
+    test_QueryFollowers()
+    test_QueryUserConnectionQuestionList()
+    test_ModifyPersonalInformation()
+    test_QueryAllInformation()
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a

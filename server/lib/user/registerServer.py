@@ -11,7 +11,10 @@ from tornado.httpclient import HTTPError
 
 from userAct import register
 from tool.util import safe_str_to_dict, safe_str_to_int
+<<<<<<< HEAD
 from conf.cm import ConfigManager
+=======
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 
 
 class RegisterHandler(tornado.web.RequestHandler):
@@ -38,16 +41,24 @@ class RegisterHandler(tornado.web.RequestHandler):
                 from tool.util import get_file_extension, save_file
                 suffix = get_file_extension(file_name)
                 from dbop.dbUser import get_latest_id
+<<<<<<< HEAD
                 index = get_latest_id(username, is_new=True)
                 new_file_name = "{0}_{1}{2}".format("user", index, suffix)
+=======
+                index = get_latest_id(username)
+                new_file_name = "{0}.{1}".format(index, suffix)
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
                 msg0 = "[in registerServer] new_file_name=" + new_file_name
                 logging.info(msg0)
                 file_content = avatar_file['body']
                 # 注入头像url字段信息
                 tmp_dict = dict()
                 tmp_dict['avatar_url'] = save_file(new_file_name, file_content, 1)
+<<<<<<< HEAD
                 tmp_dict['avatar_url'] = "http://" + ConfigManager().get_config('host') + ":" + \
                                          str(ConfigManager().get_config('port')) + tmp_dict['avatar_url']
+=======
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
                 if options:
                     options = safe_str_to_dict(options)
                     options.update(tmp_dict)

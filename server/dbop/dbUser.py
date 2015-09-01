@@ -482,12 +482,19 @@ def modify_personal_information(username, props=None, options=None):
     :param props: 更新的数据域
     :return:
     """
+<<<<<<< HEAD
     if len(props) > 0:
         is_avatar = False
         assert isinstance(props, dict)
         if options:
             assert isinstance(options, dict)
             is_avatar = True
+=======
+    if props:
+        assert isinstance(props, dict)
+        if options:
+            assert isinstance(options, dict)
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
             props.update(options)
         update_str = FormatUpdateStr(props)
         sql0 = "update `%s` set %s where username='%s'" % ("tb_user", update_str, username)
@@ -504,6 +511,7 @@ def modify_personal_information(username, props=None, options=None):
             cursor_0.close()
             db_manager.close()
             raise Exception
+<<<<<<< HEAD
             return False, None
         db_manager.close()
         if is_avatar:
@@ -511,6 +519,12 @@ def modify_personal_information(username, props=None, options=None):
         return True, None
     elif options:
         return True, options
+=======
+            return False
+        db_manager.close()
+        return True
+    return False
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 
 
 def query_all_information(username, identifier):
@@ -578,6 +592,29 @@ def query_all_information(username, identifier):
         counts = 0
         if result:
             counts = result['counts']
+<<<<<<< HEAD
+=======
+            # 回答没有被采纳
+            user_operation_type = 4
+            sql2 = "select score_points from `%s` where user_operation_type=%s" % ("tb_score_rule_template", user_operation_type)
+            cursor2 = db_manager.conn_r.cursor(cursorclass=DictCursor)
+            cursor2.execute(sql2)
+            result2 = cursor2.fetchone()
+            cursor2.close()
+            point_value = result2['score_points'] * counts
+            sql_0 = "insert into `%s` (username, point_type, point_value) values ('%s', %s, %s) ON DUPLICATE KEY UPDATE" \
+                    " point_value=point_value" % ("tb_user_points", username, user_operation_type, point_value)
+            try:
+                cursor2 = db_manager.conn_r.cursor()
+                cursor2.execute(sql_0)
+                db_manager.conn_r.commit()
+                cursor2.close()
+            except Exception:
+                db_manager.conn_r.rollback()
+                cursor2.close()
+                db_manager.close()
+                raise Exception
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
         # 拿到总回答数/被采纳的回答数
         data['answer_info'] = {
             "total_answers": sums,
@@ -648,6 +685,7 @@ def query_all_information(username, identifier):
     return True, data
 
 
+<<<<<<< HEAD
 def get_latest_id(username, is_new=False):
     """
     根据用户名获取tb_account中对应主键ID
@@ -667,12 +705,31 @@ def get_latest_id(username, is_new=False):
 
     sql1 = "SELECT Auto_increment FROM information_schema.tables WHERE table_schema = 'Question_Answer_Platform' " \
            "and table_name='%s'" % "tb_account"
+=======
+def get_latest_id(username):
+    """
+    根据用户名获取tb_account中对应主键ID
+    :param username: 用户名
+    :return:
+    """
+    db_manager = DBManager()
+    sql0 = "select id from `%s` where username='%s'" % ("tb_account", username)
+    cursor0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
+    cursor0.execute(sql0)
+    result0 = cursor0.fetchone()
+    cursor0.close()
+    if result0:
+        return result0['id']
+
+    sql1 = "SHOW TABLE STATUS LIKE `%s`" % "tb_account"
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     cursor1 = db_manager.conn_r.cursor(cursorclass=DictCursor)
     cursor1.execute(sql1)
     result1 = cursor0.fetchone()
     cursor1.close()
     db_manager.close()
     return result1['Auto_increment']
+<<<<<<< HEAD
 
 
 def reset_user_password(user_name, email):
@@ -734,3 +791,5 @@ def reset_user_password(user_name, email):
     result = dict()
     result['new_password'] = new_password
     return is_success, result
+=======
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a

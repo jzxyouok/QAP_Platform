@@ -6,7 +6,10 @@
 
 # HOST = "123.59.71.144"
 HOST = "localhost"
+<<<<<<< HEAD
 # HOST = "61.158.108.30"
+=======
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 
 import requests
 
@@ -16,7 +19,11 @@ def test_QueryUserQuestionList():
     测试请求问题列表
     :return:
     """
+<<<<<<< HEAD
     params = {'username': "heavenfox@126.com"}
+=======
+    params = {'username': "caiyuanpei@vip.qq.com"}
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     r = requests.post("http://%s:10100/doQuestionAct/QueryUserQuestionList" % HOST, data=params)
     print r.cookies
     print params, '-', r.text
@@ -27,8 +34,13 @@ def test_PostQuestion():
     测试用户提问
     :return:
     """
+<<<<<<< HEAD
     params = {'username': "heavenfox@126.com", 'grade': 1, 'subject': 4, 'question_content':
               'hello', 'question_score': 3}
+=======
+    params = {'username': "flyfish@ifeiyu.net", 'grade': 1, 'subject': 4, 'content_type': 1, 'question_content':
+              'hello', 'question_score': 20}
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     r = requests.post("http://%s:10100/doQuestionAct/PostQuestion" % HOST, data=params)
     print r.cookies
     print params, '-', r.text
@@ -61,7 +73,11 @@ def test_AnswerQuestion():
     测试回答问题
     :return:
     """
+<<<<<<< HEAD
     params = {'username': "flyfish@ifeiyu.net", 'question_id': 8, 'answer_content': 'wawo'}
+=======
+    params = {'username': "flyfish@ifeiyu.net", 'question_id': 3, 'content_type': 1, 'answer_content': 'wawo'}
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     r = requests.post("http://%s:10100/doQuestionAct/AnswerQuestion" % HOST, data=params)
     print r.cookies
     print params, '-', r.text
@@ -72,7 +88,11 @@ def test_QueryUserQuestionDetail():
     测试回答问题
     :return:
     """
+<<<<<<< HEAD
     params = {'username': "liangcheng@hrbmu.edu.cn", 'question_id': 16}
+=======
+    params = {'username': "flyfish@ifeiyu.net", 'question_id': 3}
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     r = requests.post("http://%s:10100/doQuestionAct/QueryUserQuestionDetail" % HOST, data=params)
     print r.cookies
     print params, '-', r.text
@@ -89,6 +109,7 @@ def test_QueryUserConnectionQuestionList():
     print params, '-', r.text
 
 
+<<<<<<< HEAD
 def test_AskQuestion():
     """
     测试用户追问
@@ -136,3 +157,14 @@ if __name__ == '__main__':
     # test_AskQuestion()
     # test_QueryAskAndAnswerPage()
     # test_AdoptAnswer()
+=======
+if __name__ == '__main__':
+    test_QueryUserQuestionList()
+    test_AnswerQuestion()
+    test_PostQuestion()
+    test_ConnectQuestion()
+    test_AnswerQuestion()
+    test_SearchQuestion()
+    test_QueryUserQuestionDetail()
+    test_QueryUserConnectionQuestionList()
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a

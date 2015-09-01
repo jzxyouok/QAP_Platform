@@ -24,7 +24,11 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doUserAct/Login,
 			"username": "flyfish@ifeiyu.net",			         // 用户名
 			"nickname": "fishzz",                   // 昵称
 			"has_sign_today": 0,                    // 是否已签到 (1: 是 0: 否)
+<<<<<<< HEAD
 			"card_number": "11111111111",        // 证件号码 (11位)
+=======
+			"card_number": "1111111111111",        // 证件号码
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 			"address": "xxx",			            // 家庭住址
 			"grade": 1,                           // 年级(1: 小学 2: 初中 3: 高中)
 			"subject": 2,                         // 科目(1: 数学 2: 语文 3: 英语 4: 生物 5: 政治 6: 历史 7: 地理 8: 物理 9: 化学)
@@ -125,17 +129,29 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/Qu
 					{
 						"question_id": 3,                               // 问题ID
 						"question_username": "flyfish@ifeiyu.net",                // 提问者
+<<<<<<< HEAD
 						"avatar_url": "123.59.71.144/data/avatars/flyfish.png",     // 头像索引
 						"nickname": "cls1991",                        // 昵称
 						"question_grade": 1,		                    // 问题对应的年级(1: 小学 2: 初中 3: 高中)
 						"question_subject": 2,                        // 问题所属科目(1: 数学 2: 语文 3: 英语 4: 生物 5: 政治 6: 历史 7: 地理 8: 物理 9: 化学)
+=======
+						"avatar_url": "/data/avatars/flyfish.png",     // 头像索引
+						"nickname": "cls1991",                        // 昵称
+						"question_grade": 1,		                    // 问题对应的年级(1: 小学 2: 初中 3: 高中)
+						"question_subject": 2,                        // 问题所属科目(1: 数学 2: 语文 3: 英语 4: 生物 5: 政治 6: 历史 7: 地理 8: 物理 9: 化学)
+						"question_head" "xxx",                        // 系统随机注入的信息头部
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 						"quetion_content": "xxx",                     // 问题内容
 						"question_pic_url": "xxx",                     // 问题相关的图片url
 						"question_sound_url": "xxx",                  // 问题相关的录音url
 						"question_score": 10,                         // 问题悬赏积分
 						"answer_counts": 3,                           //  问题回答的数目
+<<<<<<< HEAD
 						"question_time": "2015-08-10 00:13:13",        // 提问时间
 						"has_collect": 0              // 是否收藏过该问题 (1: 是 0: 否)
+=======
+						"question_time": "2015-08-10 00:13:13"        // 提问时间
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 					},
 					......
 				],
@@ -225,17 +241,29 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/Se
 					{
 							"question_id": 3,                               // 问题ID
 							"question_username": "flyfish@ifeiyu.net",                // 提问者
+<<<<<<< HEAD
 							"avatar_url": "123.59.71.144/data/avatars/flyfish.png",     // 头像索引
 							"nickname": "cls1991",                          // 昵称
 							"question_grade": 1,		                    // 问题对应的年级
 							"question_subject": 2,                        // 问题所属科目(1: 数学 2: 语文 3: 英语 4: 生物 5: 政治 6: 历史 7: 地理 8: 物理 9: 化学)
+=======
+							"avatar_url": "/data/avatars/flyfish.png",     // 头像索引
+							"nickname": "cls1991",                          // 昵称
+							"question_grade": 1,		                    // 问题对应的年级
+							"question_subject": 2,                        // 问题所属科目(1: 数学 2: 语文 3: 英语 4: 生物 5: 政治 6: 历史 7: 地理 8: 物理 9: 化学)
+							"question_head" "xxx",                        // 系统随机注入的信息头部
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 							"quetion_content": "xxx",                     // 问题内容
 							"question_pic_url": "xxx",                     // 问题相关的图片url
 							"question_sound_url": "xxx",                  // 问题相关的录音url
 							"question_score": 10,                         // 问题悬赏积分
 							"answer_counts": 3,                           //  问题回答的数目
+<<<<<<< HEAD
 							"question_time": "2015-08-10 00:13:13",        // 提问时间
 							"has_collect": 0           // 是否收藏过该问题 (1: 是 0: 否)
+=======
+							"question_time": "2015-08-10 00:13:13"        // 提问时间
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 						},
 						......
 				 ],
@@ -251,12 +279,17 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/Se
 
 HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/AnswerQuestion, 请求示例:
 
+<<<<<<< HEAD
 	curl -d "username=xxx&question_id=xxx&answer_content=xxx&is_original_answer=xxx" "http://123.59.71.144:10100/doQuestionAct/AnswerQuestion"
+=======
+	curl -d "username=xxx&question_id=xxx&answer_content=xxx" "http://123.59.71.144:10100/doQuestionAct/AnswerQuestion"
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 
 请求参数格式说明:
 
 	{
 		"username": "flyfish@ifeiyu.net",                     // 用户名
+<<<<<<< HEAD
 		"question_id": 1001,		                // 回答的问题ID (追问时, 是追问产生的临时问题ID)
 		"answer_content": "xxx",                   // 回答的内容
 		"is_original_answer": 1                    // 是否是原始问题的回答 (1: 是 0: 追答)
@@ -264,6 +297,10 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/An
         "answer_pic_file"
         // 如果有录音
         "answer_sound_file"
+=======
+		"question_id": 1001,		                // 回答的问题ID
+		"answer_content": "xxx"                   // 回答的内容
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 	}
 
 返回结果说明:
@@ -279,7 +316,11 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/An
 
 HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/AskQuestion, 请求示例:
 
+<<<<<<< HEAD
 	curl -d "username=xxx&ask_content=xxx&original_quetion_id=xxx&be_asked_username=xxx&answer_id=xxx" "http://123.59.71.144:10100/doQuestionAct/AskQuestion"
+=======
+	curl -d "username=xxx&ask_content=xxx&original_quetion_id=xxx&be_asked_username=xxx" "http://123.59.71.144:10100/doQuestionAct/AskQuestion"
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 
 
 请求参数格式说明:
@@ -326,7 +367,11 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/Qu
 			"question_info": {
 				"question_id": 3,                               // 问题ID
 				"question_username": "flyfish@ifeiyu.net",                // 提问者
+<<<<<<< HEAD
 				"avatar_url": "123.59.71.144/data/avatars/flyfish.png",     // 头像索引
+=======
+				"avatar_url": "/data/avatars/flyfish.png",     // 头像索引
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 				"nickname": "cls1991",                        // 昵称
 				"question_grade": 1,		                    // 问题对应的年级(1: 小学 2: 初中 3: 高中)
 				"question_subject": 2,                        // 问题所属科目(1: 数学 2: 语文 3: 英语 4: 生物 5: 政治 6: 历史 7: 地理 8: 物理 9: 化学)
@@ -336,6 +381,7 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/Qu
 				"question_score": 10,                         // 问题悬赏积分
 				"answer_counts": 3,                           //  问题回答的数目
 				"question_status": 0,                         // 问题当前的状态 (0: 未解决 1: 已解决)
+<<<<<<< HEAD
 				"question_time": "2015-08-10 00:13:13",        // 提问时间
 				"has_collect": 0           // 是否收藏过该问题 (1: 是 0: 否)
 			},
@@ -344,14 +390,43 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/Qu
 				"answer_id": 1,                                 // 回答ID
 				"answer_username": "flyfish@ifeiyu.net",                // 回答者
 				"avatar_url": "123.59.71.144/data/avatars/flyfish.png",     // 头像索引
+=======
+				"question_time": "2015-08-10 00:13:13"        // 提问时间
+			},
+			"answers_info": [[{
+				"question_id": 3,                               // 问题ID
+				"answer_id": 1,                                 // 回答ID
+				"answer_username": "flyfish@ifeiyu.net",                // 回答者
+				"avatar_url": "/data/avatars/flyfish.png",     // 头像索引
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 				"nickname": "cls1991",                       // 昵称
 				"answer_content": "xxx",                     // 回答内容
 				"answer_pic_url": "xxx",                     // 回答相关的图片url
 				"answer_sound_url": "xxx",                   // 回答相关的录音url
 				"is_accepted": 0,			                  // 是否被采纳
+<<<<<<< HEAD
 				"answer_time": "2015-08-10 00:13:13",        // 回答的最新时间
 				"counts": 4                                  // 问答条数(包括回答, 追问和追答条数)
 				},
+=======
+				"answer_time": "2015-08-10 00:13:13"        // 回答的最新时间
+				},
+				// 如果有追问
+				{
+					"ask_question_id": 1001,                // 追问产生的临时问题ID
+					"ask_content": "xxx",                  // 追问内容
+					"ask_pic_url": "xxx",                  // 追问相关的图片url
+					"ask_sound_url": "xxx",               // 追问相关的录音url
+					"ask_time": "xxx",                    // 追问时间
+					"original_question_id": 3,            // 原问题的ID
+					"be_asked_username": "flyfish13@ifeiyu.net",     // 被追问者的用户名
+					"avatar_url": "/data/avatars/flyfish.png",     // 头像索引
+					"nickname": "cls1991",                       // 昵称
+					"ask_order": 1                       // 追问顺序
+				},
+				......
+			],
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 			// 如果有其他用户回答
 			.....
 		  ]
@@ -484,17 +559,29 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doUserAct/QueryU
 					{
 							"question_id": 3,                             // 问题ID
 							"question_username": "flyfish@ifeiyu.net",                // 提问者
+<<<<<<< HEAD
 							"avatar_url": "123.59.71.144/data/avatars/flyfish.png",     // 头像索引
 							"nickname": "cls1991",                        // 昵称
 							"question_grade": 1,		                    // 问题对应的年级
 							"question_subject": 2,                        // 问题所属科目(1: 数学 2: 语文 3: 英语 4: 生物 5: 政治 6: 历史 7: 地理 8: 物理 9: 化学)
+=======
+							"avatar_url": "/data/avatars/flyfish.png",     // 头像索引
+							"nickname": "cls1991",                        // 昵称
+							"question_grade": 1,		                    // 问题对应的年级
+							"question_subject": 2,                        // 问题所属科目(1: 数学 2: 语文 3: 英语 4: 生物 5: 政治 6: 历史 7: 地理 8: 物理 9: 化学)
+							"question_head" "xxx",                        // 系统随机注入的信息头部
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 							"quetion_content": "xxx",                     // 问题内容
 							"question_pic_url": "xxx",                     // 问题相关的图片url
 							"question_sound_url": "xxx",                  // 问题相关的录音url
 							"question_score": 10,                         // 问题悬赏积分
 							"answer_counts": 3,                           //  问题回答的数目
+<<<<<<< HEAD
 							"question_time": "2015-08-10 00:13:13",        // 提问时间
 							"has_collect": 0           // 是否收藏过该问题 (1: 是 0: 否)
+=======
+							"question_time": "2015-08-10 00:13:13"        // 提问时间
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 						},
 						......
 				 ],
@@ -528,17 +615,29 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/Qu
 					{
 							"question_id": 3,                             // 问题ID
 							"question_username": "flyfish@ifeiyu.net",                // 提问者
+<<<<<<< HEAD
 							"avatar_url": "123.59.71.144/data/avatars/flyfish.png",     // 头像索引
 							"nickname": "cls1991",                        // 昵称
 							"question_grade": 1,		                    // 问题对应的年级
 							"question_subject": 2,                        // 问题所属科目(1: 数学 2: 语文 3: 英语 4: 生物 5: 政治 6: 历史 7: 地理 8: 物理 9: 化学)
+=======
+							"avatar_url": "/data/avatars/flyfish.png",     // 头像索引
+							"nickname": "cls1991",                        // 昵称
+							"question_grade": 1,		                    // 问题对应的年级
+							"question_subject": 2,                        // 问题所属科目(1: 数学 2: 语文 3: 英语 4: 生物 5: 政治 6: 历史 7: 地理 8: 物理 9: 化学)
+							"question_head" "xxx",                        // 系统随机注入的信息头部
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 							"quetion_content": "xxx",                     // 问题内容
 							"question_pic_url": "xxx",                     // 问题相关的图片url
 							"question_sound_url": "xxx",                  // 问题相关的录音url
 							"question_score": 10,                         // 问题悬赏积分
 							"answer_counts": 3,                           //  问题回答的数目
+<<<<<<< HEAD
 							"question_time": "2015-08-10 00:13:13",        // 提问时间
 							"has_collect": 0           // 是否收藏过该问题 (1: 是 0: 否)
+=======
+							"question_time": "2015-08-10 00:13:13"        // 提问时间
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 						},
 						......
 				 ],
@@ -628,6 +727,7 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doUserAct/FeedBa
 	{
 		"username": "flyfish@ifeiyu.net",                             // 用户名
 		"content": "flyfish, zzz"                                    // 反馈内容
+<<<<<<< HEAD
 	}
 
 返回结果说明:
@@ -749,11 +849,14 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/Qu
 
 	{
 		"answer_id": 9             // 回答的ID
+=======
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 	}
 
 返回结果说明:
 
 	{
+<<<<<<< HEAD
 		"code": 200,				           // OK
 		"data": {
 			"question_info": {
@@ -815,19 +918,64 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/Qu
 HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doUserAct/ResetUserPassword, 请求示例:
 
 	curl -d "username=xxx&email=xxx" "http://123.59.71.144:10100/doUserAct/ResetUserPassword"
+=======
+		"code": 200,                       // OK
+		"data": "",
+		"msg": "提交反馈成功"
+	}
+
+###20 ModifyPersonalInformation
+修改个人信息
+
+HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doUserAct/ModifyPersonalInformation, 请求示例:
+
+	curl -d "username=xxx&props={\"nickname\": xxx, ...}" "http://123.59.71.144:10100/doUserAct/ModifyPersonalInformation"
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 
 请求参数格式说明:
 
 	{
+<<<<<<< HEAD
 		"username": "flyfish@ifeiyu.net",           // 用户名
 		"email": "nobody@ifeiyu.net"                // 密码
 	}
 	
+=======
+		"username": "flyfish@ifeiyu.net",                      // 用户名
+		"props": "{\"nickname\": \"zzz\", ....}"               // 更新的数据域
+	}
+
+返回结果说明:
+
+	{
+		"code": 200,
+		"data": "",
+		"msg": "修改成功"
+	}
+
+###21 AdoptAnswer
+采纳回答
+
+HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doQuestionAct/AdoptAnswer", 请求示例:
+
+	curl -d "username=xxx&question_id=xxx&answer_id=xxx&answer_username=xxx" "http://123.59.71.144:10100/doQuestionAct/AdoptAnswer"
+
+请求参数格式说明:
+
+	{
+    	"username": "flyfish@ifeiyu.net",                  // 用户名
+        "question_id": 2,                                  // 原问题ID
+        "answer_id": 1001,                                // 回答的ID
+        "answer_username": "flyfish13@ifeiyu.net"        // 回答者的用户名
+    }
+
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 返回结果说明:
 
 1.成功
 
 	{
+<<<<<<< HEAD
 		"code": 200,            // OK
 		"data": {
 			"new_password": "12345678"         // 新密码 (长度为8的字符串)
@@ -840,3 +988,50 @@ HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doUserAct/ResetU
  		"code": 201,             // FAIL
  		"msg": "发送失败"
  	} 
+=======
+    	"code": 200,                   // OK
+        "data": "",
+        "msg": "采纳成功"
+    }
+
+###22 QueryAllInformation
+请求用户所有信息 (供客户端进入"我的"页面使用)
+
+HTTP POST请求方式, 访问接口: http://123.59.71.144:10100/doUserAct/QueryAllInformation, 请求示例:
+
+	curl -d "username=xxx&identifier=xxx" "http://123.59.71.144:10100/doUserAct/QueryAllInformation"
+
+请求参数格式说明:
+
+	{
+    	"username": "flyfish@ifeiyu.net",                   // 用户名
+        "identifier": 0                                     // 身份标志 (0: 学生 1: 教师)
+    }
+
+返回结果说明:
+
+	{
+    	"code": 200,                               // OK
+        "data": {
+    		"user_info": {
+      			"level_desc": "学渣",             // 称号
+      			"total_points": 175,             // 总学分
+      			"user_level": 1                 // 等级
+    		},
+    		"relation_info": {
+      			"follows_num": 1,                // 关注数
+      			"fans_num": 0                    // 粉丝数
+    		},
+            // 学生
+    		"question_info": {
+      			"solved_questions": 0,           // 已完成的问题数
+      			"total_questions": 46           // 问题总数
+    		}
+            // 教师
+            "answer_info": {
+            	"total_answers": 30,           // 总回答数
+                "accepted_answers": 10         // 被采纳的回答数
+            }
+  		}
+    }
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a

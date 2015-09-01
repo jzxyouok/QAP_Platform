@@ -27,7 +27,10 @@ from lib.user.FollowOtherServer import FollowOtherHandler
 from lib.user.QueryFollowersServer import QueryFollowersHandler
 from lib.user.ModifyPersonalInformationServer import ModifyPersonalInformationHandler
 from lib.user.QueryAllInformationServer import QueryAllInformationHandler
+<<<<<<< HEAD
 from lib.user.resetPasswordServer import ResetUserPasswordHandler
+=======
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 
 from lib.email.validEmailServer import ValidEmailHandler
 
@@ -41,7 +44,10 @@ from lib.question.askQuestionServer import AskQuestionHandler
 from lib.question.adoptAnswerServer import AdoptAnswerHandler
 from lib.question.queryUserConnectionQuestionListServer import QueryUserConnectionQuestionListHandler
 from lib.question.queryUserQuestionOrAnswerListServer import QueryUserQuestionOrAnswerListHandler
+<<<<<<< HEAD
 from lib.question.QueryAskAndAnswerPageServer import QueryAskAndAnswerPageHandler
+=======
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 
 
 class MainHandler(tornado.web.RequestHandler):
@@ -76,7 +82,10 @@ application = tornado.web.Application([
     (r"/doUserAct/QueryFollowers", QueryFollowersHandler),
     (r"/doUserAct/ModifyPersonalInformation", ModifyPersonalInformationHandler),
     (r"/doUserAct/QueryAllInformation", QueryAllInformationHandler),
+<<<<<<< HEAD
     (r"/doUserAct/ResetUserPassword", ResetUserPasswordHandler),
+=======
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     (r"/doEmailAct/ValidEmail", ValidEmailHandler),
     (r"/doQuestionAct/QueryUserQuestionList", QueryUserQuestionListHandler),
     (r"/doQuestionAct/PostQuestion", PostQuestionHandler),
@@ -87,8 +96,12 @@ application = tornado.web.Application([
     (r"/doQuestionAct/AskQuestion", AskQuestionHandler),
     (r"/doQuestionAct/AdoptAnswer", AdoptAnswerHandler),
     (r"/doQuestionAct/QueryUserConnectionQuestionList", QueryUserConnectionQuestionListHandler),
+<<<<<<< HEAD
     (r"/doQuestionAct/QueryUserQuestionOrAnswerList", QueryUserQuestionOrAnswerListHandler),
     (r"/doQuestionAct/QueryAskAndAnswerPage", QueryAskAndAnswerPageHandler)
+=======
+    (r"/doQuestionAct/QueryUserQuestionOrAnswerList", QueryUserQuestionOrAnswerListHandler)
+>>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 ])
 
 if __name__ == '__main__':

@@ -37,6 +37,31 @@ class ConfigManager:
                 "host": "61.158.108.30",
                 "port": 8081,
                 "mysql": {
+                    "host": "192.168.1.106",
+                    "user": "root",
+                    "passwd": "asd123",
+                    "db": "Question_Answer_Platform",
+                    "charset": "utf8"
+                },
+                "redis": {
+                    "host": "192.168.1.106",
+                    "port": 6379
+                },
+                "upload": {
+                    "save": {
+                        "pic": "/data/upload/pic/",
+                        "avatar": "/data/upload/avatar/",
+                        "sound": "/data/upload/sound/"
+                    },
+                    "visit": {
+                        "pic": "/qap_server/uploads/question/pic/",
+                        "avatar": "/qap_server/uploads/user/avatar/",
+                        "sound": "/qap_server/uploads/question/sound/"
+                    }
+                }
+            },
+            "production": {
+                "mysql": {
                     "host": "localhost",
                     "user": "root",
                     "passwd": "flyfishdb",
