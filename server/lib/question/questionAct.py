@@ -122,11 +122,7 @@ def search_question(username, question_content, cur_page, page_size, grade=None,
         })
 
 
-<<<<<<< HEAD
 def answer_question(username, question_id, answer_content, is_original_answer, options=None):
-=======
-def answer_question(username, question_id, answer_content, options=None):
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     """
     回答问题
     :param username: 用户名
@@ -135,12 +131,8 @@ def answer_question(username, question_id, answer_content, options=None):
     :param is_original_answer: 是否是原回答(1: 原回答 0: 追答)
     :return:
     """
-<<<<<<< HEAD
     is_success, msg = dbQuestion.answer_question(username, question_id, answer_content, is_original_answer,
                                                  options=options)
-=======
-    is_success = dbQuestion.answer_question(username, question_id, answer_content, options=options)
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     if is_success:
         return SmartResponse().jsonwrap({
             "code": 200,
@@ -148,7 +140,6 @@ def answer_question(username, question_id, answer_content, options=None):
             "msg": "回答成功"
         })
     return SmartResponse().jsonwrap({
-<<<<<<< HEAD
         "code": 201,
         "msg": msg
     })
@@ -261,99 +252,4 @@ def query_ask_and_answer_page(answer_id):
     return SmartResponse().jsonwrap({
         "code": 201,
         "msg": data
-=======
-        "code": 201,
-        "msg": "没有权限回答"
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     })
-
-
-def query_user_question_detail(username, question_id):
-    """
-    请求用户问题详情
-    :param username: 用户名
-    :param question_id: 问题ID
-    :return:
-    """
-    is_success, data = dbQuestion.query_user_question_detail(username, question_id)
-    if is_success:
-        return SmartResponse().jsonwrap({
-            "code": 200,
-            "data": data,
-            "msg": ""
-        })
-    return SmartResponse().jsonwrap({
-        "code": 201,
-        "msg": "没有该问题"
-    })
-
-
-def ask_question(username, content_type, ask_content, original_question_id, be_asked_username):
-    """
-    用户追问
-    :param username: 用户名
-    :param content_type: 追问内容类型 (1: 文字 2: 语音 3: 图片)
-    :param ask_content: 追问内容
-    :param original_question_id: 原问题ID
-    :param be_asked_username: 被追问的用户
-    :return:
-    """
-    is_success = dbQuestion.ask_question(username, content_type, ask_content, original_question_id, be_asked_username)
-    if is_success:
-        return {
-            "code": 200,
-            "data": "",
-            "msg": "追问成功"
-        }
-    return {
-        "code": 201,
-        "msg": "追问失败"
-    }
-
-
-def adopt_answer(username, question_id, answer_id, answer_username):
-    """
-    采纳回答
-    :param username: 用户名
-    :param question_id: 原问题ID
-    :param answer_id: 回答的ID
-    :param answer_username: 回答者的用户名
-    :return:
-    """
-    is_success, msg = dbQuestion.adopt_answer(username, question_id, answer_id, answer_username)
-    if is_success:
-        return SmartResponse().jsonwrap({
-            "code": 200,
-            "data": "",
-            "msg": "采纳成功"
-        })
-    return SmartResponse().jsonwrap({
-        "code": 201,
-        "msg": msg
-    })
-
-
-def query_user_question_or_answer_list(username, identifier, is_part, cur_page, page_size):
-    """
-    请求用户的问题列表或者回答列表
-    :param username: 用户名
-    :param identifier: 身份标志 (0: 学生 1: 教师)
-    :param is_part: 按照条件搜索 (学生: 问题完成数 教师： 回答采纳数)
-    :param cur_page: 当前数据分页
-    :param page_size: 每页显示数据条数
-    :return:
-    """
-    is_success, question_list, counts = dbQuestion.query_user_question_or_answer_list(username, identifier, is_part,
-                                                                                      cur_page, page_size)
-    if is_success:
-        return SmartResponse().jsonwrap({
-            "code": 200,
-            "data": {
-                "question_list": question_list,
-                "page_size": page_size,
-                "cur_page": cur_page,
-                "counts": counts
-            },
-            "msg": ""
-        })
-

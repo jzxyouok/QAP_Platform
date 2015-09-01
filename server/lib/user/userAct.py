@@ -232,19 +232,11 @@ def modify_personal_information(username, props=None, options=None):
     :param options: 头像信息字段
     :return:
     """
-<<<<<<< HEAD
     is_ok, result = dbUser.modify_personal_information(username, props=props, options=options)
     if is_ok:
         return SmartResponse().jsonwrap({
             "code": 200,
             "data": result if result else "",
-=======
-    is_ok = dbUser.modify_personal_information(username, props=props, options=options)
-    if is_ok:
-        return SmartResponse().jsonwrap({
-            "code": 200,
-            "data": "",
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
             "msg": "修改成功"
         })
     return SmartResponse().jsonwrap({
@@ -268,7 +260,6 @@ def query_all_information(username, identifier):
             "msg": ""
         }
 
-<<<<<<< HEAD
 
 def reset_user_password(username, email):
     """
@@ -289,5 +280,3 @@ def reset_user_password(username, email):
         "msg": data
     })
 
-=======
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a

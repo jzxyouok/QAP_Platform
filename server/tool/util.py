@@ -94,7 +94,6 @@ def copy_dict_by_keys(keys, source_dict, to_dict):
             assert 0
 
 
-<<<<<<< HEAD
 def copy_dict_by_keys_with_new_keys(keys, new_keys, source_dict, to_dict):
     index = 0
     for key in keys:
@@ -106,8 +105,6 @@ def copy_dict_by_keys_with_new_keys(keys, new_keys, source_dict, to_dict):
             assert 0
 
 
-=======
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 def add_dict_by_keys(dict_1, dict_2, keys=None):
     if not keys:
         keys = dict_2.keys()
@@ -295,7 +292,6 @@ def get_system_default_avatar_url():
     """
     from conf.cm import ConfigManager
     cm = ConfigManager()
-<<<<<<< HEAD
     avatar_url = "http://" + cm.get_config('host') + ":" + str(cm.get_config('port')) + cm.get_config('upload')['visit']['avatar'] + 'default.png'
     return avatar_url
 
@@ -309,8 +305,3 @@ def random_str(random_length=8):
     for i in range(random_length):
         str0 += chars[random.randint(0, length)]
     return str0
-=======
-    avatar_url = cm.get_config('upload')['visit']['avatar'] + 'default.png'
-    return avatar_url
-
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a

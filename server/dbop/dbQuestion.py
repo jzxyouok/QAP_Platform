@@ -11,11 +11,7 @@ from MySQLdb.cursors import DictCursor
 
 from db.dbmanager import DBManager
 
-<<<<<<< HEAD
 from tool.util import copy_dict_by_keys, time_now_str, copy_dict_by_keys_with_new_keys
-=======
-from tool.util import copy_dict_by_keys, time_now_str
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 from db.util import FormatCondition, forEachPlusInsertProps, FormatUpdateStr
 
 
@@ -50,7 +46,6 @@ def query_user_question_list(username, cur_page, page_size):
                ("tb_question", grade, (cur_page - 1) * page_size, page_size)
     elif identifier == 1:
         subject = result['subject']
-<<<<<<< HEAD
         # 获取总页数
         sql_0 = "select count(*) as counts from `%s` where question_grade=%s and question_subject=%s" % \
                 ("tb_question", grade, subject)
@@ -61,8 +56,6 @@ def query_user_question_list(username, cur_page, page_size):
         if tmp is None or len(tmp) == 0:
             return True, question_list, 0
         counts = tmp['counts']
-=======
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
         sql1 = "select *from `%s` where question_grade=%s and question_subject=%s order by question_time desc limit %s, %s" % \
                ("tb_question", grade, subject, (cur_page - 1) * page_size, page_size)
     msg0 = "[in query_user_question_list] sql1=" + sql1
@@ -106,8 +99,6 @@ def query_user_question_list(username, cur_page, page_size):
             if result0:
                 counter = result0['counts']
             tmp['answer_counts'] = counter
-            tmp['avatar_url'] = result['avatar_url']
-            tmp['nickname'] = result['nickname']
             question_list.append(tmp)
     db_manager.close()
     return True, question_list, counts
@@ -136,7 +127,6 @@ def post_question(username, grade, subject, question_content, question_score=0, 
     identifier = result0['identifier']
     if identifier != 0:
         return False
-<<<<<<< HEAD
     # 客户端提交的问题内容为空
     if question_content is None or question_content == '':
         # 获取随机问题内容 (随机数的上限取决于后期配置的模板表的大小)
@@ -153,31 +143,16 @@ def post_question(username, grade, subject, question_content, question_score=0, 
             return False
         r_index = randint(1, template_size)
         sql0 = "select *from `%s` where content_id=%s" % ("tb_question_content_template", r_index)
-=======
-    header_id = 0
-    # 获取随机问题头部 (随机数的上限取决于后期配置的模板表的大小)
-    r_index = randint(0, 0)
-    if r_index > 0:
-        sql0 = "select *from `%s` where id='%s'" % ("tb_question_header_template", r_index)
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
         cursor0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
         cursor0.execute(sql0)
         result0 = cursor0.fetchone()
         cursor0.close()
         if result0:
-<<<<<<< HEAD
             question_content = result0['content_value']
 
     # 拿到插入的数据
     props = dict()
     props['question_username'] = username
-=======
-            header_id = result0['header_id']
-    # 拿到插入的数据
-    props = dict()
-    props['question_username'] = username
-    props['question_head'] = header_id
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     props['question_content'] = question_content
     props['question_score'] = question_score
     props['question_grade'] = grade
@@ -206,7 +181,6 @@ def post_question(username, grade, subject, question_content, question_score=0, 
     cursor2 = db_manager.conn_r.cursor(cursorclass=DictCursor)
     cursor2.execute(sql2)
     result2 = cursor2.fetchone()
-<<<<<<< HEAD
     point_value = result2['score_points'] - question_score
     if point_value >= 0:
         sql_0 = "insert into `%s` (username, point_type, point_value) values ('%s', %s, %s) ON DUPLICATE KEY UPDATE" \
@@ -229,12 +203,6 @@ def post_question(username, grade, subject, question_content, question_score=0, 
                     ("tb_user_points", username, user_operation_type, point_value)
     msg_110 = "[in post_question refresh user points] sql_0=" + sql_0
     logging.info(msg_110)
-=======
-    point_value = result2['score_points']
-    sql_0 = "insert into `%s` (username, point_type, point_value) values ('%s', %s, %s) ON DUPLICATE KEY UPDATE" \
-            " point_value=point_value+VALUES(point_value)" % ("tb_user_points", username, user_operation_type,
-                                                              point_value)
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     try:
         cursor2 = db_manager.conn_r.cursor()
         cursor2.execute(sql_0)
@@ -264,11 +232,7 @@ def connect_question(username, question_id):
     cursor0.execute(sql0)
     result0 = cursor0.fetchone()
     cursor0.close()
-<<<<<<< HEAD
     if result0 is None:
-=======
-    if result0 is not None:
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
         return False, "问题不存在"
     # 查询是否收藏过该问题
     sql0 = "select *from `%s` where collecter_username='%s' and question_id=%s" % ("tb_question_collection",
@@ -279,11 +243,7 @@ def connect_question(username, question_id):
     cursor0.close()
     if result0 is not None:
         return False, "已收藏过该问题"
-<<<<<<< HEAD
     sql = "insert into `%s` (question_id, collecter_username, collect_time) values (%s, '%s', '%s')" % ("tb_question_collection",
-=======
-    sql = "insert into `%s` (question_id, collecter_username, collect_time) values (%s, '%s')" % ("tb_question_collection",
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
                                                                                     question_id, username, time_now_str())
     msg = "[in connect_question] sql=" + sql
     logging.info(msg)
@@ -361,71 +321,6 @@ def query_collect_question_list(username, cur_page, page_size):
     return True, question_list, counts
 
 
-<<<<<<< HEAD
-=======
-def query_collect_question_list(username, cur_page, page_size):
-    """
-    请求用户收藏的问题列表
-    :param username: 用户名
-    :param cur_page: 当前数据分页
-    :param page_size: 每页显示数据条数
-    :return:
-    """
-    db_manager = DBManager()
-    question_list = []
-    # 获取总页数
-    sql_0 = "select count(*) as counts from `%s` where collecter_username='%s'" % ("tb_question_collection", username)
-    cursor_0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
-    cursor_0.execute(sql_0)
-    tmp = cursor_0.fetchone()
-    cursor_0.close()
-    if tmp is None or len(tmp) == 0:
-        return True, question_list, 0
-    counts = tmp['counts']
-    sql0 = "select *from `%s` where collecter_username='%s' order by collect_time desc limit %s,%s" % \
-           ("tb_question_collection", username, (cur_page - 1) * page_size, page_size)
-    cursor0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
-    cursor0.execute(sql0)
-    results = cursor0.fetchall()
-    cursor0.close()
-    for t in results:
-        # 拿到用户信息
-        tmp = dict()
-        tmp_username = t['collecter_username']
-        sql0 = "select avatar_url, nickname from `%s` where username='%s'" % ("tb_user", tmp_username)
-        cursor0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
-        cursor0.execute(sql0)
-        result0 = cursor0.fetchone()
-        cursor0.close()
-        tmp['avatar_url'] = result0['avatar_url']
-        tmp['nickname'] = result0['nickname']
-
-        # 拿到问题信息
-        tmp_question_id = t['question_id']
-        sql0 = "select *from `%s` where question_id=%s" % ("tb_question", tmp_question_id)
-        cursor0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
-        cursor0.execute(sql0)
-        result0 = cursor0.fetchone()
-        cursor0.close()
-        if result0 is None:
-            continue
-        tmp.update(result0)
-
-        cursor0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
-        sql0 = "select count(*) as counts from `%s` where question_id=%s" % ("tb_answer", tmp_question_id)
-        cursor0.execute(sql0)
-        result0 = cursor0.fetchone()
-        cursor0.close()
-        counter = 0
-        if result0:
-            counter = result0['counts']
-        tmp['answer_counts'] = counter
-        question_list.append(tmp)
-    db_manager.close()
-    return True, question_list, counts
-
-
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 def query_user_question_or_answer_list(username, identifier, is_part, cur_page, page_size):
     """
     请求用户的问题列表或者回答列表
@@ -463,11 +358,7 @@ def query_user_question_or_answer_list(username, identifier, is_part, cur_page, 
         if result is None or len(result) == 0:
             return True, question_list, 0
         counts = result['counts']
-<<<<<<< HEAD
         sql0 = "select *from `%s` where %s order by %s limit %s,%s" % \
-=======
-        sql0 = "select *from `%s` where %s order by %s desc limit %s,%s" % \
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
                (table_name, query_str, order_key, (cur_page - 1) * page_size, page_size)
     # 教师
     elif identifier == 1:
@@ -494,11 +385,7 @@ def query_user_question_or_answer_list(username, identifier, is_part, cur_page, 
         counts = result['counts']
         sql0 = "select *from `%s` where question_id in (select question_id from `tb_answer` where " \
                "%s and question_id not in (select ask_question_id from `tb_ask` where be_asked_username='%s')) order by " \
-<<<<<<< HEAD
                "%s limit %s,%s" % (table_name, query_str, username, order_key, (cur_page - 1) * page_size,
-=======
-               "%s desc limit %s,%s" % (table_name, query_str, username, order_key, (cur_page - 1) * page_size,
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
                                         page_size)
     cursor0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
     cursor0.execute(sql0)
@@ -517,7 +404,6 @@ def query_user_question_or_answer_list(username, identifier, is_part, cur_page, 
         tmp['avatar_url'] = result0['avatar_url']
         tmp['nickname'] = result0['nickname']
 
-<<<<<<< HEAD
         # 用户是否收藏过该问题
         has_collect = 0
         sql0 = "select *from `%s` where collecter_username='%s' and question_id=%s" % ("tb_question_collection",
@@ -530,8 +416,6 @@ def query_user_question_or_answer_list(username, identifier, is_part, cur_page, 
             has_collect = 1
         tmp['has_collect'] = has_collect
 
-=======
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
         cursor0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
         sql0 = "select count(*) as counts from `%s` where question_id=%s" % ("tb_answer", tmp_question_id)
         cursor0.execute(sql0)
@@ -568,19 +452,11 @@ def search_question(username, question_content, cur_page, page_size, grade=None,
     signal = False
     if con_str is not None and len(con_str) > 0:
         signal = True
-<<<<<<< HEAD
         sql_1 = "select count(*) as counts from `%s` where %s and question_content like '%s%s%s'" % \
                 ("tb_question", con_str, '%', question_content, '%')
     else:
         sql_1 = "select count(*) as counts from `%s` where question_content like '%s%s%s'" % \
                 ("tb_question", '%', question_content, '%')
-=======
-        sql_1 = "select count(*) as counts from `%s` where %s and question_content like '%s%s'" % \
-                ("tb_question", con_str, question_content, '%')
-    else:
-        sql_1 = "select count(*) as counts from `%s` where question_content like '%s%s'" % \
-                ("tb_question", question_content, '%')
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     msg0 = "[in search_question] sql_1=" + sql_1
     logging.info(msg0)
     cursor_1 = db_manager.conn_r.cursor(cursorclass=DictCursor)
@@ -591,19 +467,11 @@ def search_question(username, question_content, cur_page, page_size, grade=None,
         return True, question_list, 0
     counts = tmp['counts']
     if signal:
-<<<<<<< HEAD
         sql = "select *from `%s` where %s and question_content like '%s%s%s' order by question_time desc limit %s,%s " % \
               ("tb_question", con_str, '%', question_content, '%', (cur_page - 1) * page_size, page_size)
     else:
         sql = "select *from `%s` where question_content like '%s%s%s' order by question_time desc limit %s,%s " % \
               ("tb_question", '%', question_content, '%', (cur_page - 1) * page_size, page_size)
-=======
-        sql = "select *from `%s` where %s and question_content like '%s%s' order by question_time desc limit %s,%s " % \
-              ("tb_question", con_str, question_content, '%', (cur_page - 1) * page_size, page_size)
-    else:
-        sql = "select *from `%s` where question_content like '%s%s' order by question_time desc limit %s,%s " % \
-              ("tb_question", question_content, '%', (cur_page - 1) * page_size, page_size)
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     msg = '[in search_question] sql=' + sql
     logging.info(msg)
     cursor_0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
@@ -625,7 +493,6 @@ def search_question(username, question_content, cur_page, page_size, grade=None,
             tmp['avatar_url'] = result0['avatar_url']
             tmp['nickname'] = result0['nickname']
 
-<<<<<<< HEAD
             # 用户是否收藏过该问题
             has_collect = 0
             sql0 = "select *from `%s` where collecter_username='%s' and question_id=%s" % ("tb_question_collection",
@@ -638,8 +505,6 @@ def search_question(username, question_content, cur_page, page_size, grade=None,
                 has_collect = 1
             tmp['has_collect'] = has_collect
 
-=======
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
             cursor0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
             sql0 = "select count(*) as counts from `%s` where question_id=%s" % ("tb_answer", question_id)
             cursor0.execute(sql0)
@@ -654,11 +519,7 @@ def search_question(username, question_content, cur_page, page_size, grade=None,
     return True, question_list, counts
 
 
-<<<<<<< HEAD
 def answer_question(username, question_id, answer_content, is_original_answer, options=None):
-=======
-def answer_question(username, question_id, answer_content, options=None):
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     """
     回答问题
     :param username: 用户名
@@ -679,7 +540,6 @@ def answer_question(username, question_id, answer_content, options=None):
     identifier = result0['identifier']
     if identifier != 1:
         return False, "没有回答权限"
-<<<<<<< HEAD
     original_question_id = question_id
     # 如果是追答
     if is_original_answer == 0:
@@ -694,10 +554,6 @@ def answer_question(username, question_id, answer_content, options=None):
         original_question_id = result_0['original_question_id']
     # 问题是否已经被解决
     sql_0 = "select question_status from `%s` where question_id=%s" % ("tb_question", original_question_id)
-=======
-    # 问题是否已经被解决
-    sql_0 = "select question_status from `%s` where question_id=%s" % ("tb_question", question_id)
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     cursor_0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
     cursor_0.execute(sql_0)
     result_0 = cursor_0.fetchone()
@@ -769,11 +625,7 @@ def query_user_question_detail(username, question_id):
     :return:
     """
     db_manager = DBManager()
-<<<<<<< HEAD
     sql0 = "SELECT tq.question_id, question_username, avatar_url, nickname, question_grade, question_subject, " \
-=======
-    sql0 = "SELECT question_username, avatar_url, nickname, question_grade, question_subject, question_head, " \
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
            "question_content, question_pic_url, question_sound_url, question_time, question_status, question_score from `tb_question` as tq inner join `tb_user` as tu on " \
            "tq.question_username=tu.username and tq.question_id=%s and tq.question_username='%s';" % (question_id,
                                                                                                       username)
@@ -786,7 +638,6 @@ def query_user_question_detail(username, question_id):
         return False, None
     data = dict()
     answer_list = []
-<<<<<<< HEAD
     # 用户是否收藏过该问题
     has_collect = 0
     sql0 = "select *from `%s` where collecter_username='%s' and question_id=%s" % ("tb_question_collection",
@@ -821,12 +672,6 @@ def query_user_question_detail(username, question_id):
     data['answers_info'] = answer_list
     # 找出回答列表(根据回答时间排序)
     sql1 = "select *from `tb_answer` where question_id=%s order by answer_time" % question_id
-=======
-    data['question_info'] = result0
-    data['answers_info'] = answer_list
-    # 找出回答列表(根据回答时间排序)
-    sql1 = "select *from `tb_answer` where question_id=%s order by answer_time desc" % question_id
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     msg0 = "[in query_user_question_detail] sql1=" + sql1
     logging.info(msg0)
     cursor1 = db_manager.conn_r.cursor(cursorclass=DictCursor)
@@ -838,7 +683,6 @@ def query_user_question_detail(username, question_id):
         return True, data
     for a_answer in answers:
         t_username = a_answer['answer_username']
-<<<<<<< HEAD
         # 添加回答信息
         tmp_dict = a_answer.copy()
         # 拿到回答者信息
@@ -853,19 +697,11 @@ def query_user_question_detail(username, question_id):
         sql2 = "select *from (select *from `tb_ask` where be_asked_username='%s' and original_question_id=%s and answer_id=%s) as ta left join `tb_answer` as tb on ta.ask_question_id=" \
                "tb.question_id and ta.be_asked_username=tb.answer_username" % (t_username, question_id,
                                                                                a_answer['answer_id'])
-=======
-        tmp_answer_list = []
-        # 是否有追问
-        sql2 = "select *from `tb_ask` as ta order by ta.ask_order left join `tb_answer` as tb on ta.question_id=" \
-               "tb.question_id and ta.original_question_id=%s and ta.be_asked_username=tb.answer_username and " \
-               "ta.be_asked_username='%s'" % (question_id, t_username)
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
         cursor2 = db_manager.conn_r.cursor(cursorclass=DictCursor)
         cursor2.execute(sql2)
         results = cursor2.fetchall()
         cursor2.close()
         if results is None or len(results) == 0:
-<<<<<<< HEAD
             # 没有追问
             tmp_dict['counts'] = 1
             answer_list.append(tmp_dict)
@@ -882,62 +718,15 @@ def query_user_question_detail(username, question_id):
                 counts += 1
         tmp_dict['counts'] = counts
         answer_list.append(tmp_dict)
-=======
-            tmp_dict = a_answer.copy()
-            tmp_dict['answer_id'] = tmp_dict['id']
-            tmp_dict.pop('ip')
-            tmp_answer_list.append(tmp_dict)
-            answer_list.append(tmp_answer_list)
-            continue
-
-        tmp_ask_dict = dict()
-        tmp_answer_dict = dict()
-        for t in results:
-            # 拿到追问者的信息
-            tmp_username = t['be_asked_username']
-            sql0 = "select avatar_url, nickname from `%s` where username='%s" % ("tb_user", tmp_username)
-            cursor0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
-            cursor0.execute(sql0)
-            result0 = cursor0.fetchone()
-            cursor0.close()
-            tmp_ask_dict['avatar_url'] = result0['avatar_url']
-            tmp_ask_dict['nickname'] = result0['nickname']
-
-            copy_dict_by_keys(['ask_question_id', 'ask_content', 'ask_pic_url', 'ask_sound_url', 'ask_time',
-                               'original_question_id',
-                               'be_asked_username', 'ask_order'], t, tmp_ask_dict)
-            tmp_answer_list.append(tmp_ask_dict)
-            if t['question_id'] is not None:
-                # 拿到回答者的信息
-                tmp_username = t['answer_username']
-                sql0 = "select avatar_url, nickname from `%s` where username='%s" % ("tb_user", tmp_username)
-                cursor0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
-                cursor0.execute(sql0)
-                result0 = cursor0.fetchone()
-                cursor0.close()
-                tmp_answer_dict['avatar_url'] = result0['avatar_url']
-                tmp_answer_dict['nickname'] = result0['nickname']
-                copy_dict_by_keys(['answer_username', 'answer_time', 'question_id', 'is_accepted', 'answer_content',
-                                   'answer_pic_url', 'answer_sound_url'], t, tmp_answer_dict)
-                tmp_answer_list.append(tmp_answer_dict)
-        answer_list.append(tmp_answer_list)
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     db_manager.close()
     return True, data
 
 
-<<<<<<< HEAD
 def ask_question(username, answer_id, ask_content, original_question_id, be_asked_username, options=None):
     """
     用户追问
     :param username: 用户名
     :param answer_id: 回答的ID
-=======
-def ask_question(username, ask_content, original_question_id, be_asked_username):
-    """
-    用户追问
-    :param username: 用户名
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     :param ask_content: 追问内容
     :param original_question_id: 原问题ID
     :param be_asked_username: 被追问的用户
@@ -964,11 +753,7 @@ def ask_question(username, ask_content, original_question_id, be_asked_username)
     result_0 = cursor_0.fetchone()
     cursor_0.close()
     if result_0 is None or len(result_0) == 0:
-<<<<<<< HEAD
         return False, "没有回答该问题"
-=======
-        return False
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 
     # 拿到追问顺序ask_order
     sql_1 = "select max(ask_order) as ask_order0 from `tb_ask` where be_asked_username='%s' and original_question_id=" \
@@ -980,11 +765,7 @@ def ask_question(username, ask_content, original_question_id, be_asked_username)
     if result_1 is None or len(result_1) == 0:
         ask_order = 0
     else:
-<<<<<<< HEAD
         ask_order = result_1['ask_order0'] if result_1['ask_order0'] else 0
-=======
-        ask_order = result_1['ask_order0']
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     # 添加一条追问记录
     props = dict()
     props['ask_content'] = ask_content
@@ -992,14 +773,11 @@ def ask_question(username, ask_content, original_question_id, be_asked_username)
     props['original_question_id'] = original_question_id
     props['be_asked_username'] = be_asked_username
     props['ask_order'] = ask_order + 1
-<<<<<<< HEAD
     props['answer_id'] = answer_id
 
     if options:
         assert isinstance(options, dict)
         props.update(options)
-=======
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 
     insert_sql = forEachPlusInsertProps("tb_ask", props)
     msg0 = "[in ask_question] insert_sql=" + insert_sql
@@ -1015,11 +793,7 @@ def ask_question(username, ask_content, original_question_id, be_asked_username)
         db_manager.close()
         raise Exception
     db_manager.close()
-<<<<<<< HEAD
     return True, ""
-=======
-    return True
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
 
 
 def adopt_answer(username, question_id, answer_id, answer_username):
@@ -1044,11 +818,7 @@ def adopt_answer(username, question_id, answer_id, answer_username):
     if identifier != 0:
         return False, "没有采纳权限"
     # 问题是否已经被解决
-<<<<<<< HEAD
     sql_0 = "select question_status, question_score from `%s` where question_id=%s" % ("tb_question", question_id)
-=======
-    sql_0 = "select question_status from `%s` where question_id=%s" % ("tb_question", question_id)
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     cursor_0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
     cursor_0.execute(sql_0)
     result_0 = cursor_0.fetchone()
@@ -1056,10 +826,7 @@ def adopt_answer(username, question_id, answer_id, answer_username):
     if result_0 is None:
         return False, "问题不存在"
     question_status = result_0['question_status']
-<<<<<<< HEAD
     question_score = result_0['question_score']
-=======
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     # 问题已经被解决
     if question_status == 1:
         return False, "问题已经被解决"
@@ -1068,13 +835,8 @@ def adopt_answer(username, question_id, answer_id, answer_username):
     update_prop['question_status'] = 1
     update_sql_0 = FormatUpdateStr(update_prop)
     sql0 = "update `%s` set %s where question_id=%s" % ("tb_question", update_sql_0, question_id)
-<<<<<<< HEAD
     cursor0 = db_manager.conn_r.cursor()
     try:
-=======
-    try:
-        cursor0 = db_manager.conn_r.cursor()
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
         cursor0.execute(sql0)
         db_manager.conn_r.commit()
         cursor0.close()
@@ -1088,15 +850,9 @@ def adopt_answer(username, question_id, answer_id, answer_username):
     update_prop = dict()
     update_prop['is_accepted'] = 1
     update_sql_0 = FormatUpdateStr(update_prop)
-<<<<<<< HEAD
     sql0 = "update `%s` set %s where answer_id=%s" % ("tb_answer", update_sql_0, answer_id)
     cursor0 = db_manager.conn_r.cursor()
     try:
-=======
-    sql0 = "update `%s` set %s where id=%s" % ("tb_answer", update_sql_0, answer_id)
-    try:
-        cursor0 = db_manager.conn_r.cursor()
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
         cursor0.execute(sql0)
         db_manager.conn_r.commit()
         cursor0.close()
@@ -1106,17 +862,12 @@ def adopt_answer(username, question_id, answer_id, answer_username):
         db_manager.close()
         raise Exception
         return False
-<<<<<<< HEAD
     # 更新教师积分
-=======
-    # 更新用户积分
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     user_operation_type = 3
     sql2 = "select score_points from `%s` where user_operation_type=%s" % ("tb_score_rule_template", user_operation_type)
     cursor2 = db_manager.conn_r.cursor(cursorclass=DictCursor)
     cursor2.execute(sql2)
     result2 = cursor2.fetchone()
-<<<<<<< HEAD
     cursor2.close()
     point_value = result2['score_points'] + question_score
     sql_0 = "insert into `%s` (username, point_type, point_value) values ('%s', %s, %s) ON DUPLICATE KEY UPDATE" \
@@ -1126,14 +877,6 @@ def adopt_answer(username, question_id, answer_id, answer_username):
     logging.info(msg_120)
     cursor2 = db_manager.conn_r.cursor()
     try:
-=======
-    point_value = result2['score_points']
-    sql_0 = "insert into `%s` (username, point_type, point_value) values ('%s', %s, %s) ON DUPLICATE KEY UPDATE" \
-            " point_value=point_value+VALUES(point_value)" % ("tb_user_points", answer_username, user_operation_type,
-                                                              point_value)
-    try:
-        cursor2 = db_manager.conn_r.cursor()
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
         cursor2.execute(sql_0)
         db_manager.conn_r.commit()
         cursor2.close()
@@ -1147,7 +890,6 @@ def adopt_answer(username, question_id, answer_id, answer_username):
     return True, ""
 
 
-<<<<<<< HEAD
 def query_ask_and_answer_page(answer_id):
     """
     获取某个问题的追问追答列表
@@ -1201,23 +943,10 @@ def query_ask_and_answer_page(answer_id):
     tmp_dict = answer.copy()
     # 拿到回答者信息
     sql0 = "select avatar_url, nickname from `%s` where username='%s'" % ("tb_user", t_username)
-=======
-def get_latest_id(username, table_name, key):
-    """
-    根据用户名获取数据表对应主键ID
-    :param username: 用户名
-    :param table_name: 数据表名
-    :param key: 主键
-    :return:
-    """
-    db_manager = DBManager()
-    sql0 = "select %s from `%s` where question_username='%s'" % (key, table_name, username)
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     cursor0 = db_manager.conn_r.cursor(cursorclass=DictCursor)
     cursor0.execute(sql0)
     result0 = cursor0.fetchone()
     cursor0.close()
-<<<<<<< HEAD
     tmp_dict['avatar_url'] = result0['avatar_url']
     tmp_dict['nickname'] = result0['nickname']
     # 原始问题的回答
@@ -1332,15 +1061,6 @@ def get_latest_id(table_name):
     cursor1 = db_manager.conn_r.cursor(cursorclass=DictCursor)
     cursor1.execute(sql1)
     result1 = cursor1.fetchone()
-=======
-    if result0:
-        return result0[key]
-
-    sql1 = "SHOW TABLE STATUS LIKE `%s`" % "tb_question"
-    cursor1 = db_manager.conn_r.cursor(cursorclass=DictCursor)
-    cursor1.execute(sql1)
-    result1 = cursor0.fetchone()
->>>>>>> 46917cd49fb2d8e06862c869e0f0c545ca7db35a
     cursor1.close()
     db_manager.close()
     return result1['Auto_increment']
